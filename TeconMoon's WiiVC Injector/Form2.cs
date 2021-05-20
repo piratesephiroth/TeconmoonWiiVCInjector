@@ -32,6 +32,7 @@ namespace TeconMoon_s_WiiVC_Injector
             VideoForceMode.SelectedIndex = 0;
             VideoTypeMode.SelectedIndex = 0;
             LanguageBox.SelectedIndex = 0;
+            wiiUGamepadSlotBox.SelectedIndex = 0;
             NintendontOptions.SetItemChecked(0, true);
             NintendontOptions.SetItemChecked(7, true);
         }
@@ -289,6 +290,7 @@ namespace TeconMoon_s_WiiVC_Injector
             public sbyte videoScale;
             public sbyte videoOffset;
             public byte networkProfile; // wii only
+            public uint wiiuGamepadSlot;
         }
 
         public enum ninconfig
@@ -351,22 +353,22 @@ namespace TeconMoon_s_WiiVC_Injector
 
         private void GenerateConfig_Click(object sender, EventArgs e)
         {
-
             ConfigFile nintendontCfg = new ConfigFile();
             
             nintendontCfg.magicBytes = 0x01070CF6;
-            nintendontCfg.version = 9;
+            nintendontCfg.version = 10;
             nintendontCfg.config = 0;
             nintendontCfg.videoMode = 0;
             nintendontCfg.language = 0;
             nintendontCfg.gamePath = new byte[256];
             nintendontCfg.cheatPath = new byte[256];
-            nintendontCfg.maxPads = 0;
+            nintendontCfg.maxPads = 4;
             nintendontCfg.gameID = 0;
             nintendontCfg.memCardBlocks = 0;
             nintendontCfg.videoScale = 0;
             nintendontCfg.videoOffset = 0;
             nintendontCfg.networkProfile = 0;
+            nintendontCfg.wiiuGamepadSlot = 0;
 
             nintendontCfg.videoMode |= (uint)ninvideomode.NIN_VID_PROG; // always required?
 
@@ -530,14 +532,17 @@ namespace TeconMoon_s_WiiVC_Injector
                 nintendontCfg.videoScale = (sbyte)(VideoWidth.Value - 600);
             }
 
+            // WII U GAMEPAD SLOT
+            nintendontCfg.wiiuGamepadSlot = (uint)(wiiUGamepadSlotBox.SelectedIndex + 1);
 
+            //
             // SAVING THE FILE
             string savePath = SelectedDriveLetter + "nincfg.bin";
 
             // if removable drive isdn't specified, save file manually
             if (DriveSpecified == false)
             {
-                DialogResult dialogResult = MessageBox.Show("SD not specified.\nDo you wish to save the file somewhere else?"
+                DialogResult dialogResult = MessageBox.Show("SD card not specified.\nDo you wish to save the file somewhere else?"
                                                             , "Drive not specified"
                                                             , MessageBoxButtons.YesNo
                                                             , MessageBoxIcon.Question
@@ -586,6 +591,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 byte[] language = BitConverter.GetBytes(nintendontCfg.language);
                 byte[] maxPads = BitConverter.GetBytes(nintendontCfg.maxPads);
                 byte[] gameID = BitConverter.GetBytes(nintendontCfg.gameID);
+                byte[] wiiuGamepadSlot = BitConverter.GetBytes(nintendontCfg.wiiuGamepadSlot);
 
 
                 if (BitConverter.IsLittleEndian)
@@ -597,6 +603,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     Array.Reverse(language, 0, language.Length);
                     Array.Reverse(maxPads, 0, maxPads.Length);
                     Array.Reverse(gameID, 0, gameID.Length);
+                    Array.Reverse(wiiuGamepadSlot, 0, wiiuGamepadSlot.Length);
                 }
 
                 cfgFile.Write(magicBytes);
@@ -612,6 +619,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 cfgFile.Write(nintendontCfg.videoScale);
                 cfgFile.Write(nintendontCfg.videoOffset);
                 cfgFile.Write(nintendontCfg.networkProfile);
+                cfgFile.Write(wiiuGamepadSlot);
 
             }
 
