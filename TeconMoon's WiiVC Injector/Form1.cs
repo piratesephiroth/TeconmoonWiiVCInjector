@@ -2194,7 +2194,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     BuildStatus.Text = "Unscrubbing game for NFS Conversion...";
                     BuildStatus.Refresh();
                     LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                    LauncherExeArgs = "\"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "\"" + OpenGame.FileName;
                     LaunchProgram(); // CONVERT TO ISO
                     File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\game.iso");
                 }
