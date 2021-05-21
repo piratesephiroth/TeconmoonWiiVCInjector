@@ -1818,9 +1818,7 @@ namespace TeconMoon_s_WiiVC_Injector
             {
                 BuildStatus.Text = "Saving files from Nintendo for future use...";
                 BuildStatus.Refresh();
-                //Directory.CreateDirectory(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]");
-                //Directory.CreateDirectory(JNUSToolDownloads + "0005001010004000");
-                //Directory.CreateDirectory(JNUSToolDownloads + "0005001010004001");
+
                 if (Directory.Exists("Rhythm Heaven Fever [VAKE01]"))
                 {
                     FileSystem.CopyDirectory("Rhythm Heaven Fever [VAKE01]", JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]", true);
