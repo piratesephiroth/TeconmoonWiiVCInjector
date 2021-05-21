@@ -633,8 +633,8 @@ namespace TeconMoon_s_WiiVC_Injector
 
         private void Format_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("http://www.ridgecrop.demon.co.uk/index.htm?guiformat.htm");
-            Process.Start("http://www.ridgecrop.demon.co.uk/guiformat.exe");
+            Process.Start("http://ridgecrop.co.uk/index.htm?guiformat.htm");
+            Process.Start("http://ridgecrop.co.uk/guiformat.exe");
         }
     }
 }
