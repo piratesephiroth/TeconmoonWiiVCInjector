@@ -1704,268 +1704,167 @@ namespace TeconMoon_s_WiiVC_Injector
             //////////////////////////
 
             //Download base files with JNUSTool, store them for future use
-            if (Directory.Exists(JNUSToolDownloads) == false)
+
+            var downloadedFiles = new string[]
             {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004000\\code\\deint.txt") == false)
+                JNUSToolDownloads + "0005001010004000\\code\\deint.txt",
+                JNUSToolDownloads + "0005001010004000\\code\\font.bin",
+                JNUSToolDownloads + "0005001010004001\\code\\c2w.img",
+                JNUSToolDownloads + "0005001010004001\\code\\boot.bin",
+                JNUSToolDownloads + "0005001010004001\\code\\dmcu.d.hex",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\cos.xml",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\frisbiiU.rpx",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\fw.img",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\fw.tmd",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\htk.bin",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\nn_hai_user.rpl",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\content\\assets\\shaders\\cafe\\banner.gsh",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\content\\assets\\shaders\\cafe\\fade.gsh",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootMovie.h264",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootLogoTex.tga",
+                JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootSound.btsnd"
+            };
+
+            var fileHashes = new string[]
             {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004000\\code\\font.bin") == false)
+                "E707A62EE5491DD16E5494631EA9870A",
+                "CDDAC70FDDB9428F220B048102DAAD40",
+                "FC5EE480F58796C3681BEE78BD3E5D1C",
+                "F4D5F095CBA9504A5CB8A94A4781114C",
+                "E32FCBCC817C443E0832DE5CA9032808",
+                "42215713D951C2023F90164ED9DF900F",
+                "69E191E8B0DF1D5304B36F1375C4F127",
+                "3CAF52A9A440EEE4F125A3AD22E305C8",
+                "AE4E06CAD3BEF60AE5C49E22CCDC3254",
+                "C99CAF5995E395F39C3FCAB4A8AF20E0",
+                "C4BF586BA0071BD8477986C1AA37E1F1",
+                "5F2FA196DFC158F0FCC69272073AE07E",
+                "307221985A7B46F0386A2637DC15DA3E",
+                "CA0DAC3E3C5654209C754357EF5A2507",
+                "67B312145ECB70514D5BD36FCAAE0193",
+                "43CD445B8569A445F97ECCC098C93B38"
+            };
+
+            var filesToDownload = new string[]
             {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004001\\code\\c2w.img") == false)
+                "0005001010004000 -file /code/deint.txt",
+                "0005001010004000 -file /code/font.bin",
+                "0005001010004001 -file /code/c2w.img",
+                "0005001010004001 -file /code/boot.bin",
+                "0005001010004001 -file /code/dmcu.d.hex",
+                "00050000101b0700 " + TitleKey.Text + " -file /code/cos.xml",
+                "00050000101b0700 " + TitleKey.Text + " -file /code/frisbiiU.rpx",
+                "00050000101b0700 " + TitleKey.Text + " -file /code/fw.img",
+                "00050000101b0700 " + TitleKey.Text + " -file /code/fw.tmd",
+                "00050000101b0700 " + TitleKey.Text + " -file /code/htk.bin",
+                "00050000101b0700 " + TitleKey.Text + " -file /code/nn_hai_user.rpl",
+                "00050000101b0700 " + TitleKey.Text + " -file /content/assets/shaders/cafe/banner.gsh",
+                "00050000101b0700 " + TitleKey.Text + " -file /content/assets/shaders/cafe/fade.gsh*",
+                "00050000101b0700 " + TitleKey.Text + " -file /meta/bootMovie.h264",
+                "00050000101b0700 " + TitleKey.Text + " -file /meta/bootLogoTex.tga",
+                "00050000101b0700 " + TitleKey.Text + " -file /meta/bootSound.btsnd"
+            };
+
+            BuildStatus.Text = "Checking if the necessary files are present...";
+            BuildStatus.Refresh();
+            BuildProgress.Value = 10;
+
+            // create config file for jnustool
+            string[] JNUSToolConfig = { "http://ccs.cdn.wup.shop.nintendo.net/ccs/download", WiiUCommonKey.Text };
+            File.WriteAllLines(TempToolsPath + "JAR\\config", JNUSToolConfig);
+            Directory.SetCurrentDirectory(TempToolsPath + "JAR");
+            LauncherExeFile = "JNUSTool.exe";
+
+            bool internetPresent = CheckForInternetConnection();
+
+            for (int i = 0; i < downloadedFiles.Length; i++)
             {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004001\\code\\boot.bin") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004001\\code\\dmcu.d.hex") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\cos.xml") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\frisbiiU.rpx") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\fw.img") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\fw.tmd") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\htk.bin") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\nn_hai_user.rpl") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\content\\assets\\shaders\\cafe\\banner.gsh") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\content\\assets\\shaders\\cafe\\fade.gsh") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootMovie.h264") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootLogoTex.tga") == false)
-            {
-                goto JNUSStuff;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootSound.btsnd") == false)
-            {
-                goto JNUSStuff;
-            }
-            goto SkipJNUS;
-            JNUSStuff:;
-            if (CheckForInternetConnection() == false)
-            {
-                DialogResult dialogResult = MessageBox.Show("Your internet connection could not be verified, do you wish to try and download" +
-                                                            "the necessary base files from Nintendo anyway? (This is a one-time download)"
-                                                            , "Internet Connection Verification Failed"
-                                                            , MessageBoxButtons.YesNo
-                                                            , MessageBoxIcon.Warning
-                                                            , MessageBoxDefaultButton.Button1
-                                                            , (MessageBoxOptions)0x40000);
-                if (dialogResult == DialogResult.No)
+                // check if file exists and is correct
+                if (File.Exists(downloadedFiles[i]) && GetMD5Checksum(downloadedFiles[i]) == fileHashes[i])
                 {
+                    continue;
+                }
+
+                if (!internetPresent)
+                {
+                    DialogResult dialogResult = MessageBox.Show("Your internet connection could not be verified, do you wish to try and download" +
+                                                                "the necessary base files from Nintendo anyway? (This is a one-time download)"
+                                                                , "Internet Connection Verification Failed"
+                                                                , MessageBoxButtons.YesNo
+                                                                , MessageBoxIcon.Warning
+                                                                , MessageBoxDefaultButton.Button1
+                                                                , (MessageBoxOptions)0x40000);
+                    if (dialogResult == DialogResult.No)
+                    {
+                        MainTabs.Enabled = true;
+                        BuildStatus.Text = "";
+                        BuildStatus.Refresh();
+                        BuildProgress.Value = 0;
+                        goto BuildProcessFin;
+                    }
+                }
+
+                // if not, download it
+                BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo...";
+                BuildStatus.Refresh();
+                LauncherExeArgs = filesToDownload[i];
+                LaunchProgram();
+                BuildProgress.Value += 2;
+
+            }
+
+            // if any files were downloaded, store them in ProgramData
+            if (BuildProgress.Value > 10)
+            {
+                BuildStatus.Text = "Saving files from Nintendo for future use...";
+                BuildStatus.Refresh();
+                //Directory.CreateDirectory(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]");
+                //Directory.CreateDirectory(JNUSToolDownloads + "0005001010004000");
+                //Directory.CreateDirectory(JNUSToolDownloads + "0005001010004001");
+                if (Directory.Exists("Rhythm Heaven Fever [VAKE01]"))
+                {
+                    FileSystem.CopyDirectory("Rhythm Heaven Fever [VAKE01]", JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]", true);
+                    Directory.Delete("Rhythm Heaven Fever [VAKE01]", true);
+                }
+                if (Directory.Exists("0005001010004000"))
+                {
+                    FileSystem.CopyDirectory("0005001010004000", JNUSToolDownloads + "0005001010004000", true);
+                    Directory.Delete("0005001010004000", true);
+                }
+                if (Directory.Exists("0005001010004001"))
+                {
+                    FileSystem.CopyDirectory("0005001010004001", JNUSToolDownloads + "0005001010004001", true);
+                    Directory.Delete("0005001010004001", true);
+                }
+
+                // repeat loop to check if all files were downloaded properly
+                bool JNUSFail = false;
+                for (int i = 0; i < downloadedFiles.Length; i++)
+                {
+                    // check if file exists and is correct
+                    if (File.Exists(downloadedFiles[i]) && GetMD5Checksum(downloadedFiles[i]) == fileHashes[i])
+                    {
+                        continue;
+                    }
+                    JNUSFail = true;
+                }
+
+                if (JNUSFail)
+                {
+                    MessageBox.Show("Failed to download base files using JNUSTool, conversion will not continue"
+                                    , "Error"
+                                    , MessageBoxButtons.OK
+                                    , MessageBoxIcon.Error
+                                    , MessageBoxDefaultButton.Button1
+                                    , (MessageBoxOptions)0x40000);
                     MainTabs.Enabled = true;
                     BuildStatus.Text = "";
-                    BuildStatus.Refresh();
                     BuildProgress.Value = 0;
                     goto BuildProcessFin;
                 }
             }
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo...";
-            BuildStatus.Refresh();
-            string[] JNUSToolConfig = { "http://ccs.cdn.wup.shop.nintendo.net/ccs/download", WiiUCommonKey.Text };
-            File.WriteAllLines(TempToolsPath + "JAR\\config", JNUSToolConfig);
-            Directory.SetCurrentDirectory(TempToolsPath + "JAR");
-            BuildProgress.Value = 10;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (deint.txt)";
-            BuildStatus.Refresh();
-            LauncherExeFile = "JNUSTool.exe";
-            LauncherExeArgs = "0005001010004000 -file /code/deint.txt";
-            LaunchProgram();
-            BuildProgress.Value = 12;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (font.bin)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "0005001010004000 -file /code/font.bin";
-            LaunchProgram();
-            BuildProgress.Value = 15;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (c2w.img)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "0005001010004001 -file /code/c2w.img";
-            LaunchProgram();
-            BuildProgress.Value = 17;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (boot.bin)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "0005001010004001 -file /code/boot.bin";
-            LaunchProgram();
-            BuildProgress.Value = 20;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (dmcu.d.hex)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "0005001010004001 -file /code/dmcu.d.hex";
-            LaunchProgram();
-            BuildProgress.Value = 23;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (cos.xml)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /code/cos.xml";
-            LaunchProgram();
-            BuildProgress.Value = 25;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (frisbiiU.rpx)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /code/frisbiiU.rpx";
-            LaunchProgram();
-            BuildProgress.Value = 27;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (fw.img)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /code/fw.img";
-            LaunchProgram();
-            BuildProgress.Value = 30;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (fw.tmd)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /code/fw.tmd";
-            LaunchProgram();
-            BuildProgress.Value = 32;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (htk.bin)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /code/htk.bin";
-            LaunchProgram();
-            BuildProgress.Value = 35;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (nn_hai_user.rpl)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /code/nn_hai_user.rpl";
-            LaunchProgram();
-            BuildProgress.Value = 37;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (banner.gsh / fade.gsh)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /content/assets/.*";
-            LaunchProgram();
-            BuildProgress.Value = 40;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (bootMovie.h264)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /meta/bootMovie.h264";
-            LaunchProgram();
-            BuildProgress.Value = 42;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (bootLogoTex.tga)";
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /meta/bootLogoTex.tga";
-            LaunchProgram();
-            BuildProgress.Value = 45;
-            BuildStatus.Text = "(One-Time Download) Downloading base files from Nintendo... (bootSound.btsnd)";
-            BuildStatus.Refresh();
-            LauncherExeArgs = "00050000101b0700 " + TitleKey.Text + " -file /meta/bootSound.btsnd";
-            LaunchProgram();
-            BuildProgress.Value = 47;
-            BuildStatus.Text = "Saving files from Nintendo for future use...";
-            BuildStatus.Refresh();
-            Directory.CreateDirectory(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]");
-            Directory.CreateDirectory(JNUSToolDownloads + "0005001010004000");
-            Directory.CreateDirectory(JNUSToolDownloads + "0005001010004001");
-            FileSystem.CopyDirectory("Rhythm Heaven Fever [VAKE01]", JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]");
-            FileSystem.CopyDirectory("0005001010004000", JNUSToolDownloads + "0005001010004000");
-            FileSystem.CopyDirectory("0005001010004001", JNUSToolDownloads + "0005001010004001");
-            Directory.Delete("Rhythm Heaven Fever [VAKE01]", true);
-            Directory.Delete("0005001010004000", true);
-            Directory.Delete("0005001010004001", true);
             File.Delete("config");
-            //Check if files exist after they were supposed to be downloaded
-            bool JNUSFail = false;
-            if (File.Exists(JNUSToolDownloads + "0005001010004000\\code\\deint.txt") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004000\\code\\font.bin") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004001\\code\\c2w.img") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004001\\code\\boot.bin") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "0005001010004001\\code\\dmcu.d.hex") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\cos.xml") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\frisbiiU.rpx") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\fw.img") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\fw.tmd") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\htk.bin") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\code\\nn_hai_user.rpl") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\content\\assets\\shaders\\cafe\\banner.gsh") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\content\\assets\\shaders\\cafe\\fade.gsh") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootMovie.h264") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootLogoTex.tga") == false)
-            {
-                JNUSFail = true;
-            }
-            if (File.Exists(JNUSToolDownloads + "Rhythm Heaven Fever [VAKE01]\\meta\\bootSound.btsnd") == false)
-            {
-                JNUSFail = true;
-            }
-            if (JNUSFail)
-            {
-                MessageBox.Show("Failed to download base files using JNUSTool, conversion will not continue"
-                                , "Error"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
-                MainTabs.Enabled = true;
-                BuildStatus.Text = "";
-                BuildProgress.Value = 0;
-                goto BuildProcessFin;
-            }
             Directory.SetCurrentDirectory(TempRootPath);
-            SkipJNUS:;
             ///////////////////////////////////
 
             //Copy downloaded files to the build directory
@@ -2323,6 +2222,15 @@ namespace TeconMoon_s_WiiVC_Injector
             /////
         }
 
+        private static string GetMD5Checksum(string file)
+        {
+            using (FileStream stream = File.OpenRead(file))
+            {
+                var md5 = MD5.Create();
+                byte[] checksum = md5.ComputeHash(stream);
+                return BitConverter.ToString(checksum).Replace("-", String.Empty);
+            }
+        }
 
     }
 }
