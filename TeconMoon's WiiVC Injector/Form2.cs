@@ -533,7 +533,7 @@ namespace TeconMoon_s_WiiVC_Injector
             }
 
             // WII U GAMEPAD SLOT
-            nintendontCfg.wiiuGamepadSlot = (uint)(wiiUGamepadSlotBox.SelectedIndex + 1);
+            nintendontCfg.wiiuGamepadSlot = (uint)(wiiUGamepadSlotBox.SelectedIndex);
 
             //
             // SAVING THE FILE
