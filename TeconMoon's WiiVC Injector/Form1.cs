@@ -2184,8 +2184,9 @@ namespace TeconMoon_s_WiiVC_Injector
             BuildStatus.Text = "Encrypting contents into installable WUP Package...";
             BuildStatus.Refresh();
             Directory.SetCurrentDirectory(TempRootPath);
+            string outputPath = OutputFolderSelect.SelectedPath + "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
             LauncherExeFile = TempToolsPath + "JAR\\NUSPacker.exe";
-            LauncherExeArgs = "-in BUILDDIR -out \"" + OutputFolderSelect.SelectedPath + "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text + "\" -encryptKeyWith " + WiiUCommonKey.Text;
+            LauncherExeArgs = "-in BUILDDIR -out \"" + outputPath + "\" -encryptKeyWith " + WiiUCommonKey.Text;
             LaunchProgram();
             BuildProgress.Value = 100;
             /////////////////////////////////
@@ -2201,15 +2202,21 @@ namespace TeconMoon_s_WiiVC_Injector
             //END
             BuildStatus.Text = "Conversion complete...";
             BuildStatus.Refresh();
-            MessageBox.Show("Conversion Complete! Your packed game can be found here: " + OutputFolderSelect.SelectedPath +
-                            "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text +
-                            ".\n\nInstall your title using WUP Installer GX2 with signature patches enabled (CBHC, Haxchi, etc)." +
-                            "Make sure you have signature patches enabled when launching your title.\n\n Click OK to continue..."
-                            , PackedTitleLine1.Text + " Conversion Complete"
-                            , MessageBoxButtons.OK
-                            , MessageBoxIcon.Information
-                            , MessageBoxDefaultButton.Button1
-                            , (MessageBoxOptions)0x40000);
+
+            DialogResult finalDialogResult = MessageBox.Show("Conversion Complete! Your packed game can be found here:\n" + outputPath + "\n\n" +
+                                                            "Install your title using WUP Installer GX2 with signature patches enabled (CBHC, Haxchi, etc)." +
+                                                            "Make sure you have signature patches enabled when launching your title.\n\n" +
+                                                            "Open the output folder now?"
+                                                            , PackedTitleLine1.Text + "Conversion Complete"
+                                                            , MessageBoxButtons.YesNo
+                                                            , MessageBoxIcon.Information
+                                                            , MessageBoxDefaultButton.Button1
+                                                            , (MessageBoxOptions)0x40000);
+
+            if (finalDialogResult == DialogResult.Yes)
+            {
+                Process.Start(outputPath);
+            }
 
             if (OGfilepath != null) { OpenGame.FileName = OGfilepath; }
             BuildStatus.Text = "";
