@@ -2193,9 +2193,9 @@ namespace TeconMoon_s_WiiVC_Injector
 
             //Delete Temp Directories
             Directory.SetCurrentDirectory(Application.StartupPath);
-            Directory.Delete(TempBuildPath, true);
-            Directory.Delete(TempRootPath + "output", true);
-            Directory.Delete(TempRootPath + "tmp", true);
+            DeleteFolder(TempBuildPath, true);
+            DeleteFolder(TempRootPath + "output", true);
+            DeleteFolder(TempRootPath + "tmp", true);
             Directory.CreateDirectory(TempBuildPath);
             /////////////////////////
 
@@ -2234,6 +2234,14 @@ namespace TeconMoon_s_WiiVC_Injector
                 var md5 = MD5.Create();
                 byte[] checksum = md5.ComputeHash(stream);
                 return BitConverter.ToString(checksum).Replace("-", String.Empty);
+            }
+        }
+
+        private static void DeleteFolder(string path, bool recursive)
+        {
+            if (Directory.Exists(path))
+            {
+                Directory.Delete(path, recursive);
             }
         }
 
