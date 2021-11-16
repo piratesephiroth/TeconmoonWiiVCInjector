@@ -16,7 +16,7 @@ using System.IO.Compression;
 using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using System.Runtime.InteropServices;
-
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace TeconMoon_s_WiiVC_Injector
 {
@@ -25,6 +25,7 @@ namespace TeconMoon_s_WiiVC_Injector
         public WiiVC_Injector()
         {
             InitializeComponent();
+            this.Text = string.Format(this.Text, System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             //Check for if .Net v3.5 component is installed
             CheckForNet35();
             //Delete Temporary Root Folder if it exists
@@ -116,6 +117,7 @@ namespace TeconMoon_s_WiiVC_Injector
         string TempLogoPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootLogoTex.png";
         string TempSoundPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootSound.wav";
         string OGfilepath;
+        string selectedOutputPath;
 
         //call options
         public void LaunchProgram()
@@ -1688,8 +1690,16 @@ namespace TeconMoon_s_WiiVC_Injector
                     }
                 }
             }
+
+            var outputFolderSelect = new CommonOpenFileDialog("Specify your output folder")
+            {
+                InitialDirectory = Properties.Settings.Default.OutputPath,
+                IsFolderPicker = true,
+                EnsurePathExists = true
+            };
+
             //Specify Path Variables to be called later
-            if (OutputFolderSelect.ShowDialog() == DialogResult.Cancel)
+            if (outputFolderSelect.ShowDialog() == CommonFileDialogResult.Cancel)
             {
                 MessageBox.Show("Output folder selection has been cancelled, conversion will not continue."
                                 , "Cancelled"
@@ -1701,6 +1711,9 @@ namespace TeconMoon_s_WiiVC_Injector
                 goto BuildProcessFin;
             }
             BuildProgress.Value = 2;
+            selectedOutputPath = outputFolderSelect.FileName;
+            Properties.Settings.Default.OutputPath = selectedOutputPath;
+            Properties.Settings.Default.Save();
             //////////////////////////
 
             //Download base files with JNUSTool, store them for future use
@@ -2184,7 +2197,7 @@ namespace TeconMoon_s_WiiVC_Injector
             BuildStatus.Text = "Encrypting contents into installable WUP Package...";
             BuildStatus.Refresh();
             Directory.SetCurrentDirectory(TempRootPath);
-            string outputPath = OutputFolderSelect.SelectedPath + "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
+            string outputPath = selectedOutputPath + "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
             LauncherExeFile = TempToolsPath + "JAR\\NUSPacker.exe";
             LauncherExeArgs = "-in BUILDDIR -out \"" + outputPath + "\" -encryptKeyWith " + WiiUCommonKey.Text;
             LaunchProgram();

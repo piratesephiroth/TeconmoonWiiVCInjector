@@ -128,7 +128,6 @@
             this.OpenLogo = new System.Windows.Forms.OpenFileDialog();
             this.OpenBootSound = new System.Windows.Forms.OpenFileDialog();
             this.OpenMainDol = new System.Windows.Forms.OpenFileDialog();
-            this.OutputFolderSelect = new System.Windows.Forms.FolderBrowserDialog();
             this.OpenGC2 = new System.Windows.Forms.OpenFileDialog();
             this.MainTableLayout.SuspendLayout();
             this.MainTabs.SuspendLayout();
@@ -1290,7 +1289,6 @@
             // 
             // WiiVC_Injector
             // 
-            string versionNumber = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(485, 427);
@@ -1300,7 +1298,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "WiiVC_Injector";
-            this.Text = $"TeconMoon\'s WiiVC Injector - [{versionNumber}]";
+            this.Text = "TeconMoon\'s WiiVC Injector - [{0}]";
             this.MainTableLayout.ResumeLayout(false);
             this.MainTableLayout.PerformLayout();
             this.MainTabs.ResumeLayout(false);
@@ -1416,7 +1414,6 @@
         private System.Windows.Forms.ProgressBar BuildProgress;
         private System.Windows.Forms.Label BuildStatus;
         private System.Windows.Forms.Label AdvanceCheck;
-        private System.Windows.Forms.FolderBrowserDialog OutputFolderSelect;
         private System.Windows.Forms.Button SDCardStuff;
         private System.Windows.Forms.Label GC2SourceDirectory;
         private System.Windows.Forms.Button GC2SourceButton;
