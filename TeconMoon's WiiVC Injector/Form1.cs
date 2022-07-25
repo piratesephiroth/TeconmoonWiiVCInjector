@@ -2130,7 +2130,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     }
                     else
                     {
-                        File.Move(OpenGC2.FileName, TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
+                        File.Copy(OpenGC2.FileName, TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
                     }
                 }
                 LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
