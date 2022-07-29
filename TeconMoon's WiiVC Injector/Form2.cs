@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
-using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace TeconMoon_s_WiiVC_Injector
 {
@@ -20,8 +15,9 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             InitializeComponent();
         }
-        string SelectedDriveLetter;
-        bool DriveSpecified;
+
+        private string SelectedDriveLetter;
+        private bool DriveSpecified;
 
         //Load Drives and set drive variable on load
         private void SDCardMenu_Load(object sender, EventArgs e)
@@ -42,7 +38,7 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             if (DriveBox.SelectedValue != null)
             {
-                SelectedDriveLetter = DriveBox.SelectedValue.ToString().Substring(0, 3);
+                SelectedDriveLetter = DriveBox.SelectedValue.ToString()[..3];
                 DriveSpecified = true;
             }
             else
@@ -93,12 +89,10 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             try
             {
-                using (var client = new WebClient())
+                using WebClient client = new();
+                using (client.OpenRead("http://clients3.google.com/generate_204"))
                 {
-                    using (client.OpenRead("http://clients3.google.com/generate_204"))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             catch
@@ -118,7 +112,7 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             SpecifyDrive();
         }
-        
+
 
         //Changing config options
         public void NintendontOptions_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,8 +176,8 @@ namespace TeconMoon_s_WiiVC_Injector
 
             ActionStatus.Text = "Downloading...";
             ActionStatus.Refresh();
-            Directory.CreateDirectory(tempPath);
-            var client = new WebClient();
+            _ = Directory.CreateDirectory(tempPath);
+            WebClient client = new();
             client.DownloadFile("https://raw.githubusercontent.com/FIX94/Nintendont/master/loader/loader.dol", tempPath + "boot.dol");
             client.DownloadFile("https://raw.githubusercontent.com/FIX94/Nintendont/master/nintendont/meta.xml", tempPath + "meta.xml");
             client.DownloadFile("https://raw.githubusercontent.com/FIX94/Nintendont/master/nintendont/icon.png", tempPath + "icon.png");
@@ -195,19 +189,19 @@ namespace TeconMoon_s_WiiVC_Injector
                 {
                     Directory.Delete(SelectedDriveLetter + "apps\\nintendont", true);
                 }
-                Directory.CreateDirectory(SelectedDriveLetter + "apps\\nintendont");
+                _ = Directory.CreateDirectory(SelectedDriveLetter + "apps\\nintendont");
 
 
-                DirectoryInfo dir = new DirectoryInfo(tempPath);
+                DirectoryInfo dir = new(tempPath);
                 FileInfo[] files = dir.GetFiles();
 
                 foreach (FileInfo file in files)
                 {
                     string outPath = Path.Combine(SDPath, file.Name);
-                    file.CopyTo(outPath, true);
+                    _ = file.CopyTo(outPath, true);
                 }
 
-                MessageBox.Show("Download complete."
+                _ = MessageBox.Show("Download complete."
                                 , "Success"
                                 , MessageBoxButtons.OK
                                 , MessageBoxIcon.Information
@@ -228,7 +222,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 {
                     DateTime dateTime = DateTime.UtcNow.Date;
 
-                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    SaveFileDialog saveFileDialog = new()
                     {
                         Title = "Save Nintendont zip file",
                         CheckPathExists = true,
@@ -236,7 +230,7 @@ namespace TeconMoon_s_WiiVC_Injector
                         Filter = "Zip Files (*.zip)|*.zip",
                         FilterIndex = 2,
                         RestoreDirectory = true,
-                        FileName = "Nintendont-" + dateTime.ToString("dd.MMM.yyyy") +  ".zip"
+                        FileName = "Nintendont-" + dateTime.ToString("dd.MMM.yyyy") + ".zip"
                     };
 
                     // if a path is decided, store it
@@ -251,14 +245,14 @@ namespace TeconMoon_s_WiiVC_Injector
                         }
 
                         ZipFile.CreateFromDirectory(sourcePath, zipPath);
-                        MessageBox.Show("Download complete."
+                        _ = MessageBox.Show("Download complete."
                                         , "Success"
                                         , MessageBoxButtons.OK
                                         , MessageBoxIcon.Information
                                         , MessageBoxDefaultButton.Button1
                                         , (MessageBoxOptions)0x40000);
                     }
-                    
+
 
                     // else, stop the saving process
                     else
@@ -296,48 +290,48 @@ namespace TeconMoon_s_WiiVC_Injector
         public enum ninconfig
         {
             NIN_CFG_CHEATS = 1,
-            NIN_CFG_DEBUGGER = (1 << 1), // Only for Wii Version
-            NIN_CFG_DEBUGWAIT = (1 << 2),   // Only for Wii Version
-            NIN_CFG_MEMCARDEMU = (1 << 3), // ENABLED for Wii U and newer Wii
-            NIN_CFG_CHEAT_PATH = (1 << 4),
-            NIN_CFG_FORCE_WIDE = (1 << 5),
-            NIN_CFG_FORCE_PROG = (1 << 6),
-            NIN_CFG_AUTO_BOOT = (1 << 7),
-            NIN_CFG_HID = (1 << 8),
-            NIN_CFG_REMLIMIT = (1 << 8),
-            NIN_CFG_OSREPORT = (1 << 9),
-            NIN_CFG_USB = (1 << 10),       // old bit for WiiU Widescreen
-            NIN_CFG_LED = (1 << 11),       // Only for Wii Version
-            NIN_CFG_LOG = (1 << 12),
+            NIN_CFG_DEBUGGER = 1 << 1, // Only for Wii Version
+            NIN_CFG_DEBUGWAIT = 1 << 2,   // Only for Wii Version
+            NIN_CFG_MEMCARDEMU = 1 << 3, // ENABLED for Wii U and newer Wii
+            NIN_CFG_CHEAT_PATH = 1 << 4,
+            NIN_CFG_FORCE_WIDE = 1 << 5,
+            NIN_CFG_FORCE_PROG = 1 << 6,
+            NIN_CFG_AUTO_BOOT = 1 << 7,
+            NIN_CFG_HID = 1 << 8,
+            NIN_CFG_REMLIMIT = 1 << 8,
+            NIN_CFG_OSREPORT = 1 << 9,
+            NIN_CFG_USB = 1 << 10,       // old bit for WiiU Widescreen
+            NIN_CFG_LED = 1 << 11,       // Only for Wii Version
+            NIN_CFG_LOG = 1 << 12,
 
-            NIN_CFG_MC_MULTI = (1 << 13),
-            NIN_CFG_NATIVE_SI = (1 << 14),   // Only for Wii Version
-            NIN_CFG_WIIU_WIDE = (1 << 15),   // Only for Wii U Version
-            NIN_CFG_ARCADE_MODE = (1 << 16),
-            NIN_CFG_CC_RUMBLE = (1 << 17),
-            NIN_CFG_SKIP_IPL = (1 << 18),
-            NIN_CFG_BBA_EMU = (1 << 19),
+            NIN_CFG_MC_MULTI = 1 << 13,
+            NIN_CFG_NATIVE_SI = 1 << 14,   // Only for Wii Version
+            NIN_CFG_WIIU_WIDE = 1 << 15,   // Only for Wii U Version
+            NIN_CFG_ARCADE_MODE = 1 << 16,
+            NIN_CFG_CC_RUMBLE = 1 << 17,
+            NIN_CFG_SKIP_IPL = 1 << 18,
+            NIN_CFG_BBA_EMU = 1 << 19,
         };
 
-        enum ninvideomode
+        private enum ninvideomode
         {
-            NIN_VID_AUTO = (0 << 16),
-            NIN_VID_FORCE = (1 << 16),
-            NIN_VID_NONE = (2 << 16),
-            NIN_VID_FORCE_DF = (4 << 16),
+            NIN_VID_AUTO = 0 << 16,
+            NIN_VID_FORCE = 1 << 16,
+            NIN_VID_NONE = 2 << 16,
+            NIN_VID_FORCE_DF = 4 << 16,
             NIN_VID_MASK = NIN_VID_AUTO | NIN_VID_FORCE | NIN_VID_NONE | NIN_VID_FORCE_DF,
 
-            NIN_VID_FORCE_PAL50 = (1 << 0), 
-            NIN_VID_FORCE_PAL60 = (1 << 1),
-            NIN_VID_FORCE_NTSC = (1 << 2),
-            NIN_VID_FORCE_MPAL = (1 << 3),
+            NIN_VID_FORCE_PAL50 = 1 << 0,
+            NIN_VID_FORCE_PAL60 = 1 << 1,
+            NIN_VID_FORCE_NTSC = 1 << 2,
+            NIN_VID_FORCE_MPAL = 1 << 3,
             NIN_VID_FORCE_MASK = NIN_VID_FORCE_PAL50 | NIN_VID_FORCE_PAL60 | NIN_VID_FORCE_NTSC | NIN_VID_FORCE_MPAL,
 
-            NIN_VID_PROG = (1 << 4),   //important to prevent blackscreens
-            NIN_VID_PATCH_PAL50 = (1 << 5), //different force behaviour
+            NIN_VID_PROG = 1 << 4,   //important to prevent blackscreens
+            NIN_VID_PATCH_PAL50 = 1 << 5, //different force behaviour
         };
 
-        enum ninlanguage : uint
+        private enum ninlanguage : uint
         {
             NIN_LAN_ENGLISH = 0,
             NIN_LAN_GERMAN = 1,
@@ -353,22 +347,23 @@ namespace TeconMoon_s_WiiVC_Injector
 
         private void GenerateConfig_Click(object sender, EventArgs e)
         {
-            ConfigFile nintendontCfg = new ConfigFile();
-            
-            nintendontCfg.magicBytes = 0x01070CF6;
-            nintendontCfg.version = 10;
-            nintendontCfg.config = 0;
-            nintendontCfg.videoMode = 0;
-            nintendontCfg.language = 0;
-            nintendontCfg.gamePath = new byte[256];
-            nintendontCfg.cheatPath = new byte[256];
-            nintendontCfg.maxPads = 4;
-            nintendontCfg.gameID = 0;
-            nintendontCfg.memCardBlocks = 0;
-            nintendontCfg.videoScale = 0;
-            nintendontCfg.videoOffset = 0;
-            nintendontCfg.networkProfile = 0;
-            nintendontCfg.wiiuGamepadSlot = 0;
+            ConfigFile nintendontCfg = new()
+            {
+                magicBytes = 0x01070CF6,
+                version = 10,
+                config = 0,
+                videoMode = 0,
+                language = 0,
+                gamePath = new byte[256],
+                cheatPath = new byte[256],
+                maxPads = 4,
+                gameID = 0,
+                memCardBlocks = 0,
+                videoScale = 0,
+                videoOffset = 0,
+                networkProfile = 0,
+                wiiuGamepadSlot = 0
+            };
 
             nintendontCfg.videoMode |= (uint)ninvideomode.NIN_VID_PROG; // always required?
 
@@ -417,7 +412,7 @@ namespace TeconMoon_s_WiiVC_Injector
             {
                 nintendontCfg.videoMode |= (uint)ninvideomode.NIN_VID_PATCH_PAL50;
 
-                if(VideoTypeMode.SelectedIndex == 0 || VideoTypeMode.SelectedIndex == 3)
+                if (VideoTypeMode.SelectedIndex is 0 or 3)
                 {
                     nintendontCfg.videoMode |= (uint)ninvideomode.NIN_VID_FORCE_PAL50;
                 }
@@ -510,30 +505,16 @@ namespace TeconMoon_s_WiiVC_Injector
 
 
             // LANGUAGE SELECTION
-            if (LanguageBox.SelectedIndex == 0)
-            {
-                nintendontCfg.language = 0xFFFFFFFF;
-            }
-            else
-            {
-                nintendontCfg.language = (uint)LanguageBox.SelectedIndex;
-            }
+            nintendontCfg.language = LanguageBox.SelectedIndex == 0 ? 0xFFFFFFFF : (uint)LanguageBox.SelectedIndex;
 
             // MEMCARD BLOCKS
             nintendontCfg.memCardBlocks = (byte)MemcardBlocks.SelectedIndex;
 
             // VIDEO WIDTH
-            if (NintendontOptions.GetItemChecked(7))
-            {
-                nintendontCfg.videoScale = 0;
-            }
-            else
-            {
-                nintendontCfg.videoScale = (sbyte)(VideoWidth.Value - 600);
-            }
+            nintendontCfg.videoScale = NintendontOptions.GetItemChecked(7) ? (sbyte)0 : (sbyte)(VideoWidth.Value - 600);
 
             // WII U GAMEPAD SLOT
-            nintendontCfg.wiiuGamepadSlot = (uint)(wiiUGamepadSlotBox.SelectedIndex);
+            nintendontCfg.wiiuGamepadSlot = (uint)wiiUGamepadSlotBox.SelectedIndex;
 
             //
             // SAVING THE FILE
@@ -550,7 +531,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                                             , (MessageBoxOptions)0x40000);
                 if (dialogResult == DialogResult.Yes)   // if YES, ask where to save the file
                 {
-                    SaveFileDialog saveFileDialog = new SaveFileDialog
+                    SaveFileDialog saveFileDialog = new()
                     {
                         Title = "Save nincfg.bin",
                         CheckPathExists = true,
@@ -582,7 +563,7 @@ namespace TeconMoon_s_WiiVC_Injector
             }
 
             // write it
-            using (BinaryWriter cfgFile = new BinaryWriter(File.Open(savePath, FileMode.Create) ) )
+            using (BinaryWriter cfgFile = new(File.Open(savePath, FileMode.Create)))
             {
                 byte[] magicBytes = BitConverter.GetBytes(nintendontCfg.magicBytes);
                 byte[] version = BitConverter.GetBytes(nintendontCfg.version);
@@ -623,7 +604,7 @@ namespace TeconMoon_s_WiiVC_Injector
 
             }
 
-            MessageBox.Show("Config generation complete."
+            _ = MessageBox.Show("Config generation complete."
                             , "Information"
                             , MessageBoxButtons.OK
                             , MessageBoxIcon.Information
@@ -633,8 +614,8 @@ namespace TeconMoon_s_WiiVC_Injector
 
         private void Format_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("http://ridgecrop.co.uk/index.htm?guiformat.htm");
-            Process.Start("http://ridgecrop.co.uk/guiformat.exe");
+            _ = Process.Start("http://ridgecrop.co.uk/index.htm?guiformat.htm");
+            _ = Process.Start("http://ridgecrop.co.uk/guiformat.exe");
         }
     }
 }
