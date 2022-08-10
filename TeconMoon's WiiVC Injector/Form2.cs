@@ -516,7 +516,7 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             else
             {
-                nintendontCfg.language = (uint)LanguageBox.SelectedIndex;
+                nintendontCfg.language = (uint)LanguageBox.SelectedIndex - 1;
             }
 
             // MEMCARD BLOCKS
