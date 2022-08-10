@@ -353,22 +353,23 @@ namespace TeconMoon_s_WiiVC_Injector
 
         private void GenerateConfig_Click(object sender, EventArgs e)
         {
-            ConfigFile nintendontCfg = new ConfigFile();
-            
-            nintendontCfg.magicBytes = 0x01070CF6;
-            nintendontCfg.version = 10;
-            nintendontCfg.config = 0;
-            nintendontCfg.videoMode = 0;
-            nintendontCfg.language = 0;
-            nintendontCfg.gamePath = new byte[256];
-            nintendontCfg.cheatPath = new byte[256];
-            nintendontCfg.maxPads = 4;
-            nintendontCfg.gameID = 0;
-            nintendontCfg.memCardBlocks = 0;
-            nintendontCfg.videoScale = 0;
-            nintendontCfg.videoOffset = 0;
-            nintendontCfg.networkProfile = 0;
-            nintendontCfg.wiiuGamepadSlot = 0;
+            ConfigFile nintendontCfg = new ConfigFile
+            {
+                magicBytes = 0x01070CF6,
+                version = 10,
+                config = 0,
+                videoMode = 0,
+                language = 0,
+                gamePath = new byte[256],
+                cheatPath = new byte[256],
+                maxPads = 4,
+                gameID = 0,
+                memCardBlocks = 0,
+                videoScale = 0,
+                videoOffset = 0,
+                networkProfile = 0,
+                wiiuGamepadSlot = 0
+            };
 
             nintendontCfg.videoMode |= (uint)ninvideomode.NIN_VID_PROG; // always required?
 
