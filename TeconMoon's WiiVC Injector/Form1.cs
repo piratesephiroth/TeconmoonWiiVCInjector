@@ -2211,7 +2211,8 @@ namespace TeconMoon_s_WiiVC_Injector
             BuildStatus.Text = "Encrypting contents into installable WUP Package...";
             BuildStatus.Refresh();
             Directory.SetCurrentDirectory(TempRootPath);
-            string outputPath = selectedOutputPath + "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
+            string sanitizedGameName = SanitizeFilename(PackedTitleLine1.Text);
+            string outputPath = selectedOutputPath + "\\" + sanitizedGameName + " WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
             LauncherExeFile = TempToolsPath + "JAR\\NUSPacker.exe";
             LauncherExeArgs = "-in BUILDDIR -out \"" + outputPath + "\" -encryptKeyWith " + WiiUCommonKey.Text;
             LaunchProgram();
@@ -2252,6 +2253,12 @@ namespace TeconMoon_s_WiiVC_Injector
             MainTabs.SelectedTab = SourceFilesTab;
             BuildProcessFin:;
             /////
+        }
+
+        private string SanitizeFilename(string str)
+        {
+            var invalids = Path.GetInvalidFileNameChars();
+            return string.Join("_", str.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
         }
 
         private static string GetMD5Checksum(string file)
