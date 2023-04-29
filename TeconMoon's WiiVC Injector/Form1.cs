@@ -177,13 +177,13 @@ namespace TeconMoon_s_WiiVC_Injector
         public void DownloadFromRepo()
         {
             var client = new WebClient();
-            IconPreviewBox.Load("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/iconTex.png");
+            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + CucholixRepoID + "/iconTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png"); }
             client.DownloadFile(IconPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png");
             IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
             FlagIconSpecified = true;
-            BannerPreviewBox.Load("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/bootTvTex.png");
+            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + CucholixRepoID + "/bootTvTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png"); }
             client.DownloadFile(BannerPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png");
             BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
@@ -491,6 +491,13 @@ namespace TeconMoon_s_WiiVC_Injector
                 DisableTrimming.Enabled = false;
                 Force43NAND.Checked = false;
                 Force43NAND.Enabled = false;
+            }
+        }
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            using (var settingsForm = new SettingsForm())
+            {
+                settingsForm.ShowDialog(this);
             }
         }
         private void SDCardStuff_Click(object sender, EventArgs e)
@@ -1691,29 +1698,36 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
             }
 
-            var outputFolderSelect = new CommonOpenFileDialog("Specify your output folder")
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.OutputPathFixed))
             {
-                InitialDirectory = Properties.Settings.Default.OutputPath,
-                IsFolderPicker = true,
-                EnsurePathExists = true
-            };
+                selectedOutputPath = Properties.Settings.Default.OutputPathFixed;
+            }
+            else
+            {
+                var outputFolderSelect = new CommonOpenFileDialog("Specify your output folder")
+                {
+                    InitialDirectory = Properties.Settings.Default.OutputPath,
+                    IsFolderPicker = true,
+                    EnsurePathExists = true
+                };
 
-            //Specify Path Variables to be called later
-            if (outputFolderSelect.ShowDialog() == CommonFileDialogResult.Cancel)
-            {
-                MessageBox.Show("Output folder selection has been cancelled, conversion will not continue."
-                                , "Cancelled"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Warning
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
-                MainTabs.Enabled = true;
-                goto BuildProcessFin;
+                //Specify Path Variables to be called later
+                if (outputFolderSelect.ShowDialog() == CommonFileDialogResult.Cancel)
+                {
+                    MessageBox.Show("Output folder selection has been cancelled, conversion will not continue."
+                                    , "Cancelled"
+                                    , MessageBoxButtons.OK
+                                    , MessageBoxIcon.Warning
+                                    , MessageBoxDefaultButton.Button1
+                                    , (MessageBoxOptions)0x40000);
+                    MainTabs.Enabled = true;
+                    goto BuildProcessFin;
+                }
+                selectedOutputPath = outputFolderSelect.FileName;
+                Properties.Settings.Default.OutputPath = selectedOutputPath;
+                Properties.Settings.Default.Save();
             }
             BuildProgress.Value = 2;
-            selectedOutputPath = outputFolderSelect.FileName;
-            Properties.Settings.Default.OutputPath = selectedOutputPath;
-            Properties.Settings.Default.Save();
             //////////////////////////
 
             //Download base files with JNUSTool, store them for future use
