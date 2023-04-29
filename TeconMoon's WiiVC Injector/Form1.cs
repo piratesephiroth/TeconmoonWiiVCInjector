@@ -813,7 +813,8 @@ namespace TeconMoon_s_WiiVC_Injector
                     goto EndOfGameSelection;
                 }
                 GameNameLabel.Text = InternalGameName;
-                PackedTitleLine1.Text = InternalGameName;
+                var GameTitle = StringUtil.RemoveSpecialChars(GameTdb.GetName(CucholixRepoID));
+                PackedTitleLine1.Text = !string.IsNullOrEmpty(GameTitle) ? GameTitle : InternalGameName;
                 //Convert pulled Title ID Int to Hex for use with Wii U Title ID
                 idBytes = BitConverter.GetBytes(TitleIDInt);
                 if (!BitConverter.IsLittleEndian)
@@ -851,6 +852,7 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             EndOfGameSelection:;
         }
+
         private void IconSourceButton_Click(object sender, EventArgs e)
         {
             if (FlagRepo)
