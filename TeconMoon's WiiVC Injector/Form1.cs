@@ -174,16 +174,17 @@ namespace TeconMoon_s_WiiVC_Injector
             IconSourceDirectory.Text = "Icon file has not been specified";
             BannerSourceDirectory.Text = "Banner file has not been specified";
         }
-        public void DownloadFromRepo()
+
+        public void DownloadFromRepo(string cucholixRepoID)
         {
             var client = new WebClient();
-            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + CucholixRepoID + "/iconTex.png");
+            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + cucholixRepoID + "/iconTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png"); }
             client.DownloadFile(IconPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png");
             IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
             FlagIconSpecified = true;
-            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + CucholixRepoID + "/bootTvTex.png");
+            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + cucholixRepoID + "/bootTvTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png"); }
             client.DownloadFile(BannerPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png");
             BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
@@ -973,78 +974,36 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             else
             {
-                if (SystemType == "wiiware")
+                if (!TryDownloadImages(CucholixRepoID))
                 {
-                    if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/iconTex.png") == true)
+                    FlagRepo = false;
+                    if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
+                                        , "Game not found on Repo"
+                                        , MessageBoxButtons.YesNo
+                                        , MessageBoxIcon.Asterisk
+                                        , MessageBoxDefaultButton.Button1,
+                                        (MessageBoxOptions)0x40000) == DialogResult.Yes)
                     {
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "E" + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "E";
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "P" + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "P";
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "J" + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "J";
-                        DownloadFromRepo();
-                    }
-                    else
-                    {
-                        FlagRepo = false;
-                        if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
-                                            , "Game not found on Repo"
-                                            , MessageBoxButtons.YesNo
-                                            , MessageBoxIcon.Asterisk
-                                            , MessageBoxDefaultButton.Button1,
-                                            (MessageBoxOptions)0x40000) == DialogResult.Yes)
-                        {
-                            System.Diagnostics.Process.Start("https://gbatemp.net/threads/483080/");
-                        }
-                    }
-                }
-                else
-                {
-                    if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/iconTex.png") == true)
-                    {
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "E" + CucholixRepoID.Substring(4, 2) + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "E" + CucholixRepoID.Substring(4, 2);
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "P" + CucholixRepoID.Substring(4, 2) + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "P" + CucholixRepoID.Substring(4, 2);
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "J" + CucholixRepoID.Substring(4, 2) + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "J" + CucholixRepoID.Substring(4, 2);
-                        DownloadFromRepo();
-                    }
-                    else
-                    {
-                        FlagRepo = false;
-                        if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
-                                            , "Game not found on Repo"
-                                            , MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk
-                                            , MessageBoxDefaultButton.Button1
-                                            , (MessageBoxOptions)0x40000) == DialogResult.Yes)
-                        {
-                            System.Diagnostics.Process.Start("https://gbatemp.net/threads/483080/");
-                        }
+                        Process.Start("https://gbatemp.net/threads/483080/");
                     }
                 }
             }
         }
-        
+
+        private bool TryDownloadImages(string cucholixRepoID)
+        {
+            IEnumerable<string> ids = GameTdb.GetAlternativeIds(cucholixRepoID);
+            foreach (var id in ids)
+            {
+                if (RemoteFileExists(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + id + "/iconTex.png"))
+                {
+                    DownloadFromRepo(id);
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         //Events for the "Optional Source Files" Tab
         private void GC2SourceButton_Click(object sender, EventArgs e)
