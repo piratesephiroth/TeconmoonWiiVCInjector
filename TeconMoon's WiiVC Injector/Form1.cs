@@ -174,16 +174,17 @@ namespace TeconMoon_s_WiiVC_Injector
             IconSourceDirectory.Text = "Icon file has not been specified";
             BannerSourceDirectory.Text = "Banner file has not been specified";
         }
-        public void DownloadFromRepo()
+
+        public void DownloadFromRepo(string cucholixRepoID)
         {
             var client = new WebClient();
-            IconPreviewBox.Load("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/iconTex.png");
+            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + cucholixRepoID + "/iconTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png"); }
             client.DownloadFile(IconPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png");
             IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
             FlagIconSpecified = true;
-            BannerPreviewBox.Load("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/bootTvTex.png");
+            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + cucholixRepoID + "/bootTvTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png"); }
             client.DownloadFile(BannerPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png");
             BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
@@ -491,6 +492,13 @@ namespace TeconMoon_s_WiiVC_Injector
                 DisableTrimming.Enabled = false;
                 Force43NAND.Checked = false;
                 Force43NAND.Enabled = false;
+            }
+        }
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            using (var settingsForm = new SettingsForm())
+            {
+                settingsForm.ShowDialog(this);
             }
         }
         private void SDCardStuff_Click(object sender, EventArgs e)
@@ -806,7 +814,8 @@ namespace TeconMoon_s_WiiVC_Injector
                     goto EndOfGameSelection;
                 }
                 GameNameLabel.Text = InternalGameName;
-                PackedTitleLine1.Text = InternalGameName;
+                var GameTitle = StringUtil.RemoveSpecialChars(GameTdb.GetName(CucholixRepoID));
+                PackedTitleLine1.Text = !string.IsNullOrEmpty(GameTitle) ? GameTitle : InternalGameName;
                 //Convert pulled Title ID Int to Hex for use with Wii U Title ID
                 idBytes = BitConverter.GetBytes(TitleIDInt);
                 if (!BitConverter.IsLittleEndian)
@@ -844,6 +853,7 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             EndOfGameSelection:;
         }
+
         private void IconSourceButton_Click(object sender, EventArgs e)
         {
             if (FlagRepo)
@@ -964,78 +974,36 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             else
             {
-                if (SystemType == "wiiware")
+                if (!TryDownloadImages(CucholixRepoID))
                 {
-                    if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/iconTex.png") == true)
+                    FlagRepo = false;
+                    if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
+                                        , "Game not found on Repo"
+                                        , MessageBoxButtons.YesNo
+                                        , MessageBoxIcon.Asterisk
+                                        , MessageBoxDefaultButton.Button1,
+                                        (MessageBoxOptions)0x40000) == DialogResult.Yes)
                     {
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "E" + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "E";
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "P" + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "P";
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "J" + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "J";
-                        DownloadFromRepo();
-                    }
-                    else
-                    {
-                        FlagRepo = false;
-                        if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
-                                            , "Game not found on Repo"
-                                            , MessageBoxButtons.YesNo
-                                            , MessageBoxIcon.Asterisk
-                                            , MessageBoxDefaultButton.Button1,
-                                            (MessageBoxOptions)0x40000) == DialogResult.Yes)
-                        {
-                            System.Diagnostics.Process.Start("https://gbatemp.net/threads/483080/");
-                        }
-                    }
-                }
-                else
-                {
-                    if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID + "/iconTex.png") == true)
-                    {
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "E" + CucholixRepoID.Substring(4, 2) + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "E" + CucholixRepoID.Substring(4, 2);
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "P" + CucholixRepoID.Substring(4, 2) + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "P" + CucholixRepoID.Substring(4, 2);
-                        DownloadFromRepo();
-                    }
-                    else if (RemoteFileExists("https://raw.githubusercontent.com/cucholix/wiivc-bis/master/" + SystemType + "/image/" + CucholixRepoID.Substring(0, 3) + "J" + CucholixRepoID.Substring(4, 2) + "/iconTex.png") == true)
-                    {
-                        CucholixRepoID = CucholixRepoID.Substring(0, 3) + "J" + CucholixRepoID.Substring(4, 2);
-                        DownloadFromRepo();
-                    }
-                    else
-                    {
-                        FlagRepo = false;
-                        if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
-                                            , "Game not found on Repo"
-                                            , MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk
-                                            , MessageBoxDefaultButton.Button1
-                                            , (MessageBoxOptions)0x40000) == DialogResult.Yes)
-                        {
-                            System.Diagnostics.Process.Start("https://gbatemp.net/threads/483080/");
-                        }
+                        Process.Start("https://gbatemp.net/threads/483080/");
                     }
                 }
             }
         }
-        
+
+        private bool TryDownloadImages(string cucholixRepoID)
+        {
+            IEnumerable<string> ids = GameTdb.GetAlternativeIds(cucholixRepoID);
+            foreach (var id in ids)
+            {
+                if (RemoteFileExists(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + id + "/iconTex.png"))
+                {
+                    DownloadFromRepo(id);
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         //Events for the "Optional Source Files" Tab
         private void GC2SourceButton_Click(object sender, EventArgs e)
@@ -1691,29 +1659,36 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
             }
 
-            var outputFolderSelect = new CommonOpenFileDialog("Specify your output folder")
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.OutputPathFixed))
             {
-                InitialDirectory = Properties.Settings.Default.OutputPath,
-                IsFolderPicker = true,
-                EnsurePathExists = true
-            };
+                selectedOutputPath = Properties.Settings.Default.OutputPathFixed;
+            }
+            else
+            {
+                var outputFolderSelect = new CommonOpenFileDialog("Specify your output folder")
+                {
+                    InitialDirectory = Properties.Settings.Default.OutputPath,
+                    IsFolderPicker = true,
+                    EnsurePathExists = true
+                };
 
-            //Specify Path Variables to be called later
-            if (outputFolderSelect.ShowDialog() == CommonFileDialogResult.Cancel)
-            {
-                MessageBox.Show("Output folder selection has been cancelled, conversion will not continue."
-                                , "Cancelled"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Warning
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
-                MainTabs.Enabled = true;
-                goto BuildProcessFin;
+                //Specify Path Variables to be called later
+                if (outputFolderSelect.ShowDialog() == CommonFileDialogResult.Cancel)
+                {
+                    MessageBox.Show("Output folder selection has been cancelled, conversion will not continue."
+                                    , "Cancelled"
+                                    , MessageBoxButtons.OK
+                                    , MessageBoxIcon.Warning
+                                    , MessageBoxDefaultButton.Button1
+                                    , (MessageBoxOptions)0x40000);
+                    MainTabs.Enabled = true;
+                    goto BuildProcessFin;
+                }
+                selectedOutputPath = outputFolderSelect.FileName;
+                Properties.Settings.Default.OutputPath = selectedOutputPath;
+                Properties.Settings.Default.Save();
             }
             BuildProgress.Value = 2;
-            selectedOutputPath = outputFolderSelect.FileName;
-            Properties.Settings.Default.OutputPath = selectedOutputPath;
-            Properties.Settings.Default.Save();
             //////////////////////////
 
             //Download base files with JNUSTool, store them for future use
@@ -2197,7 +2172,8 @@ namespace TeconMoon_s_WiiVC_Injector
             BuildStatus.Text = "Encrypting contents into installable WUP Package...";
             BuildStatus.Refresh();
             Directory.SetCurrentDirectory(TempRootPath);
-            string outputPath = selectedOutputPath + "\\WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
+            string sanitizedGameName = SanitizeFilename(PackedTitleLine1.Text);
+            string outputPath = selectedOutputPath + "\\" + sanitizedGameName + " WUP-N-" + TitleIDText + "_" + PackedTitleIDLine.Text;
             LauncherExeFile = TempToolsPath + "JAR\\NUSPacker.exe";
             LauncherExeArgs = "-in BUILDDIR -out \"" + outputPath + "\" -encryptKeyWith " + WiiUCommonKey.Text;
             LaunchProgram();
@@ -2238,6 +2214,12 @@ namespace TeconMoon_s_WiiVC_Injector
             MainTabs.SelectedTab = SourceFilesTab;
             BuildProcessFin:;
             /////
+        }
+
+        private string SanitizeFilename(string str)
+        {
+            var invalids = Path.GetInvalidFileNameChars();
+            return string.Join("_", str.Split(invalids, StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.');
         }
 
         private static string GetMD5Checksum(string file)

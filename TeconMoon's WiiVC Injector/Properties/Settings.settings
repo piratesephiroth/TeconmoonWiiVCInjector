@@ -8,5 +8,11 @@
     <Setting Name="GameFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="OutputPathFixed" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="BannersRepository" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://raw.githubusercontent.com/cucholix/wiivc-bis/master/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

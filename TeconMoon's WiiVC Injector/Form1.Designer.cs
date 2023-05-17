@@ -116,7 +116,8 @@
             this.TitleKey = new System.Windows.Forms.TextBox();
             this.RHFKeyLabel = new System.Windows.Forms.Label();
             this.CommonLabel = new System.Windows.Forms.Label();
-            this.WiiUCommonKey = new System.Windows.Forms.TextBox();
+            this.WiiUCommonKey = new System.Windows.Forms.TextBox(); 
+            this.SettingsButton = new System.Windows.Forms.Button();
             this.SDCardStuff = new System.Windows.Forms.Button();
             this.GCRetail = new System.Windows.Forms.RadioButton();
             this.WiiNAND = new System.Windows.Forms.RadioButton();
@@ -151,6 +152,7 @@
             this.MainTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.MainTableLayout.Controls.Add(this.WiiRetail, 0, 0);
             this.MainTableLayout.Controls.Add(this.MainTabs, 0, 2);
+            this.MainTableLayout.Controls.Add(this.SettingsButton, 1, 1);
             this.MainTableLayout.Controls.Add(this.SDCardStuff, 2, 1);
             this.MainTableLayout.Controls.Add(this.GCRetail, 2, 0);
             this.MainTableLayout.Controls.Add(this.WiiNAND, 0, 1);
@@ -1196,6 +1198,16 @@
             this.WiiUCommonKey.Size = new System.Drawing.Size(288, 20);
             this.WiiUCommonKey.TabIndex = 0;
             // 
+            // SettingsButton
+            // 
+            this.SettingsButton.Location = new System.Drawing.Point(164, 28);
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(157, 19);
+            this.SettingsButton.TabIndex = 5;
+            this.SettingsButton.Text = "Settings";
+            this.SettingsButton.UseVisualStyleBackColor = true;
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            // 
             // SDCardStuff
             // 
             this.SDCardStuff.Location = new System.Drawing.Point(325, 28);
@@ -1414,6 +1426,7 @@
         private System.Windows.Forms.ProgressBar BuildProgress;
         private System.Windows.Forms.Label BuildStatus;
         private System.Windows.Forms.Label AdvanceCheck;
+        private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.Button SDCardStuff;
         private System.Windows.Forms.Label GC2SourceDirectory;
         private System.Windows.Forms.Button GC2SourceButton;

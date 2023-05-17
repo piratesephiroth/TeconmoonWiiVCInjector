@@ -19,7 +19,7 @@ namespace TeconMoon_s_WiiVC_Injector.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -67,6 +67,27 @@ namespace TeconMoon_s_WiiVC_Injector.Properties {
             get {
                 object obj = ResourceManager.GetObject("TOOLDIR", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TITLES = https://www.gametdb.com (type: Wii language: ORIG version: 20230426014834)
+        ///007E01 = Wii Auto Erase Disc
+        ///091E00 = Movie-Ch Install Disc Ver. A
+        ///23EE41 = Just Dance 2023 Wii Edition
+        ///410E01 = Wii Backup Disc v1.31
+        ///413E01 = DiscUpdate Disc
+        ///D2AJAF = みんなで冒険!ファミリートレーナー 体験版
+        ///D2SE18 = Deca Sports 2 (Demo)
+        ///D3DE18 = Deca Sports 3 (Demo)
+        ///DASE4Q = Disney Epic Mickey (Demo)
+        ///DAUEPZ = Country Dance (Demo)
+        ///DAVE01 = Mystery Case Files: The Malgrave Incident (Demo)
+        ///DAXE01 = The Legend of Zelda: Skyward Swor [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string wiitdb {
+            get {
+                return ResourceManager.GetString("wiitdb", resourceCulture);
             }
         }
     }
