@@ -1300,7 +1300,7 @@ namespace TeconMoon_s_WiiVC_Injector
         //Events for the Advanced Tab
         private void Force43NINTENDONT_CheckedChanged(object sender, EventArgs e)
         {
-            if (Force43NINTENDONT.Checked)
+            if (Force43NINTENDONT.Checked || ForceInterlacedNINTENDONT.Checked)
             {
                 CustomMainDol.Checked = false;
                 CustomMainDol.Enabled = false;
@@ -1313,11 +1313,11 @@ namespace TeconMoon_s_WiiVC_Injector
                 DisableNintendontAutoboot.Enabled = true;
             }
         }
-        ForceInterlacedNINTENDONT.Checked = false;
-                ForceInterlacedNINTENDONT.Enabled = false;
+        //ForceInterlacedNINTENDONT.Checked = false;
+        //ForceInterlacedNINTENDONT.Enabled = false;
         private void ForceInterlacedNINTENDONT_CheckedChanged(object sender, EventArgs e)
         {
-            if (ForceInterlacedNINTENDONT.Checked)
+            if (ForceInterlacedNINTENDONT.Checked || Force43NINTENDONT.Checked)
             {
                 CustomMainDol.Checked = false;
                 CustomMainDol.Enabled = false;
@@ -1327,7 +1327,7 @@ namespace TeconMoon_s_WiiVC_Injector
             else
             {
                 CustomMainDol.Enabled = true;
-                DisableInterlacedNINTENDONT.Enabled = true;
+                DisableNintendontAutoboot.Enabled = true;
             }
         }
         private void CustomMainDol_CheckedChanged(object sender, EventArgs e)
@@ -2087,14 +2087,14 @@ namespace TeconMoon_s_WiiVC_Injector
                 {
                     if (ForceInterlacedNINTENDONT.Checked)
                     {
-                        File.Copy(TempToolsPath + "DOL\\nintendont_force_43_interlaced_autobooter.dol, TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                        File.Copy(TempToolsPath + "DOL\\nintendont_force_43_interlaced_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                     }
                     else
                     {
                         File.Copy(TempToolsPath + "DOL\\nintendont_force_4_by_3_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                     }
                 }
-                }
+
                 else if (ForceInterlacedNINTENDONT.Checked)
                 {
                     File.Copy(TempToolsPath + "DOL\\nintendont_force_interlaced_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
@@ -2156,6 +2156,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 Directory.Delete(TempSourcePath + "TEMPISOBASE", true);
                 OpenGame.FileName = TempSourcePath + "game.iso";
             }
+        
             LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
             LauncherExeArgs = "extract " + OpenGame.FileName + " --psel data --psel -update --files +tmd.bin --files +ticket.bin --dest " + TempSourcePath + "TIKTEMP" + " -vv1";
             LaunchProgram();

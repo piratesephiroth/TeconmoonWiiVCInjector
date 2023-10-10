@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WiiVC_Injector));
             this.MainTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.WiiRetail = new System.Windows.Forms.RadioButton();
@@ -117,7 +118,7 @@
             this.TitleKey = new System.Windows.Forms.TextBox();
             this.RHFKeyLabel = new System.Windows.Forms.Label();
             this.CommonLabel = new System.Windows.Forms.Label();
-            this.WiiUCommonKey = new System.Windows.Forms.TextBox(); 
+            this.WiiUCommonKey = new System.Windows.Forms.TextBox();
             this.SettingsButton = new System.Windows.Forms.Button();
             this.SDCardStuff = new System.Windows.Forms.Button();
             this.GCRetail = new System.Windows.Forms.RadioButton();
@@ -131,6 +132,8 @@
             this.OpenBootSound = new System.Windows.Forms.OpenFileDialog();
             this.OpenMainDol = new System.Windows.Forms.OpenFileDialog();
             this.OpenGC2 = new System.Windows.Forms.OpenFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.MainTableLayout.SuspendLayout();
             this.MainTabs.SuspendLayout();
             this.SourceFilesTab.SuspendLayout();
@@ -969,20 +972,22 @@
             this.Force43NINTENDONT.AutoSize = true;
             this.Force43NINTENDONT.Location = new System.Drawing.Point(10, 24);
             this.Force43NINTENDONT.Name = "Force43NINTENDONT";
-            this.Force43NINTENDONT.Size = new System.Drawing.Size(441, 17);
+            this.Force43NINTENDONT.Size = new System.Drawing.Size(141, 17);
             this.Force43NINTENDONT.TabIndex = 14;
-            this.Force43NINTENDONT.Text = "Force 4:3 for Nintendont - (Disables \"Force Widescreen\" and \"WiiU Widescreen\" Flags)";
+            this.Force43NINTENDONT.Text = "Force 4:3 for Nintendont";
+            this.toolTip1.SetToolTip(this.Force43NINTENDONT, "Disables \"Force Widescreen\" and \"WiiU Widescreen\" Flags");
             this.Force43NINTENDONT.UseVisualStyleBackColor = true;
             this.Force43NINTENDONT.CheckedChanged += new System.EventHandler(this.Force43NINTENDONT_CheckedChanged);
-            //
+            // 
             // ForceInterlacedNINTENDONT
-            //
+            // 
             this.ForceInterlacedNINTENDONT.AutoSize = true;
-            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(10, 24);
+            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(225, 24);
             this.ForceInterlacedNINTENDONT.Name = "ForceInterlacedNINTENDONT";
-            this.ForceInterlacedNINTENDONT.Size = new System.Drawing.Size(441, 17);
+            this.ForceInterlacedNINTENDONT.Size = new System.Drawing.Size(172, 17);
             this.ForceInterlacedNINTENDONT.TabIndex = 14;
-            this.ForceInterlacedNINTENDONT.Text = "Force interlaced for Nintendont - (Disables \"Force Progressive\" Flag)";
+            this.ForceInterlacedNINTENDONT.Text = "Force interlaced for Nintendont";
+            this.toolTip2.SetToolTip(this.ForceInterlacedNINTENDONT, "Disables \"Force Progressive\" Flag");
             this.ForceInterlacedNINTENDONT.UseVisualStyleBackColor = true;
             this.ForceInterlacedNINTENDONT.CheckedChanged += new System.EventHandler(this.ForceInterlacedNINTENDONT_CheckedChanged);
             // 
@@ -1214,7 +1219,7 @@
             // 
             this.SettingsButton.Location = new System.Drawing.Point(164, 28);
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(157, 19);
+            this.SettingsButton.Size = new System.Drawing.Size(155, 19);
             this.SettingsButton.TabIndex = 5;
             this.SettingsButton.Text = "Settings";
             this.SettingsButton.UseVisualStyleBackColor = true;
@@ -1394,7 +1399,7 @@
         private System.Windows.Forms.TextBox WiiUCommonKey;
         private System.Windows.Forms.TabPage SourceFilesTab2;
         private System.Windows.Forms.CheckBox Force43NINTENDONT;
-        rivate System.Windows.Forms.CheckBox ForceInterlacedNINTENDONT;
+        private System.Windows.Forms.CheckBox ForceInterlacedNINTENDONT;
         private System.Windows.Forms.CheckBox Force43NAND;
         private System.Windows.Forms.CheckBox DisablePassthrough;
         private System.Windows.Forms.Label MainDolLabel;
@@ -1448,6 +1453,8 @@
         private System.Windows.Forms.CheckBox DisableGamePad;
         private System.Windows.Forms.CheckBox LRPatch;
         private System.Windows.Forms.CheckBox WiiVMC;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip toolTip2;
         private System.Windows.Forms.CheckBox Wiimmfi;
     }
 }
