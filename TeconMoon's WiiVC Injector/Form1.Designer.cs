@@ -97,6 +97,7 @@
             this.MainDolSourceButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.Force43NINTENDONT = new System.Windows.Forms.CheckBox();
+            this.ForceInterlacedNINTENDONT = new System.Windows.Forms.CheckBox();
             this.sign_c2w_patcher_link = new System.Windows.Forms.LinkLabel();
             this.AdvancedLabel2 = new System.Windows.Forms.Label();
             this.C2WPatchFlag = new System.Windows.Forms.CheckBox();
@@ -804,6 +805,7 @@
             this.AdvancedTab.Controls.Add(this.MainDolSourceButton);
             this.AdvancedTab.Controls.Add(this.label1);
             this.AdvancedTab.Controls.Add(this.Force43NINTENDONT);
+            this.AdvancedTab.Controls.Add(this.ForceInterlacedNINTENDONT);
             this.AdvancedTab.Controls.Add(this.sign_c2w_patcher_link);
             this.AdvancedTab.Controls.Add(this.AdvancedLabel2);
             this.AdvancedTab.Controls.Add(this.C2WPatchFlag);
@@ -969,10 +971,20 @@
             this.Force43NINTENDONT.Name = "Force43NINTENDONT";
             this.Force43NINTENDONT.Size = new System.Drawing.Size(441, 17);
             this.Force43NINTENDONT.TabIndex = 14;
-            this.Force43NINTENDONT.Text = "Force 4:3 for Nintendont - (Disables \"Force Widescreen\" and \"WiiU Widescreen\" Fla" +
-    "gs)";
+            this.Force43NINTENDONT.Text = "Force 4:3 for Nintendont - (Disables \"Force Widescreen\" and \"WiiU Widescreen\" Flags)";
             this.Force43NINTENDONT.UseVisualStyleBackColor = true;
             this.Force43NINTENDONT.CheckedChanged += new System.EventHandler(this.Force43NINTENDONT_CheckedChanged);
+            //
+            // ForceInterlacedNINTENDONT
+            //
+            this.ForceInterlacedNINTENDONT.AutoSize = true;
+            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(10, 24);
+            this.ForceInterlacedNINTENDONT.Name = "ForceInterlacedNINTENDONT";
+            this.ForceInterlacedNINTENDONT.Size = new System.Drawing.Size(441, 17);
+            this.ForceInterlacedNINTENDONT.TabIndex = 14;
+            this.ForceInterlacedNINTENDONT.Text = "Force interlaced for Nintendont - (Disables \"Force Progressive\" Flag)";
+            this.ForceInterlacedNINTENDONT.UseVisualStyleBackColor = true;
+            this.ForceInterlacedNINTENDONT.CheckedChanged += new System.EventHandler(this.ForceInterlacedNINTENDONT_CheckedChanged);
             // 
             // sign_c2w_patcher_link
             // 
@@ -1382,6 +1394,7 @@
         private System.Windows.Forms.TextBox WiiUCommonKey;
         private System.Windows.Forms.TabPage SourceFilesTab2;
         private System.Windows.Forms.CheckBox Force43NINTENDONT;
+        rivate System.Windows.Forms.CheckBox ForceInterlacedNINTENDONT;
         private System.Windows.Forms.CheckBox Force43NAND;
         private System.Windows.Forms.CheckBox DisablePassthrough;
         private System.Windows.Forms.Label MainDolLabel;
