@@ -487,7 +487,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 LRPatch.Checked = false;
                 LRPatch.Enabled = false;
                 Force43NINTENDONT.Enabled = true;
-                ForceInterlacedNINTENDONT.Enabled = false;
+                ForceInterlacedNINTENDONT.Enabled = true;
                 CustomMainDol.Enabled = true;
                 DisableNintendontAutoboot.Enabled = true;
                 DisablePassthrough.Checked = false;
