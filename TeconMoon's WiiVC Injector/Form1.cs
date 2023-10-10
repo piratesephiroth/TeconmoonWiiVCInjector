@@ -287,6 +287,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
                 Force43NINTENDONT.Checked = false;
                 Force43NINTENDONT.Enabled = false;
+                ForceInterlacedNINTENDONT.Checked = false;
+                ForceInterlacedNINTENDONT.Enabled = false;
                 CustomMainDol.Checked = false;
                 CustomMainDol.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
@@ -343,6 +345,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 LRPatch.Enabled = false;
                 Force43NINTENDONT.Checked = false;
                 Force43NINTENDONT.Enabled = false;
+                ForceInterlacedNINTENDONT.Checked = false;
+                ForceInterlacedNINTENDONT.Enabled = false;
                 CustomMainDol.Checked = false;
                 CustomMainDol.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
@@ -383,6 +387,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 FlagGC2Specified = false;
                 Force43NINTENDONT.Checked = false;
                 Force43NINTENDONT.Enabled = false;
+                ForceInterlacedNINTENDONT.Checked = false;
+                ForceInterlacedNINTENDONT.Enabled = false;
                 CustomMainDol.Checked = false;
                 CustomMainDol.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
@@ -481,6 +487,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 LRPatch.Checked = false;
                 LRPatch.Enabled = false;
                 Force43NINTENDONT.Enabled = true;
+                ForceInterlacedNINTENDONT.Enabled = false;
                 CustomMainDol.Enabled = true;
                 DisableNintendontAutoboot.Enabled = true;
                 DisablePassthrough.Checked = false;
@@ -1306,6 +1313,23 @@ namespace TeconMoon_s_WiiVC_Injector
                 DisableNintendontAutoboot.Enabled = true;
             }
         }
+        ForceInterlacedNINTENDONT.Checked = false;
+                ForceInterlacedNINTENDONT.Enabled = false;
+        private void ForceInterlacedNINTENDONT_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ForceInterlacedNINTENDONT.Checked)
+            {
+                CustomMainDol.Checked = false;
+                CustomMainDol.Enabled = false;
+                DisableNintendontAutoboot.Checked = false;
+                DisableNintendontAutoboot.Enabled = false;
+            }
+            else
+            {
+                CustomMainDol.Enabled = true;
+                DisableInterlacedNINTENDONT.Enabled = true;
+            }
+        }
         private void CustomMainDol_CheckedChanged(object sender, EventArgs e)
         {
             if (CustomMainDol.Checked)
@@ -1313,6 +1337,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 MainDolSourceButton.Enabled = true;
                 Force43NINTENDONT.Checked = false;
                 Force43NINTENDONT.Enabled = false;
+                ForceInterlacedNINTENDONT.Checked = false;
+                ForceInterlacedNINTENDONT.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
                 DisableNintendontAutoboot.Enabled = false;
 
@@ -1322,6 +1348,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 MainDolSourceButton.Enabled = false;
                 MainDolLabel.Text = "<- Specify custom main.dol file";
                 Force43NINTENDONT.Enabled = true;
+                ForceInterlacedNINTENDONT.Enabled = true;
                 DisableNintendontAutoboot.Enabled = true;
                 OpenMainDol.FileName = null;
             }
@@ -1332,12 +1359,15 @@ namespace TeconMoon_s_WiiVC_Injector
             {
                 Force43NINTENDONT.Checked = false;
                 Force43NINTENDONT.Enabled = false;
+                ForceInterlacedNINTENDONT.Checked = false;
+                ForceInterlacedNINTENDONT.Enabled = false;
                 CustomMainDol.Checked = false;
                 CustomMainDol.Enabled = false;
             }
             else
             {
                 Force43NINTENDONT.Enabled = true;
+                ForceInterlacedNINTENDONT.Enabled = true;
                 CustomMainDol.Enabled = true;
             }
         }
@@ -2055,7 +2085,19 @@ namespace TeconMoon_s_WiiVC_Injector
                 FileSystem.CopyDirectory(TempToolsPath + "BASE", TempSourcePath + "TEMPISOBASE");
                 if (Force43NINTENDONT.Checked)
                 {
-                    File.Copy(TempToolsPath + "DOL\\FIX94_nintendont_force43_autoboot.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                    if (ForceInterlacedNINTENDONT.Checked)
+                    {
+                        File.Copy(TempToolsPath + "DOL\\nintendont_force_43_interlaced_autobooter.dol, TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                    }
+                    else
+                    {
+                        File.Copy(TempToolsPath + "DOL\\nintendont_force_4_by_3_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                    }
+                }
+                }
+                else if (ForceInterlacedNINTENDONT.Checked)
+                {
+                    File.Copy(TempToolsPath + "DOL\\nintendont_force_interlaced_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                 }
                 else if (CustomMainDol.Checked)
                 {
@@ -2063,11 +2105,11 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
                 else if (DisableNintendontAutoboot.Checked)
                 {
-                    File.Copy(TempToolsPath + "DOL\\FIX94_nintendont_forwarder.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                    File.Copy(TempToolsPath + "DOL\\nintendont_forwarder.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                 }
                 else
                 {
-                    File.Copy(TempToolsPath + "DOL\\FIX94_nintendont_default_autoboot.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                    File.Copy(TempToolsPath + "DOL\\nintendont_default_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                 }
 
                 if (FlagNKIT)
