@@ -612,10 +612,10 @@ namespace TeconMoon_s_WiiVC_Injector
                 cfgFile.Write(config);
                 cfgFile.Write(videoMode);
                 cfgFile.Write(language);
-                cfgFile.Write(maxPads);
-                cfgFile.Write(gameID);
                 cfgFile.Write(nintendontCfg.gamePath);
                 cfgFile.Write(nintendontCfg.cheatPath);
+                cfgFile.Write(maxPads);
+                cfgFile.Write(gameID);
                 cfgFile.Write(nintendontCfg.memCardBlocks);
                 cfgFile.Write(nintendontCfg.videoScale);
                 cfgFile.Write(nintendontCfg.videoOffset);
