@@ -2121,8 +2121,9 @@ namespace TeconMoon_s_WiiVC_Injector
                     BuildStatus.Text = "Scrubbing game for NFS Conversion...";
                     BuildStatus.Refresh();
                     LauncherExeFile = TempToolsPath + "NKIT\\gcit.exe";
-                    LauncherExeArgs = "\"" + OpenGame.FileName + "\" -q -d \"" + TempSourcePath + "TEMPISOBASE\\files\\game.iso\"";
+                    LauncherExeArgs = "\"" + OpenGame.FileName + "\" -q -d \"" + TempSourcePath + "TEMPISOBASE\\\"";
                     LaunchProgram(); // CONVERT TO NKIT
+                    File.Move(Directory.GetFiles(TempSourcePath + "TEMPISOBASE\\", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\game.iso");
                 }
 
                 if (FlagGC2Specified)
@@ -2136,8 +2137,9 @@ namespace TeconMoon_s_WiiVC_Injector
                         BuildStatus.Text = "Scrubbing second disc for NFS Conversion...";
                         BuildStatus.Refresh();
                         LauncherExeFile = TempToolsPath + "NKIT\\gcit.exe";
-                        LauncherExeArgs = "\"" + OpenGC2.FileName + "\" -q -d \"" + TempSourcePath + "TEMPISOBASE\\files\\disc2.iso\"";
+                        LauncherExeArgs = "\"" + OpenGC2.FileName + "\" -q -d \"" + TempSourcePath + "TEMPISOBASE\\\"";
                         LaunchProgram(); // CONVERT DISC 2 TO NKIT
+                        File.Move(Directory.GetFiles(TempSourcePath + "TEMPISOBASE\\", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
                     }
                 }
                 LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
