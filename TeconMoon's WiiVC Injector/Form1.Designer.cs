@@ -90,6 +90,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.SaveAncastKeyButton = new System.Windows.Forms.Button();
             this.DisableNintendontAutoboot = new System.Windows.Forms.CheckBox();
+            this.CopyIso = new System.Windows.Forms.CheckBox();
             this.DisableTrimming = new System.Windows.Forms.CheckBox();
             this.Force43NAND = new System.Windows.Forms.CheckBox();
             this.DisablePassthrough = new System.Windows.Forms.CheckBox();
@@ -800,6 +801,7 @@
             this.AdvancedTab.Controls.Add(this.label2);
             this.AdvancedTab.Controls.Add(this.SaveAncastKeyButton);
             this.AdvancedTab.Controls.Add(this.DisableNintendontAutoboot);
+            this.AdvancedTab.Controls.Add(this.CopyIso);
             this.AdvancedTab.Controls.Add(this.DisableTrimming);
             this.AdvancedTab.Controls.Add(this.Force43NAND);
             this.AdvancedTab.Controls.Add(this.DisablePassthrough);
@@ -886,6 +888,17 @@
             this.DisableNintendontAutoboot.Text = "Disable Autoboot";
             this.DisableNintendontAutoboot.UseVisualStyleBackColor = true;
             this.DisableNintendontAutoboot.CheckedChanged += new System.EventHandler(this.NintendontAutoboot_CheckedChanged);
+            // 
+            // Copy iso
+            // 
+            this.CopyIso.AutoSize = true;
+            this.CopyIso.Location = new System.Drawing.Point(225, 70);
+            this.CopyIso.Name = "CopyIso";
+            this.CopyIso.Size = new System.Drawing.Size(107, 17);
+            this.CopyIso.TabIndex = 22;
+            this.CopyIso.Text = "Copy .iso";
+            this.CopyIso.UseVisualStyleBackColor = true;
+            this.CopyIso.CheckedChanged += new System.EventHandler(this.CopyIso_CheckedChanged);
             // 
             // DisableTrimming
             // 
@@ -1437,6 +1450,7 @@
         private System.Windows.Forms.RadioButton ForceNoCC;
         private System.Windows.Forms.Button RepoDownload;
         private System.Windows.Forms.CheckBox DisableNintendontAutoboot;
+        private System.Windows.Forms.CheckBox CopyIso;
         private System.Windows.Forms.OpenFileDialog OpenMainDol;
         private System.Windows.Forms.Button SaveAncastKeyButton;
         private System.Windows.Forms.Button SaveTitleKeyButton;

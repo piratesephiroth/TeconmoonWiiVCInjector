@@ -293,6 +293,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 CustomMainDol.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
                 DisableNintendontAutoboot.Enabled = false;
+                CopyIso.Checked = false;
+                CopyIso.Enabled = false;
                 DisablePassthrough.Checked = false;
                 DisablePassthrough.Enabled = false;
                 DisableGamePad.Checked = false;
@@ -351,6 +353,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 CustomMainDol.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
                 DisableNintendontAutoboot.Enabled = false;
+                CopyIso.Checked = false;
+                CopyIso.Enabled = false;
                 DisablePassthrough.Enabled = true;
                 DisableGamePad.Enabled = true;
                 C2WPatchFlag.Enabled = true;
@@ -393,6 +397,8 @@ namespace TeconMoon_s_WiiVC_Injector
                 CustomMainDol.Enabled = false;
                 DisableNintendontAutoboot.Checked = false;
                 DisableNintendontAutoboot.Enabled = false;
+                CopyIso.Checked = false;
+                CopyIso.Enabled = false;
                 DisablePassthrough.Checked = false;
                 DisablePassthrough.Enabled = false;
                 DisableGamePad.Checked = false;
@@ -490,6 +496,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 ForceInterlacedNINTENDONT.Enabled = true;
                 CustomMainDol.Enabled = true;
                 DisableNintendontAutoboot.Enabled = true;
+                CopyIso.Enabled = true;
                 DisablePassthrough.Checked = false;
                 DisablePassthrough.Enabled = false;
                 DisableGamePad.Enabled = true;
@@ -1371,6 +1378,10 @@ namespace TeconMoon_s_WiiVC_Injector
                 CustomMainDol.Enabled = true;
             }
         }
+        private void CopyIso_CheckedChanged(object sender, EventArgs e)
+        {
+            // Stub
+        }
         private void MainDolSourceButton_Click(object sender, EventArgs e)
         {
             if (OpenMainDol.ShowDialog() == DialogResult.OK)
@@ -2112,7 +2123,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     File.Copy(TempToolsPath + "DOL\\nintendont_default_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                 }
 
-                if (FlagNKIT)
+                if (FlagNKIT && !CopyIso.Checked)
                 {
                     if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
                     {
@@ -2132,7 +2143,7 @@ namespace TeconMoon_s_WiiVC_Injector
 
                 if (FlagGC2Specified)
                 {
-                    if (FlagNKIT)
+                    if (FlagNKIT && !CopyIso.Checked)
                     {
                         if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
                         {
