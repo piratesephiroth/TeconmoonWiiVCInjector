@@ -178,13 +178,13 @@ namespace TeconMoon_s_WiiVC_Injector
         public void DownloadFromRepo(string cucholixRepoID)
         {
             var client = new WebClient();
-            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + cucholixRepoID + "/iconTex.png");
+            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/iconTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png"); }
             client.DownloadFile(IconPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png");
             IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
             FlagIconSpecified = true;
-            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + cucholixRepoID + "/bootTvTex.png");
+            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/bootTvTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png"); }
             client.DownloadFile(BannerPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png");
             BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
@@ -1002,7 +1002,7 @@ namespace TeconMoon_s_WiiVC_Injector
             IEnumerable<string> ids = GameTdb.GetAlternativeIds(cucholixRepoID);
             foreach (var id in ids)
             {
-                if (RemoteFileExists(Properties.Settings.Default.BannersRepository + SystemType + "/image/" + id + "/iconTex.png"))
+                if (RemoteFileExists(Properties.Settings.Default.BannersRepository + SystemType + "/" + id + "/iconTex.png"))
                 {
                     DownloadFromRepo(id);
                     return true;

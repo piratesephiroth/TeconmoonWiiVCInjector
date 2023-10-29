@@ -12,7 +12,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="BannersRepository" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://raw.githubusercontent.com/cucholix/wiivc-bis/master/</Value>
+      <Value Profile="(Default)">https://raw.githubusercontent.com/UWUVCI-PRIME/UWUVCI-IMAGES/master/</Value>
     </Setting>
   </Settings>
 </SettingsFile>
