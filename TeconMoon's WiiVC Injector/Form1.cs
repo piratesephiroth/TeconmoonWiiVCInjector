@@ -2114,40 +2114,32 @@ namespace TeconMoon_s_WiiVC_Injector
 
                 if (FlagNKIT)
                 {
-                    if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
-                    {
-                        Directory.Delete(TempToolsPath + "NKIT\\Processed\\Temp", true);
-                    }
-                    BuildStatus.Text = "Unscrubbing game for NFS Conversion...";
-                    BuildStatus.Refresh();
-                    LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                    LauncherExeArgs = "\"" + OpenGame.FileName;
-                    LaunchProgram(); // CONVERT TO ISO
-                    File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\game.iso");
+                    File.Copy(OpenGame.FileName, TempSourcePath + "TEMPISOBASE\\files\\game.iso");
                 }
                 else
                 {
-                    File.Copy(OpenGame.FileName, TempSourcePath + "TEMPISOBASE\\files\\game.iso");
+                    BuildStatus.Text = "Scrubbing game for NFS Conversion...";
+                    BuildStatus.Refresh();
+                    LauncherExeFile = TempToolsPath + "NKIT\\ConvertToNKit.exe";
+                    LauncherExeArgs = "\"" + OpenGame.FileName + "\"";
+                    LaunchProgram(); // CONVERT TO NKIT
+                    File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\game.iso");
                 }
 
                 if (FlagGC2Specified)
                 {
                     if (FlagNKIT)
                     {
-                        if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
-                        {
-                            Directory.Delete(TempToolsPath + "NKIT\\Processed\\Temp", true);
-                        }
-                        BuildStatus.Text = "Unscrubbing second disc for NFS Conversion...";
-                        BuildStatus.Refresh();
-                        LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                        LauncherExeArgs = "\"" + OpenGC2.FileName + "\"";
-                        LaunchProgram(); // CONVERT DISC 2 TO ISO
-                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
+                        File.Copy(OpenGC2.FileName, TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
                     }
                     else
                     {
-                        File.Copy(OpenGC2.FileName, TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
+                        BuildStatus.Text = "Scrubbing second disc for NFS Conversion...";
+                        BuildStatus.Refresh();
+                        LauncherExeFile = TempToolsPath + "NKIT\\ConvertToNKit.exe";
+                        LauncherExeArgs = "\"" + OpenGC2.FileName + "\"";
+                        LaunchProgram(); // CONVERT DISC 2 TO NKIT
+                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
                     }
                 }
                 LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
