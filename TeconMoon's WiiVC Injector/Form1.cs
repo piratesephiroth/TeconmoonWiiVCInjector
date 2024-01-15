@@ -56,7 +56,6 @@ namespace TeconMoon_s_WiiVC_Injector
             {
                 return sb.ToString();
             }
-
         }
 
 
@@ -1023,22 +1022,22 @@ namespace TeconMoon_s_WiiVC_Injector
                             , (MessageBoxOptions)0x40000);
             if (OpenDrc.ShowDialog() == DialogResult.OK)
             {
+                string tmpPNG = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootDrcTex.png";
+                if (File.Exists(tmpPNG)) { File.Delete(tmpPNG); }
+
                 if (Path.GetExtension(OpenDrc.FileName) == ".tga")
                 {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootDrcTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
                     LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
-                    LauncherExeArgs = "-i \"" + OpenDrc.FileName + "\" -o \"" + Path.GetDirectoryName(pngtemppath) + "\"";
+                    LauncherExeArgs = "-i \"" + OpenDrc.FileName + "\" -o \"" + Path.GetDirectoryName(tmpPNG) + "\"";
                     LaunchProgram();
-                    File.Move(Path.GetDirectoryName(pngtemppath) + "\\" + Path.GetFileNameWithoutExtension(OpenDrc.FileName) + ".png", pngtemppath);
+                    File.Move(Path.GetDirectoryName(tmpPNG) + "\\" + Path.GetFileNameWithoutExtension(OpenDrc.FileName) + ".png", tmpPNG);
                 }
                 else
                 {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootDrcTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
-                    Image.FromFile(OpenDrc.FileName).Save(pngtemppath, System.Drawing.Imaging.ImageFormat.Png);
+                    Image.FromFile(OpenDrc.FileName).Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
                 }
-                FileStream tempstream = new FileStream(pngtemppath, FileMode.Open);
+
+                FileStream tempstream = new FileStream(tmpPNG, FileMode.Open);
                 var tempimage = Image.FromStream(tempstream);
                 DrcPreviewBox.Image = tempimage;
                 tempstream.Close();
@@ -1052,7 +1051,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 DrcPreviewBox.Image = null;
                 DrcSourceDirectory.Text = "GamePad Banner has not been specified";
                 DrcSourceDirectory.ForeColor = Color.Red;
-                pngtemppath = "";
             }
         }
         private void LogoSourceButton_Click(object sender, EventArgs e)
