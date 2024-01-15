@@ -224,23 +224,22 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             base.OnFormClosing(e);
 
-            if (e.CloseReason == CloseReason.WindowsShutDown) { Directory.Delete(TempRootPath, true); return; }
-
-            // Confirm user wants to close
-            switch (MessageBox.Show(this, "Are you sure you want to close?"
+            // If Windows isn't shutting down, ask the user if they want to close
+            if ((e.CloseReason != CloseReason.WindowsShutDown) &&
+                (DialogResult.No == MessageBox.Show(this, "Are you sure you want to close?"
                     , "Closing"
                     , MessageBoxButtons.YesNo
                     , MessageBoxIcon.Question
                     , MessageBoxDefaultButton.Button1
-                    , (MessageBoxOptions)0x40000))
+                    , (MessageBoxOptions)0x40000)))
             {
-                case DialogResult.No:
-                    e.Cancel = true;
-                    break;
-                default:
-                    Directory.Delete(TempRootPath, true);
-                    break;
+                e.Cancel = true;
+                return;
             }
+
+            //Otherwise try to delete the TempRootPath
+            if(Directory.Exists(TempRootPath))
+                Directory.Delete(TempRootPath, true);
         }
 
         //Radio Buttons for desired injection type (Check with Alan on having one command to clear variables instead of specifying them all 4 times)
