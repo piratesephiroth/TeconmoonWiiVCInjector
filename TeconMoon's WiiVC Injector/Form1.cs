@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Media;
 using System.Windows.Forms;
 using System.IO;
@@ -2170,30 +2168,25 @@ namespace TeconMoon_s_WiiVC_Injector
             BuildStatus.Text = "Converting processed game to NFS format...";
             BuildStatus.Refresh();
             Directory.SetCurrentDirectory(TempBuildPath + "content");
-            string lrpatchflag = "";
-            if (LRPatch.Checked)
-            {
-                lrpatchflag = " -lrpatch";
-            }
+            LauncherExeFile = TempToolsPath + "EXE\\nfs2iso2nfs.exe";
+
+            string lrpatchflag = LRPatch.Checked ? " -lrpatch" : "";
+
             switch (SystemType)
             {
                 case "wii":
-                    LauncherExeFile = TempToolsPath + "EXE\\nfs2iso2nfs.exe";
                     LauncherExeArgs = "-enc" + nfspatchflag + lrpatchflag + " -iso \"" + OpenGame.FileName + "\"";
                     break;
 
                 case "dol":
-                    LauncherExeFile = TempToolsPath + "EXE\\nfs2iso2nfs.exe";
                     LauncherExeArgs = "-enc -homebrew" + passpatch + " -iso \"" + OpenGame.FileName + "\"";
                     break;
 
                 case "wiiware":
-                    LauncherExeFile = TempToolsPath + "EXE\\nfs2iso2nfs.exe";
                     LauncherExeArgs = "-enc -homebrew" + nfspatchflag + lrpatchflag + " -iso \"" + OpenGame.FileName + "\"";
                     break;
 
                 case "gcn":
-                    LauncherExeFile = TempToolsPath + "EXE\\nfs2iso2nfs.exe";
                     LauncherExeArgs = "-enc -homebrew -passthrough -iso \"" + OpenGame.FileName + "\"";
                     break;
             }
