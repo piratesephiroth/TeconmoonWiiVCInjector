@@ -1063,22 +1063,21 @@ namespace TeconMoon_s_WiiVC_Injector
                             , (MessageBoxOptions)0x40000);
             if (OpenLogo.ShowDialog() == DialogResult.OK)
             {
+                string tmpPNG = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootLogoTex.png";
+                if (File.Exists(tmpPNG)) { File.Delete(tmpPNG); }
+
                 if (Path.GetExtension(OpenLogo.FileName) == ".tga")
                 {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootLogoTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
                     LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
-                    LauncherExeArgs = "-i \"" + OpenLogo.FileName + "\" -o \"" + Path.GetDirectoryName(pngtemppath) + "\"";
+                    LauncherExeArgs = "-i \"" + OpenLogo.FileName + "\" -o \"" + Path.GetDirectoryName(tmpPNG) + "\"";
                     LaunchProgram();
-                    File.Move(Path.GetDirectoryName(pngtemppath) + "\\" + Path.GetFileNameWithoutExtension(OpenLogo.FileName) + ".png", pngtemppath);
+                    File.Move(Path.GetDirectoryName(tmpPNG) + "\\" + Path.GetFileNameWithoutExtension(OpenLogo.FileName) + ".png", tmpPNG);
                 }
                 else
                 {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootLogoTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
-                    Image.FromFile(OpenLogo.FileName).Save(pngtemppath, System.Drawing.Imaging.ImageFormat.Png);
+                    Image.FromFile(OpenLogo.FileName).Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
                 }
-                FileStream tempstream = new FileStream(pngtemppath, FileMode.Open);
+                FileStream tempstream = new FileStream(tmpPNG, FileMode.Open);
                 var tempimage = Image.FromStream(tempstream);
                 LogoPreviewBox.Image = tempimage;
                 tempstream.Close();
@@ -1092,7 +1091,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 LogoPreviewBox.Image = null;
                 LogoSourceDirectory.Text = "GamePad Banner has not been specified";
                 LogoSourceDirectory.ForeColor = Color.Red;
-                pngtemppath = "";
             }
         }
         private void BootSoundButton_Click(object sender, EventArgs e)
