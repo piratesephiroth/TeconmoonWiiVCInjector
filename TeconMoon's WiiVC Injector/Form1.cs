@@ -90,7 +90,6 @@ namespace TeconMoon_s_WiiVC_Injector
         string CucholixRepoID = "";
         string DRCUSE = "1";
         string pngtemppath;
-        string LoopString = " -noLoop";
         string nfspatchflag = "";
         string passpatch = " -passthrough";
         string wiimmfiOption = " --wiimmfi";
@@ -1142,17 +1141,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
             }
         }
-        private void ToggleBootSoundLoop_CheckedChanged(object sender, EventArgs e)
-        {
-            if (ToggleBootSoundLoop.Checked)
-            {
-                LoopString = "";
-            }
-            else
-            {
-                LoopString = " -noLoop";
-            }
-        }
         private void BootSoundPreviewButton_Click(object sender, EventArgs e)
         {
             var simpleSound = new SoundPlayer(OpenBootSound.FileName);
@@ -1892,7 +1880,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 LaunchProgram();
                 File.Delete(TempBuildPath + "meta\\bootSound.btsnd");
                 LauncherExeFile = TempToolsPath + "JAR\\wav2btsnd.exe";
-                LauncherExeArgs = "-in \"" + TempSoundPath + "\" -out \"" + TempBuildPath + "meta\\bootSound.btsnd\"" + LoopString;
+                LauncherExeArgs = "-in \"" + TempSoundPath + "\" -out \"" + TempBuildPath + "meta\\bootSound.btsnd\"" + (ToggleBootSoundLoop.Checked ? "":"-noLoop");
                 LaunchProgram();
                 File.Delete(TempSoundPath);
             }

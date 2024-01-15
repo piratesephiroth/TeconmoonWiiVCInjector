@@ -445,7 +445,6 @@
             this.ToggleBootSoundLoop.TabIndex = 18;
             this.ToggleBootSoundLoop.Text = "Loop Boot Sound";
             this.ToggleBootSoundLoop.UseVisualStyleBackColor = true;
-            this.ToggleBootSoundLoop.CheckedChanged += new System.EventHandler(this.ToggleBootSoundLoop_CheckedChanged);
             // 
             // BootSoundPreviewText
             // 
