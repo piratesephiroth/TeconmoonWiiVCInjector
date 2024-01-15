@@ -89,12 +89,6 @@ namespace TeconMoon_s_WiiVC_Injector
         long GameType;
         char TempChar;
         string CucholixRepoID = "";
-        string sSourceData;
-        byte[] tmpSource;
-        byte[] tmpHash;
-        string AncastKeyHash;
-        string WiiUCommonKeyHash;
-        string TitleKeyHash;
         string DRCUSE = "1";
         string pngtemppath;
         string LoopString = " -noLoop";
@@ -511,6 +505,25 @@ namespace TeconMoon_s_WiiVC_Injector
             new SDCardMenu().Show();
         }
 
+        /* Takes in a text box and the correct hash and performs the pattern
+         * that was being used for each. Returns the result so that further 
+         * actions can be taken based on it.
+         */
+        private bool HashTest(TextBox box, string goodHash)
+        {
+            box.Text = box.Text.ToUpper();
+            byte[] tmpSource = Encoding.ASCII.GetBytes(box.Text);
+            byte[] tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
+            string boxHash = BitConverter.ToString(tmpHash);
+            bool rv = (boxHash == goodHash);
+
+            /* Clean up the text box */
+            box.ReadOnly = rv;
+            box.BackColor = rv ? Color.Lime : Color.White;
+
+            return rv;
+        }
+
         //Performs actions when switching tabs
         private void MainTabs_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -544,54 +557,12 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
                 TitleKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("TitleKey").ToString();
                 Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
+
                 //Generate MD5 hashes for loaded keys and check them
-                WiiUCommonKey.Text = WiiUCommonKey.Text.ToUpper();
-                sSourceData = WiiUCommonKey.Text;
-                tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-                tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-                WiiUCommonKeyHash = BitConverter.ToString(tmpHash);
-                if (WiiUCommonKeyHash == "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC")
-                {
-                    CommonKeyGood = true;
-                    WiiUCommonKey.ReadOnly = true;
-                    WiiUCommonKey.BackColor = Color.Lime;
-                }
-                else
-                {
-                    CommonKeyGood = false;
-                    WiiUCommonKey.ReadOnly = false;
-                    WiiUCommonKey.BackColor = Color.White;
-                }
-                TitleKey.Text = TitleKey.Text.ToUpper();
-                sSourceData = TitleKey.Text;
-                tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-                tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-                TitleKeyHash = BitConverter.ToString(tmpHash);
-                if (TitleKeyHash == "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F")
-                {
-                    TitleKeyGood = true;
-                    TitleKey.ReadOnly = true;
-                    TitleKey.BackColor = Color.Lime;
-                }
-                else
-                {
-                    TitleKeyGood = false;
-                    TitleKey.ReadOnly = false;
-                    TitleKey.BackColor = Color.White;
-                }
-                AncastKey.Text = AncastKey.Text.ToUpper();
-                sSourceData = AncastKey.Text;
-                tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-                tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-                AncastKeyHash = BitConverter.ToString(tmpHash);
-                if (AncastKeyHash == "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43")
-                {
-                    AncastKeyGood = true;
-                }
-                else
-                {
-                    AncastKeyGood = false;
-                }
+                CommonKeyGood = HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC");
+                TitleKeyGood = HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
+                AncastKeyGood = HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43");
+
                 //Final check for if all requirements are good
                 if (FlagGameSpecified & FlagIconSpecified & FlagBannerSpecified)
                 {
@@ -1430,21 +1401,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 AncastKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("AncastKey").ToString();
                 Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
                 //If key is correct, lock text box for edits
-                AncastKey.Text = AncastKey.Text.ToUpper();
-                sSourceData = AncastKey.Text;
-                tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-                tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-                AncastKeyHash = BitConverter.ToString(tmpHash);
-                if (AncastKeyHash == "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43")
-                {
-                    AncastKey.ReadOnly = true;
-                    AncastKey.BackColor = Color.Lime;
-                }
-                else
-                {
-                    AncastKey.ReadOnly = false;
-                    AncastKey.BackColor = Color.White;
-                }
+                HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43");
             }
             else
             {
@@ -1456,12 +1413,7 @@ namespace TeconMoon_s_WiiVC_Injector
         private void SaveAncastKeyButton_Click(object sender, EventArgs e)
         {
             //Verify Title Key MD5 Hash
-            AncastKey.Text = AncastKey.Text.ToUpper();
-            sSourceData = AncastKey.Text;
-            tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-            tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-            AncastKeyHash = BitConverter.ToString(tmpHash);
-            if (AncastKeyHash == "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43")
+            if (HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43"))
             {
                 Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("AncastKey", AncastKey.Text);
                 Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
@@ -1471,8 +1423,6 @@ namespace TeconMoon_s_WiiVC_Injector
                                 , MessageBoxIcon.Information
                                 , MessageBoxDefaultButton.Button1
                                 , (MessageBoxOptions)0x40000);
-                AncastKey.ReadOnly = true;
-                AncastKey.BackColor = Color.Lime;
             }
             else
             {
@@ -1518,12 +1468,8 @@ namespace TeconMoon_s_WiiVC_Injector
         private void SaveCommonKeyButton_Click(object sender, EventArgs e)
         {
             //Verify Wii U Common Key MD5 Hash
-            WiiUCommonKey.Text = WiiUCommonKey.Text.ToUpper();
-            sSourceData = WiiUCommonKey.Text;
-            tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-            tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-            WiiUCommonKeyHash = BitConverter.ToString(tmpHash);
-            if (WiiUCommonKeyHash == "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC")
+
+            if (HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC"))
             {
                 Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("WiiUCommonKey", WiiUCommonKey.Text);
                 Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
@@ -1549,12 +1495,7 @@ namespace TeconMoon_s_WiiVC_Injector
         private void SaveTitleKeyButton_Click(object sender, EventArgs e)
         {
             //Verify Title Key MD5 Hash
-            TitleKey.Text = TitleKey.Text.ToUpper();
-            sSourceData = TitleKey.Text;
-            tmpSource = ASCIIEncoding.ASCII.GetBytes(sSourceData);
-            tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-            TitleKeyHash = BitConverter.ToString(tmpHash);
-            if (TitleKeyHash == "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F")
+            if (HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F"))
             {
                 Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("TitleKey", TitleKey.Text);
                 Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
