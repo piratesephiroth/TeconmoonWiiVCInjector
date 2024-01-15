@@ -997,24 +997,21 @@ namespace TeconMoon_s_WiiVC_Injector
                                         , MessageBoxIcon.Error
                                         , MessageBoxDefaultButton.Button1
                                         , (MessageBoxOptions)0x40000);
-                        GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
-                        GC2SourceDirectory.ForeColor = Color.Red;
-                        FlagGC2Specified = false;
                     }
                     else
                     {
                         GC2SourceDirectory.Text = OpenGC2.FileName;
                         GC2SourceDirectory.ForeColor = Color.Black;
                         FlagGC2Specified = true;
+                        return;
                     }
                 }
             }
-            else
-            {
-                GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
-                GC2SourceDirectory.ForeColor = Color.Red;
-                FlagGC2Specified = false;
-            }
+
+            /* Reset to these defaults unless we got the right input and returned already */
+            GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
+            GC2SourceDirectory.ForeColor = Color.Red;
+            FlagGC2Specified = false;
         }
         private void DrcSourceButton_Click(object sender, EventArgs e)
         {
