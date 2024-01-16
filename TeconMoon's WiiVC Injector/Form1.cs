@@ -835,7 +835,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 FlagIconSpecified = false;
                 FlagBannerSpecified = false;
                 FlagRepo = false;
-                pngtemppath = "";
             }
             MessageBox.Show("Make sure your icon is 128x128 (1:1) to prevent distortion"
                             , "Icon Size Information"
@@ -845,10 +844,11 @@ namespace TeconMoon_s_WiiVC_Injector
                             , (MessageBoxOptions)0x40000);
             if (OpenIcon.ShowDialog() == DialogResult.OK)
             {
-               if (Path.GetExtension(OpenIcon.FileName) == ".tga")
+                pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
+                if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
+
+                if (Path.GetExtension(OpenIcon.FileName) == ".tga")
                {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
                     LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
                     LauncherExeArgs = "-i \"" + OpenIcon.FileName + "\" -o \"" + Path.GetDirectoryName(pngtemppath) + "\"";
                     LaunchProgram();
@@ -856,10 +856,8 @@ namespace TeconMoon_s_WiiVC_Injector
                }
                else
                {
-                   pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
-                   if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
                    Image.FromFile(OpenIcon.FileName).Save(pngtemppath, System.Drawing.Imaging.ImageFormat.Png);
-               } 
+               }
                 FileStream tempstream = new FileStream(pngtemppath, FileMode.Open);
                 var tempimage = Image.FromStream(tempstream);
                 IconPreviewBox.Image = tempimage;
@@ -867,7 +865,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 IconSourceDirectory.Text = OpenIcon.FileName;
                 IconSourceDirectory.ForeColor = Color.Black;
                 FlagIconSpecified = true;
-                FlagRepo = false;
             }
             else
             {
@@ -875,14 +872,19 @@ namespace TeconMoon_s_WiiVC_Injector
                 IconSourceDirectory.Text = "Icon has not been specified";
                 IconSourceDirectory.ForeColor = Color.Red;
                 FlagIconSpecified = false;
-                FlagRepo = false;
                 pngtemppath = "";
             }
         }
         private void BannerSourceButton_Click(object sender, EventArgs e)
         {
-            FlagRepo = false;
-
+            if (FlagRepo)
+            {
+                IconPreviewBox.Image = null;
+                BannerPreviewBox.Image = null;
+                FlagIconSpecified = false;
+                FlagBannerSpecified = false;
+                FlagRepo = false;
+            }
             MessageBox.Show("Make sure your Banner is 1280x720 (16:9) to prevent distortion"
                             , "Banner Size Information"
                             , MessageBoxButtons.OK
