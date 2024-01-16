@@ -898,10 +898,11 @@ namespace TeconMoon_s_WiiVC_Injector
                             , (MessageBoxOptions)0x40000);
             if (OpenBanner.ShowDialog() == DialogResult.OK)
             {
+                pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
+                if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
+
                 if (Path.GetExtension(OpenBanner.FileName) == ".tga")
                 {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
                     LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
                     LauncherExeArgs = "-i \"" + OpenBanner.FileName + "\" -o \"" + Path.GetDirectoryName(pngtemppath) + "\"";
                     LaunchProgram();
@@ -909,8 +910,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 }
                 else
                 {
-                    pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
-                    if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
                     Image.FromFile(OpenBanner.FileName).Save(pngtemppath, System.Drawing.Imaging.ImageFormat.Png);
                 }
                 FileStream tempstream = new FileStream(pngtemppath, FileMode.Open);
