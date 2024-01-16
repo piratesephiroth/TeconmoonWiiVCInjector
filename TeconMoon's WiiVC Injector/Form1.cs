@@ -91,7 +91,6 @@ namespace TeconMoon_s_WiiVC_Injector
         string DRCUSE = "1";
         string pngtemppath;
         string nfspatchflag = "";
-        string passpatch = " -passthrough";
         string wiimmfiOption = " --wiimmfi";
         ProcessStartInfo Launcher;
         string LauncherExeFile;
@@ -1331,17 +1330,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 MainDolLabel.Text = "<- Specify custom main.dol file";
             }
         }
-        private void DisablePassthrough_CheckedChanged(object sender, EventArgs e)
-        {
-            if (DisablePassthrough.Checked)
-            {
-                passpatch = "";
-            }
-            else
-            {
-                passpatch = " -passthrough";
-            }
-        }
         private void DisableGamePad_CheckedChanged(object sender, EventArgs e)
         {
             if (DisableGamePad.Checked)
@@ -2100,7 +2088,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     break;
 
                 case "dol":
-                    LauncherExeArgs = "-enc -homebrew" + passpatch + " -iso \"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "-enc -homebrew" + (DisablePassthrough.Checked ? "" : "-passthrough") + " -iso \"" + OpenGame.FileName + "\"";
                     break;
 
                 case "wiiware":

@@ -916,7 +916,6 @@
             this.DisablePassthrough.TabIndex = 19;
             this.DisablePassthrough.Text = "Disable Wii Remote passthrough in GamePad mode";
             this.DisablePassthrough.UseVisualStyleBackColor = true;
-            this.DisablePassthrough.CheckedChanged += new System.EventHandler(this.DisablePassthrough_CheckedChanged);
             // 
             // MainDolLabel
             // 
