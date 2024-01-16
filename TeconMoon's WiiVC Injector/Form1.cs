@@ -1804,6 +1804,7 @@ namespace TeconMoon_s_WiiVC_Injector
             BuildStatus.Text = "Processing game for NFS Conversion...";
             BuildStatus.Refresh();
             if (OpenGame.FileName != null) { OGfilepath = OpenGame.FileName; }
+
             if (SystemType == "wii")
             {
                 if (FlagWBFS)
@@ -1880,7 +1881,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     OpenGame.FileName = TempSourcePath + "game.iso";
                 }
             }
-            if (SystemType == "dol")
+            else if (SystemType == "dol")
             {
                 FileSystem.CreateDirectory(TempSourcePath + "TEMPISOBASE");
                 FileSystem.CopyDirectory(TempToolsPath + "BASE", TempSourcePath + "TEMPISOBASE");
@@ -1891,7 +1892,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 Directory.Delete(TempSourcePath + "TEMPISOBASE", true);
                 OpenGame.FileName = TempSourcePath + "game.iso";
             }
-            if (SystemType == "wiiware")
+            else if (SystemType == "wiiware")
             {
                 FileSystem.CreateDirectory(TempSourcePath + "TEMPISOBASE");
                 FileSystem.CopyDirectory(TempToolsPath + "BASE", TempSourcePath + "TEMPISOBASE");
@@ -1911,7 +1912,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 Directory.Delete(TempSourcePath + "TEMPISOBASE", true);
                 OpenGame.FileName = TempSourcePath + "game.iso";
             }
-            if (SystemType == "gcn")
+            else if (SystemType == "gcn")
             {
                 FileSystem.CreateDirectory(TempSourcePath + "TEMPISOBASE");
                 FileSystem.CopyDirectory(TempToolsPath + "BASE", TempSourcePath + "TEMPISOBASE");
@@ -2026,12 +2027,7 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             LaunchProgram();
 
-
-            if (DisableTrimming.Checked == false)
-            {
-                File.Delete(OpenGame.FileName);
-            }
-            else if (FlagWBFS)
+            if ((DisableTrimming.Checked == false) || (FlagWBFS))
             {
                 File.Delete(OpenGame.FileName);
             }
