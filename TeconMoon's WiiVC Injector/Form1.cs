@@ -881,15 +881,8 @@ namespace TeconMoon_s_WiiVC_Injector
         }
         private void BannerSourceButton_Click(object sender, EventArgs e)
         {
-            if (FlagRepo)
-            {
-                BannerPreviewBox.Image = null;
-                BannerPreviewBox.Image = null;
-                FlagBannerSpecified = false;
-                FlagBannerSpecified = false;
-                FlagRepo = false;
-                pngtemppath = "";
-            }
+            FlagRepo = false;
+
             MessageBox.Show("Make sure your Banner is 1280x720 (16:9) to prevent distortion"
                             , "Banner Size Information"
                             , MessageBoxButtons.OK
@@ -919,7 +912,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 BannerSourceDirectory.Text = OpenBanner.FileName;
                 BannerSourceDirectory.ForeColor = Color.Black;
                 FlagBannerSpecified = true;
-                FlagRepo = false;
             }
             else
             {
@@ -927,7 +919,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 BannerSourceDirectory.Text = "Banner has not been specified";
                 BannerSourceDirectory.ForeColor = Color.Red;
                 FlagBannerSpecified = false;
-                FlagRepo = false;
                 pngtemppath = "";
             }
         }
