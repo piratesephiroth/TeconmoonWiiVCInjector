@@ -1494,105 +1494,30 @@ namespace TeconMoon_s_WiiVC_Injector
             //Disable form elements so navigation can't be attempted during build process
             MainTabs.Enabled = false;
             //Check for free space
-            if (SystemType == "wii")
+            var drive = new DriveInfo(TempRootPath);
+            long freeSpaceInBytes = drive.AvailableFreeSpace;
+            long gamesize = 0;
+            /* If wii or gcn, get actual game size */
+            if ((SystemType == "wii") || (SystemType == "gcn"))
+                gamesize = new FileInfo(OpenGame.FileName).Length;
+
+            if (freeSpaceInBytes < ((gamesize * 2) + 6000000000))
             {
-                long gamesize = new FileInfo(OpenGame.FileName).Length;
-                var drive = new DriveInfo(TempRootPath);
-                long freeSpaceInBytes = drive.AvailableFreeSpace;
-                if (freeSpaceInBytes < gamesize * 2 + 5000000000)
+                DialogResult dialogResult = MessageBox.Show("Your hard drive may be low on space. The conversion process involves temporary files" +
+                                                            "that can amount to more than double the size of your game + 5GB. If you continue without" +
+                                                            "clearing some hard drive space, the conversion may fail. Do you want to continue anyway?",
+                                                            "Check your hard drive space"
+                                                            , MessageBoxButtons.YesNo
+                                                            , MessageBoxIcon.Warning
+                                                            , MessageBoxDefaultButton.Button1
+                                                            , (MessageBoxOptions)0x40000);
+                if (dialogResult == DialogResult.No)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Your hard drive may be low on space. The conversion process involves temporary files" +
-                                                                "that can amount to more than double the size of your game. If you continue without" +
-                                                                "clearing some hard drive space, the conversion may fail. Do you want to continue anyway?",
-                                                                "Check your hard drive space"
-                                                                , MessageBoxButtons.YesNo
-                                                                , MessageBoxIcon.Warning
-                                                                , MessageBoxDefaultButton.Button1
-                                                                , (MessageBoxOptions)0x40000);
-                    if (dialogResult == DialogResult.No)
-                    {
-                        MainTabs.Enabled = true;
-                        BuildStatus.Text = "";
-                        BuildStatus.Refresh();
-                        BuildProgress.Value = 0;
-                        goto BuildProcessFin;
-                    }
-                }
-            }
-            if (SystemType == "dol")
-            {
-                var drive = new DriveInfo(TempRootPath);
-                long freeSpaceInBytes = drive.AvailableFreeSpace;
-                if (freeSpaceInBytes < 6000000000)
-                {
-                    DialogResult dialogResult = MessageBox.Show("Your hard drive may be low on space. Even for small programs," +
-                                                                "the conversion process can use almost 5 GB of temporary storage." +
-                                                                "If you continue without clearing some hard drive space, the conversion may fail." +
-                                                                "Do you want to continue anyway?"
-                                                                , "Check your hard drive space"
-                                                                , MessageBoxButtons.YesNo
-                                                                , MessageBoxIcon.Warning
-                                                                , MessageBoxDefaultButton.Button1
-                                                                , (MessageBoxOptions)0x40000);
-                    if (dialogResult == DialogResult.No)
-                    {
-                        MainTabs.Enabled = true;
-                        BuildStatus.Text = "";
-                        BuildStatus.Refresh();
-                        BuildProgress.Value = 0;
-                        goto BuildProcessFin;
-                    }
-                }
-            }
-            if (SystemType == "wiiware")
-            {
-                var drive = new DriveInfo(TempRootPath);
-                long freeSpaceInBytes = drive.AvailableFreeSpace;
-                if (freeSpaceInBytes < 6000000000)
-                {
-                    DialogResult dialogResult = MessageBox.Show("Your hard drive may be low on space. Even for small programs," +
-                                                                "the conversion process can use almost 5 GB of temporary storage." +
-                                                                "If you continue without clearing some hard drive space, the conversion may fail." +
-                                                                "Do you want to continue anyway?"
-                                                                , "Check your hard drive space"
-                                                                , MessageBoxButtons.YesNo
-                                                                , MessageBoxIcon.Warning
-                                                                , MessageBoxDefaultButton.Button1
-                                                                , (MessageBoxOptions)0x40000);
-                    if (dialogResult == DialogResult.No)
-                    {
-                        MainTabs.Enabled = true;
-                        BuildStatus.Text = "";
-                        BuildStatus.Refresh();
-                        BuildProgress.Value = 0;
-                        goto BuildProcessFin;
-                    }
-                }
-            }
-            if (SystemType == "gcn")
-            {
-                long gamesize = new FileInfo(OpenGame.FileName).Length;
-                var drive = new DriveInfo(TempRootPath);
-                long freeSpaceInBytes = drive.AvailableFreeSpace;
-                if (freeSpaceInBytes < gamesize * 2 + 6000000000)
-                {
-                    DialogResult dialogResult = MessageBox.Show("Your hard drive may be low on space. The conversion process involves temporary files" +
-                                                                "that can amount to more than double the size of your game. If you continue without" +
-                                                                "clearing some hard drive space, the conversion may fail. Do you want to continue anyway?",
-                                                                "Check your hard drive space"
-                                                                , MessageBoxButtons.YesNo
-                                                                , MessageBoxIcon.Warning
-                                                                , MessageBoxDefaultButton.Button1
-                                                                , (MessageBoxOptions)0x40000);
-                    if (dialogResult == DialogResult.No)
-                        if (dialogResult == DialogResult.No)
-                    {
-                        MainTabs.Enabled = true;
-                        BuildStatus.Text = "";
-                        BuildStatus.Refresh();
-                        BuildProgress.Value = 0;
-                        goto BuildProcessFin;
-                    }
+                    MainTabs.Enabled = true;
+                    BuildStatus.Text = "";
+                    BuildStatus.Refresh();
+                    BuildProgress.Value = 0;
+                    return;
                 }
             }
 
