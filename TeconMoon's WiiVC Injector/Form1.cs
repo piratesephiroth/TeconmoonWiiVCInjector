@@ -82,7 +82,6 @@ namespace TeconMoon_s_WiiVC_Injector
         bool CommonKeyGood;
         bool TitleKeyGood;
         bool AncastKeyGood;
-        bool FlagRepo;
         bool HideProcess = true;
         int TitleIDInt;
         long GameType;
@@ -179,7 +178,6 @@ namespace TeconMoon_s_WiiVC_Injector
             BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
             BannerSourceDirectory.ForeColor = Color.Black;
             FlagBannerSpecified = true;
-            FlagRepo = true;
         }
         //Called from RepoDownload_Click to check if files exist before downloading
         private bool RemoteFileExists(string url)
@@ -828,14 +826,6 @@ namespace TeconMoon_s_WiiVC_Injector
 
         private void IconSourceButton_Click(object sender, EventArgs e)
         {
-            if (FlagRepo)
-            {
-                IconPreviewBox.Image = null;
-                BannerPreviewBox.Image = null;
-                FlagIconSpecified = false;
-                FlagBannerSpecified = false;
-                FlagRepo = false;
-            }
             MessageBox.Show("Make sure your icon is 128x128 (1:1) to prevent distortion"
                             , "Icon Size Information"
                             , MessageBoxButtons.OK
@@ -877,14 +867,6 @@ namespace TeconMoon_s_WiiVC_Injector
         }
         private void BannerSourceButton_Click(object sender, EventArgs e)
         {
-            if (FlagRepo)
-            {
-                IconPreviewBox.Image = null;
-                BannerPreviewBox.Image = null;
-                FlagIconSpecified = false;
-                FlagBannerSpecified = false;
-                FlagRepo = false;
-            }
             MessageBox.Show("Make sure your Banner is 1280x720 (16:9) to prevent distortion"
                             , "Banner Size Information"
                             , MessageBoxButtons.OK
@@ -934,13 +916,11 @@ namespace TeconMoon_s_WiiVC_Injector
                                 , MessageBoxIcon.Information
                                 , MessageBoxDefaultButton.Button1
                                 , (MessageBoxOptions)0x40000);
-                FlagRepo = false;
             }
             else
             {
                 if (!TryDownloadImages(CucholixRepoID))
                 {
-                    FlagRepo = false;
                     if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
                                         , "Game not found on Repo"
                                         , MessageBoxButtons.YesNo
@@ -1034,7 +1014,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 DrcSourceDirectory.Text = OpenDrc.FileName;
                 DrcSourceDirectory.ForeColor = Color.Black;
                 FlagDrcSpecified = true;
-                FlagRepo = false;
             }
             else
             {
@@ -1074,7 +1053,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 LogoSourceDirectory.Text = OpenLogo.FileName;
                 LogoSourceDirectory.ForeColor = Color.Black;
                 FlagLogoSpecified = true;
-                FlagRepo = false;
             }
             else
             {
