@@ -70,8 +70,6 @@ namespace TeconMoon_s_WiiVC_Injector
         bool FlagNASOS;
         bool FlagGameSpecified;
         bool FlagGC2Specified;
-        bool FlagIconSpecified;
-        bool FlagBannerSpecified;
         bool FlagDrcSpecified;
         bool FlagLogoSpecified;
         bool FlagBootSoundSpecified;
@@ -87,7 +85,6 @@ namespace TeconMoon_s_WiiVC_Injector
         char TempChar;
         string CucholixRepoID = "";
         string DRCUSE = "1";
-        string pngtemppath;
         string nfspatchflag = "";
         string wiimmfiOption = " --wiimmfi";
         ProcessStartInfo Launcher;
@@ -155,11 +152,12 @@ namespace TeconMoon_s_WiiVC_Injector
                 File.Delete(file);
 
             IconPreviewBox.Image = null;
-            BannerPreviewBox.Image = null;
-            FlagIconSpecified = false;
-            FlagBannerSpecified = false;
             IconSourceDirectory.Text = "Icon file has not been specified";
+            IconSourceDirectory.ForeColor = Color.Red;
+
+            BannerPreviewBox.Image = null;
             BannerSourceDirectory.Text = "Banner file has not been specified";
+            BannerSourceDirectory.ForeColor = Color.Red;
         }
 
         public void DownloadFromRepo(string cucholixRepoID)
@@ -170,14 +168,12 @@ namespace TeconMoon_s_WiiVC_Injector
             client.DownloadFile(IconPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png");
             IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
-            FlagIconSpecified = true;
 
             BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/bootTvTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png"); }
             client.DownloadFile(BannerPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png");
             BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
             BannerSourceDirectory.ForeColor = Color.Black;
-            FlagBannerSpecified = true;
         }
         //Called from RepoDownload_Click to check if files exist before downloading
         private bool RemoteFileExists(string url)
@@ -548,7 +544,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 AncastKeyGood = HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43");
 
                 //Final check for if all requirements are good
-                if (FlagGameSpecified & FlagIconSpecified & FlagBannerSpecified)
+                if (FlagGameSpecified && (IconPreviewBox.Image != null) && (BannerPreviewBox.Image != null))
                 {
                     SourceCheck.ForeColor = Color.Green;
                     BuildFlagSource = true;
@@ -817,35 +813,32 @@ namespace TeconMoon_s_WiiVC_Injector
                             , MessageBoxIcon.Information);
             if (OpenIcon.ShowDialog() == DialogResult.OK)
             {
-                pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
-                if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
+                string tmpPNG = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
+                if (File.Exists(tmpPNG)) { File.Delete(tmpPNG); }
 
                 if (Path.GetExtension(OpenIcon.FileName) == ".tga")
                {
                     LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
-                    LauncherExeArgs = "-i \"" + OpenIcon.FileName + "\" -o \"" + Path.GetDirectoryName(pngtemppath) + "\"";
+                    LauncherExeArgs = "-i \"" + OpenIcon.FileName + "\" -o \"" + Path.GetDirectoryName(tmpPNG) + "\"";
                     LaunchProgram();
-                    File.Move(Path.GetDirectoryName(pngtemppath) + "\\" + Path.GetFileNameWithoutExtension(OpenIcon.FileName) + ".png", pngtemppath);
+                    File.Move(Path.GetDirectoryName(tmpPNG) + "\\" + Path.GetFileNameWithoutExtension(OpenIcon.FileName) + ".png", tmpPNG);
                }
                else
                {
-                   Image.FromFile(OpenIcon.FileName).Save(pngtemppath, System.Drawing.Imaging.ImageFormat.Png);
+                   Image.FromFile(OpenIcon.FileName).Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
                }
-                FileStream tempstream = new FileStream(pngtemppath, FileMode.Open);
+                FileStream tempstream = new FileStream(tmpPNG, FileMode.Open);
                 var tempimage = Image.FromStream(tempstream);
                 IconPreviewBox.Image = tempimage;
                 tempstream.Close();
                 IconSourceDirectory.Text = OpenIcon.FileName;
                 IconSourceDirectory.ForeColor = Color.Black;
-                FlagIconSpecified = true;
             }
             else
             {
                 IconPreviewBox.Image = null;
                 IconSourceDirectory.Text = "Icon has not been specified";
                 IconSourceDirectory.ForeColor = Color.Red;
-                FlagIconSpecified = false;
-                pngtemppath = "";
             }
         }
         private void BannerSourceButton_Click(object sender, EventArgs e)
@@ -856,35 +849,32 @@ namespace TeconMoon_s_WiiVC_Injector
                             , MessageBoxIcon.Information);
             if (OpenBanner.ShowDialog() == DialogResult.OK)
             {
-                pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
-                if (File.Exists(pngtemppath)) { File.Delete(pngtemppath); }
+                string tmpPNG = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
+                if (File.Exists(tmpPNG)) { File.Delete(tmpPNG); }
 
                 if (Path.GetExtension(OpenBanner.FileName) == ".tga")
                 {
                     LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
-                    LauncherExeArgs = "-i \"" + OpenBanner.FileName + "\" -o \"" + Path.GetDirectoryName(pngtemppath) + "\"";
+                    LauncherExeArgs = "-i \"" + OpenBanner.FileName + "\" -o \"" + Path.GetDirectoryName(tmpPNG) + "\"";
                     LaunchProgram();
-                    File.Move(Path.GetDirectoryName(pngtemppath) + "\\" + Path.GetFileNameWithoutExtension(OpenBanner.FileName) + ".png", pngtemppath);
+                    File.Move(Path.GetDirectoryName(tmpPNG) + "\\" + Path.GetFileNameWithoutExtension(OpenBanner.FileName) + ".png", tmpPNG);
                 }
                 else
                 {
-                    Image.FromFile(OpenBanner.FileName).Save(pngtemppath, System.Drawing.Imaging.ImageFormat.Png);
+                    Image.FromFile(OpenBanner.FileName).Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
                 }
-                FileStream tempstream = new FileStream(pngtemppath, FileMode.Open);
+                FileStream tempstream = new FileStream(tmpPNG, FileMode.Open);
                 var tempimage = Image.FromStream(tempstream);
                 BannerPreviewBox.Image = tempimage;
                 tempstream.Close();
                 BannerSourceDirectory.Text = OpenBanner.FileName;
                 BannerSourceDirectory.ForeColor = Color.Black;
-                FlagBannerSpecified = true;
             }
             else
             {
                 BannerPreviewBox.Image = null;
                 BannerSourceDirectory.Text = "Banner has not been specified";
                 BannerSourceDirectory.ForeColor = Color.Red;
-                FlagBannerSpecified = false;
-                pngtemppath = "";
             }
         }
         private void RepoDownload_Click(object sender, EventArgs e)
