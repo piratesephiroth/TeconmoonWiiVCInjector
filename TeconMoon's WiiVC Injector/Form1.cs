@@ -84,7 +84,6 @@ namespace TeconMoon_s_WiiVC_Injector
         bool AncastKeyGood;
         bool HideProcess = true;
         int TitleIDInt;
-        long GameType;
         char TempChar;
         string CucholixRepoID = "";
         string DRCUSE = "1";
@@ -257,7 +256,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 TitleIDLabel.Text = "";
                 TitleIDInt = 0;
                 TitleIDHex = "";
-                GameType = 0;
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
                 PackedTitleIDLine.Text = "";
@@ -311,7 +309,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 TitleIDLabel.Text = "";
                 TitleIDInt = 0;
                 TitleIDHex = "";
-                GameType = 0;
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
                 PackedTitleIDLine.Text = "";
@@ -363,7 +360,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 TitleIDLabel.Text = "";
                 TitleIDInt = 0;
                 TitleIDHex = "";
-                GameType = 0;
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
                 PackedTitleIDLine.Text = "";
@@ -457,7 +453,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 TitleIDLabel.Text = "";
                 TitleIDInt = 0;
                 TitleIDHex = "";
-                GameType = 0;
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
                 PackedTitleIDLine.Text = "";
@@ -643,6 +638,7 @@ namespace TeconMoon_s_WiiVC_Injector
         //Events for the "Required Source Files" Tab
         private void GameSourceButton_Click(object sender, EventArgs e)
         {
+            long GameType = 0;
             if (OpenGame.ShowDialog() == DialogResult.OK)
             {
                 // delete any previous files
@@ -750,7 +746,6 @@ namespace TeconMoon_s_WiiVC_Injector
                     TitleIDLabel.Text = "";
                     TitleIDInt = 0;
                     TitleIDHex = "";
-                    GameType = 0;
                     CucholixRepoID = "";
                     PackedTitleLine1.Text = "";
                     PackedTitleIDLine.Text = "";
@@ -762,7 +757,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                     , (MessageBoxOptions)0x40000);
                     goto EndOfGameSelection;
                 }
-                if (SystemType == "gcn" && GameType != 4440324665927270400)
+                else if (SystemType == "gcn" && GameType != 4440324665927270400)
                 {
                     GameSourceDirectory.Text = "Game file has not been specified";
                     GameSourceDirectory.ForeColor = Color.Red;
@@ -771,7 +766,6 @@ namespace TeconMoon_s_WiiVC_Injector
                     TitleIDLabel.Text = "";
                     TitleIDInt = 0;
                     TitleIDHex = "";
-                    GameType = 0;
                     CucholixRepoID = "";
                     PackedTitleLine1.Text = "";
                     PackedTitleIDLine.Text = "";
@@ -783,6 +777,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                     , (MessageBoxOptions)0x40000);
                     goto EndOfGameSelection;
                 }
+
                 GameNameLabel.Text = InternalGameName;
                 var GameTitle = StringUtil.RemoveSpecialChars(GameTdb.GetName(CucholixRepoID));
                 PackedTitleLine1.Text = !string.IsNullOrEmpty(GameTitle) ? GameTitle : InternalGameName;
@@ -815,7 +810,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 TitleIDLabel.Text = "";
                 TitleIDInt = 0;
                 TitleIDHex = "";
-                GameType = 0;
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
                 PackedTitleIDLine.Text = "";
