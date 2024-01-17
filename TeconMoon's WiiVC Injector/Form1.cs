@@ -171,6 +171,7 @@ namespace TeconMoon_s_WiiVC_Injector
             IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
             FlagIconSpecified = true;
+
             BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/bootTvTex.png");
             if (File.Exists(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png")) { File.Delete(Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png"); }
             client.DownloadFile(BannerPreviewBox.ImageLocation, Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png");
@@ -788,17 +789,17 @@ namespace TeconMoon_s_WiiVC_Injector
                     Array.Reverse(idBytes);
                 }
                 TitleIDHex = BitConverter.ToString(idBytes).Replace("-", "");
+                PackedTitleIDLine.Text = ("00050002" + TitleIDHex);
+
                 if (SystemType == "dol")
                 {
                     TitleIDLabel.Text = TitleIDHex;
-                    PackedTitleIDLine.Text = ("00050002" + TitleIDHex);
                     TitleIDText = "BOOT";
                 }
                 else
                 {
                     TitleIDText = string.Join("", System.Text.RegularExpressions.Regex.Split(TitleIDHex, "(?<=\\G..)(?!$)").Select(x => (char)Convert.ToByte(x, 16)));
                     TitleIDLabel.Text = (TitleIDText + " / " + TitleIDHex);
-                    PackedTitleIDLine.Text = ("00050002" + TitleIDHex);
                 }
             }
             else
