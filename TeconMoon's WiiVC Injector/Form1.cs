@@ -203,9 +203,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                 "\n\nYou should be able to enable this in \"Programs and Features\" under \"Turn Windows features on or off\", or download it from Microsoft." +
                                 "\n\nClick OK to close the injector and open \"Programs and Features\"...", ".NET Framework v3.5 not found..."
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Exclamation
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Exclamation);
                 HideProcess = false;
                 LauncherExeFile = "appwiz.cpl";
                 LauncherExeArgs = "";
@@ -224,9 +222,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 (DialogResult.No == MessageBox.Show(this, "Are you sure you want to close?"
                     , "Closing"
                     , MessageBoxButtons.YesNo
-                    , MessageBoxIcon.Question
-                    , MessageBoxDefaultButton.Button1
-                    , (MessageBoxOptions)0x40000)))
+                    , MessageBoxIcon.Question)))
             {
                 e.Cancel = true;
                 return;
@@ -425,9 +421,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     MessageBox.Show("Only 4 characters can be used, try again. Example: The Star Fox 64 (USA) Channel's Title ID is NADE01, so you would specify NADE as the Title ID"
                                     , "Invalid Title ID"
                                     , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Warning
-                                    , MessageBoxDefaultButton.Button1,
-                                    (MessageBoxOptions)0x40000);
+                                    , MessageBoxIcon.Warning);
                     goto WiiNANDLoopback;
                 }
                 skipWiiNandLoopback:;
@@ -753,9 +747,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     MessageBox.Show("This is not a Wii image. It will not be loaded."
                                     , "Error"
                                     , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Error
-                                    , MessageBoxDefaultButton.Button1
-                                    , (MessageBoxOptions)0x40000);
+                                    , MessageBoxIcon.Error);
                     goto EndOfGameSelection;
                 }
                 else if (SystemType == "gcn" && GameType != 4440324665927270400)
@@ -773,9 +765,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     MessageBox.Show("This is not a GameCube image. It will not be loaded."
                                     , "Error"
                                     , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Error
-                                    , MessageBoxDefaultButton.Button1
-                                    , (MessageBoxOptions)0x40000);
+                                    , MessageBoxIcon.Error);
                     goto EndOfGameSelection;
                 }
 
@@ -824,9 +814,7 @@ namespace TeconMoon_s_WiiVC_Injector
             MessageBox.Show("Make sure your icon is 128x128 (1:1) to prevent distortion"
                             , "Icon Size Information"
                             , MessageBoxButtons.OK
-                            , MessageBoxIcon.Information
-                            , MessageBoxDefaultButton.Button1
-                            , (MessageBoxOptions)0x40000);
+                            , MessageBoxIcon.Information);
             if (OpenIcon.ShowDialog() == DialogResult.OK)
             {
                 pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
@@ -865,9 +853,7 @@ namespace TeconMoon_s_WiiVC_Injector
             MessageBox.Show("Make sure your Banner is 1280x720 (16:9) to prevent distortion"
                             , "Banner Size Information"
                             , MessageBoxButtons.OK
-                            , MessageBoxIcon.Information
-                            , MessageBoxDefaultButton.Button1
-                            , (MessageBoxOptions)0x40000);
+                            , MessageBoxIcon.Information);
             if (OpenBanner.ShowDialog() == DialogResult.OK)
             {
                 pngtemppath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
@@ -908,9 +894,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 MessageBox.Show("Please select your game before using this option"
                                 , "No game specified"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Information);
             }
             else
             {
@@ -919,9 +903,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
                                         , "Game not found on Repo"
                                         , MessageBoxButtons.YesNo
-                                        , MessageBoxIcon.Asterisk
-                                        , MessageBoxDefaultButton.Button1,
-                                        (MessageBoxOptions)0x40000) == DialogResult.Yes)
+                                        , MessageBoxIcon.Asterisk) == DialogResult.Yes)
                     {
                         Process.Start("https://gbatemp.net/threads/483080/");
                     }
@@ -958,9 +940,7 @@ namespace TeconMoon_s_WiiVC_Injector
                         MessageBox.Show("This is not a GameCube image. It will not be loaded."
                                         , "Error"
                                         , MessageBoxButtons.OK
-                                        , MessageBoxIcon.Error
-                                        , MessageBoxDefaultButton.Button1
-                                        , (MessageBoxOptions)0x40000);
+                                        , MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -982,9 +962,7 @@ namespace TeconMoon_s_WiiVC_Injector
             MessageBox.Show("Make sure your GamePad Banner is 854x480 (16:9) to prevent distortion"
                             , "Banner Information"
                             , MessageBoxButtons.OK
-                            , MessageBoxIcon.Information
-                            , MessageBoxDefaultButton.Button1
-                            , (MessageBoxOptions)0x40000);
+                            , MessageBoxIcon.Information);
             if (OpenDrc.ShowDialog() == DialogResult.OK)
             {
                 string tmpPNG = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootDrcTex.png";
@@ -1022,9 +1000,7 @@ namespace TeconMoon_s_WiiVC_Injector
             MessageBox.Show("Make sure your Logo is 170x42 to prevent distortion"
                             , "Logo Information"
                             , MessageBoxButtons.OK
-                            , MessageBoxIcon.Information
-                            , MessageBoxDefaultButton.Button1
-                            , (MessageBoxOptions)0x40000);
+                            , MessageBoxIcon.Information);
             if (OpenLogo.ShowDialog() == DialogResult.OK)
             {
                 string tmpPNG = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootLogoTex.png";
@@ -1061,9 +1037,7 @@ namespace TeconMoon_s_WiiVC_Injector
             MessageBox.Show("Your sound file will be cut off if it's longer than 6 seconds to prevent the Wii U from not loading it. When the Wii U plays the boot sound, it will fade out once it's done loading the game (usually after about 5 seconds). You can not change this."
                             , "Boot Sound Information"
                             , MessageBoxButtons.OK
-                            , MessageBoxIcon.Information
-                            , MessageBoxDefaultButton.Button1
-                            , (MessageBoxOptions)0x40000);
+                            , MessageBoxIcon.Information);
             if (OpenBootSound.ShowDialog() == DialogResult.OK)
             {
                 using (var reader = new BinaryReader(File.OpenRead(OpenBootSound.FileName)))
@@ -1084,9 +1058,7 @@ namespace TeconMoon_s_WiiVC_Injector
                         MessageBox.Show("This is not a valid WAV file. It will not be loaded. \nConsider converting it with something like Audacity."
                                         , "Not a WAV File"
                                         , MessageBoxButtons.OK
-                                        , MessageBoxIcon.Error
-                                        , MessageBoxDefaultButton.Button1
-                                        , (MessageBoxOptions)0x40000);
+                                        , MessageBoxIcon.Error);
                         BootSoundDirectory.Text = "Boot Sound has not been specified";
                         BootSoundDirectory.ForeColor = Color.Red;
                         BootSoundPreviewButton.Enabled = false;
@@ -1353,18 +1325,14 @@ namespace TeconMoon_s_WiiVC_Injector
                 MessageBox.Show("The Wii U Starbuck Ancast Key has been verified."
                                 , "Success"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Information);
             }
             else
             {
                 MessageBox.Show("The Wii U Starbuck Ancast Key you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
                                 , "Invalid Starbuck Ancast Keyn"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Error);
             }
         }
         private void sign_c2w_patcher_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1409,9 +1377,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 MessageBox.Show("The Wii U Common Key has been verified."
                                 , "Success"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Information);
                 MainTabs.SelectedTab = AdvancedTab;
                 MainTabs.SelectedTab = BuildTab;
             }
@@ -1420,9 +1386,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 MessageBox.Show("The Wii U Common Key you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
                                 , "Invalid Wii U Common Key"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Error);
             }
         }
         private void SaveTitleKeyButton_Click(object sender, EventArgs e)
@@ -1435,9 +1399,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 MessageBox.Show("The Title Key has been verified."
                                 , "Success"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Information);
                 MainTabs.SelectedTab = AdvancedTab;
                 MainTabs.SelectedTab = BuildTab;
             }
@@ -1446,9 +1408,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 MessageBox.Show("The Title Key you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
                                 , "Invalid Title Key"
                                 , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error
-                                , MessageBoxDefaultButton.Button1
-                                , (MessageBoxOptions)0x40000);
+                                , MessageBoxIcon.Error);
             }
         }
 
@@ -1473,9 +1433,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                                             "clearing some hard drive space, the conversion may fail. Do you want to continue anyway?",
                                                             "Check your hard drive space"
                                                             , MessageBoxButtons.YesNo
-                                                            , MessageBoxIcon.Warning
-                                                            , MessageBoxDefaultButton.Button1
-                                                            , (MessageBoxOptions)0x40000);
+                                                            , MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.No)
                 {
                     MainTabs.Enabled = true;
@@ -1505,9 +1463,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     MessageBox.Show("Output folder selection has been cancelled, conversion will not continue."
                                     , "Cancelled"
                                     , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Warning
-                                    , MessageBoxDefaultButton.Button1
-                                    , (MessageBoxOptions)0x40000);
+                                    , MessageBoxIcon.Warning);
                     MainTabs.Enabled = true;
                     goto BuildProcessFin;
                 }
@@ -1606,9 +1562,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                                                 "the necessary base files from Nintendo anyway? (This is a one-time download)"
                                                                 , "Internet Connection Verification Failed"
                                                                 , MessageBoxButtons.YesNo
-                                                                , MessageBoxIcon.Warning
-                                                                , MessageBoxDefaultButton.Button1
-                                                                , (MessageBoxOptions)0x40000);
+                                                                , MessageBoxIcon.Warning);
                     if (dialogResult == DialogResult.No)
                     {
                         MainTabs.Enabled = true;
@@ -1667,9 +1621,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     MessageBox.Show("Failed to download base files using JNUSTool, conversion will not continue"
                                     , "Error"
                                     , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Error
-                                    , MessageBoxDefaultButton.Button1
-                                    , (MessageBoxOptions)0x40000);
+                                    , MessageBoxIcon.Error);
                     MainTabs.Enabled = true;
                     BuildStatus.Text = "";
                     BuildProgress.Value = 0;
@@ -1818,9 +1770,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                         "\n\nClick OK to continue..."
                                         , "Information"
                                         , MessageBoxButtons.OK
-                                        , MessageBoxIcon.Information
-                                        , MessageBoxDefaultButton.Button1
-                                        , (MessageBoxOptions)0x40000);
+                                        , MessageBoxIcon.Information);
                         HideProcess = false;
                         LauncherExeFile = TempToolsPath + "EXE\\wii-vmc.exe";
                         LauncherExeArgs = "\"" + TempSourcePath + "ISOEXTRACT\\sys\\main.dol\"";
@@ -1829,9 +1779,7 @@ namespace TeconMoon_s_WiiVC_Injector
                         MessageBox.Show("Conversion will now continue..."
                                         , "Information"
                                         , MessageBoxButtons.OK
-                                        , MessageBoxIcon.Information
-                                        , MessageBoxDefaultButton.Button1
-                                        , (MessageBoxOptions)0x40000);
+                                        , MessageBoxIcon.Information);
                     }
                     BuildStatus.Text = "Rebuilding iso for NFS Conversion...";
                     BuildStatus.Refresh();
@@ -2029,9 +1977,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                                             "Open the output folder now?"
                                                             , PackedTitleLine1.Text + "Conversion Complete"
                                                             , MessageBoxButtons.YesNo
-                                                            , MessageBoxIcon.Information
-                                                            , MessageBoxDefaultButton.Button1
-                                                            , (MessageBoxOptions)0x40000);
+                                                            , MessageBoxIcon.Information);
 
             if (finalDialogResult == DialogResult.Yes)
             {
