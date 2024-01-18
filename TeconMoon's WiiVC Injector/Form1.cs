@@ -64,7 +64,6 @@ namespace TeconMoon_s_WiiVC_Injector
         string TitleIDHex;
         string TitleIDText;
         string InternalGameName;
-        string TempString = "";
         bool FlagWBFS;
         bool FlagNKIT;
         bool FlagNASOS;
@@ -80,7 +79,6 @@ namespace TeconMoon_s_WiiVC_Injector
         bool AncastKeyGood;
         bool HideProcess = true;
         int TitleIDInt;
-        char TempChar;
         string CucholixRepoID = "";
         string DRCUSE = "1";
         string nfspatchflag = "";
@@ -624,6 +622,17 @@ namespace TeconMoon_s_WiiVC_Injector
             }
         }
 
+        private string readerReadString(BinaryReader reader)
+        {
+            string TempString = "";
+            char TempChar;
+
+            while ((int)(TempChar = reader.ReadChar()) != 0)
+                TempString = TempString + TempChar;
+
+            return TempString;
+        }
+
         //Events for the "Required Source Files" Tab
         private void GameSourceButton_Click(object sender, EventArgs e)
         {
@@ -653,18 +662,18 @@ namespace TeconMoon_s_WiiVC_Injector
                     if (idString == "WBFS") //Performs actions if the header indicates a WBFS file
                     {
                         FlagWBFS = true;
+
                         reader.BaseStream.Position = 0x200;
                         TitleIDInt = reader.ReadInt32();
+
                         reader.BaseStream.Position = 0x218;
                         GameType = reader.ReadInt64();
-                        TempString = "";
+
                         reader.BaseStream.Position = 0x220;
-                        while ((int)(TempChar = reader.ReadChar()) != 0) TempString = TempString + TempChar;
-                        InternalGameName = TempString;
-                        TempString = "";
+                        InternalGameName = readerReadString(reader);
+
                         reader.BaseStream.Position = 0x200;
-                        while ((int)(TempChar = reader.ReadChar()) != 0) TempString = TempString + TempChar;
-                        CucholixRepoID = TempString;
+                        CucholixRepoID = readerReadString(reader);
                     }
                     else
                     {
@@ -694,22 +703,15 @@ namespace TeconMoon_s_WiiVC_Injector
                             // read game info
                             reader.BaseStream.Position = startOffset;
                             TitleIDInt = reader.ReadInt32();
+
                             reader.BaseStream.Position = startOffset + 0x18;
                             GameType = reader.ReadInt64();
-                            TempString = "";
+
                             reader.BaseStream.Position = startOffset + 0x20;
-                            while ((int)(TempChar = reader.ReadChar()) != 0)
-                            {
-                                TempString = TempString + TempChar;
-                            }
-                            InternalGameName = TempString;
-                            TempString = "";
+                            InternalGameName = readerReadString(reader);
+
                             reader.BaseStream.Position = startOffset + 0x00;
-                            while ((int)(TempChar = reader.ReadChar()) != 0)
-                            {
-                                TempString = TempString + TempChar;
-                            }
-                            CucholixRepoID = TempString;
+                            CucholixRepoID = readerReadString(reader);
 
                             // NKIT check
                             if(!FlagNASOS)
