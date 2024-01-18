@@ -717,6 +717,8 @@ namespace TeconMoon_s_WiiVC_Injector
                             if(!FlagNASOS)
                             {
                                 reader.BaseStream.Position = 0x200;
+                                /* TODO: It should be possible to replace this with ReadChars(4), 
+                                but would need to be tested. */
                                 idBytes = reader.ReadBytes(4);
                                 idString = new string(Encoding.ASCII.GetChars(idBytes));
                                 if (idString == "NKIT")
@@ -727,82 +729,58 @@ namespace TeconMoon_s_WiiVC_Injector
                         }
                     }
                 }
+
                 //Flag if GameType Int doesn't match current SystemType
-                if (SystemType == "wii" && GameType != 2745048157)
+                if ((SystemType == "wii" && GameType != 2745048157) ||
+                    (SystemType == "gcn" && GameType != 4440324665927270400))
                 {
-                    GameSourceDirectory.Text = "Game file has not been specified";
-                    GameSourceDirectory.ForeColor = Color.Red;
-                    FlagGameSpecified = false;
-                    GameNameLabel.Text = "";
-                    TitleIDLabel.Text = "";
-                    TitleIDInt = 0;
-                    TitleIDHex = "";
-                    CucholixRepoID = "";
-                    PackedTitleLine1.Text = "";
-                    PackedTitleIDLine.Text = "";
-                    MessageBox.Show("This is not a Wii image. It will not be loaded."
+                    MessageBox.Show("This is not a valid " + SystemType +" image. It will not be loaded."
                                     , "Error"
                                     , MessageBoxButtons.OK
                                     , MessageBoxIcon.Error);
-                    goto EndOfGameSelection;
-                }
-                else if (SystemType == "gcn" && GameType != 4440324665927270400)
-                {
-                    GameSourceDirectory.Text = "Game file has not been specified";
-                    GameSourceDirectory.ForeColor = Color.Red;
-                    FlagGameSpecified = false;
-                    GameNameLabel.Text = "";
-                    TitleIDLabel.Text = "";
-                    TitleIDInt = 0;
-                    TitleIDHex = "";
-                    CucholixRepoID = "";
-                    PackedTitleLine1.Text = "";
-                    PackedTitleIDLine.Text = "";
-                    MessageBox.Show("This is not a GameCube image. It will not be loaded."
-                                    , "Error"
-                                    , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Error);
-                    goto EndOfGameSelection;
-                }
-
-                GameNameLabel.Text = InternalGameName;
-                var GameTitle = StringUtil.RemoveSpecialChars(GameTdb.GetName(CucholixRepoID));
-                PackedTitleLine1.Text = !string.IsNullOrEmpty(GameTitle) ? GameTitle : InternalGameName;
-                //Convert pulled Title ID Int to Hex for use with Wii U Title ID
-                idBytes = BitConverter.GetBytes(TitleIDInt);
-                if (!BitConverter.IsLittleEndian)
-                {
-                    Array.Reverse(idBytes);
-                }
-                TitleIDHex = BitConverter.ToString(idBytes).Replace("-", "");
-                PackedTitleIDLine.Text = ("00050002" + TitleIDHex);
-
-                if (SystemType == "dol")
-                {
-                    TitleIDLabel.Text = TitleIDHex;
-                    TitleIDText = "BOOT";
+                    /* Fall through to the fail state on the outside of all the if blocks */
                 }
                 else
                 {
-                    TitleIDText = string.Join("", System.Text.RegularExpressions.Regex.Split(TitleIDHex, "(?<=\\G..)(?!$)").Select(x => (char)Convert.ToByte(x, 16)));
-                    TitleIDLabel.Text = (TitleIDText + " / " + TitleIDHex);
+                    GameNameLabel.Text = InternalGameName;
+                    var GameTitle = StringUtil.RemoveSpecialChars(GameTdb.GetName(CucholixRepoID));
+                    PackedTitleLine1.Text = !string.IsNullOrEmpty(GameTitle) ? GameTitle : InternalGameName;
+                    //Convert pulled Title ID Int to Hex for use with Wii U Title ID
+                    idBytes = BitConverter.GetBytes(TitleIDInt);
+                    if (!BitConverter.IsLittleEndian)
+                    {
+                        Array.Reverse(idBytes);
+                    }
+                    TitleIDHex = BitConverter.ToString(idBytes).Replace("-", "");
+                    PackedTitleIDLine.Text = ("00050002" + TitleIDHex);
+
+                    if (SystemType == "dol")
+                    {
+                        TitleIDLabel.Text = TitleIDHex;
+                        TitleIDText = "BOOT";
+                    }
+                    else
+                    {
+                        TitleIDText = string.Join("", System.Text.RegularExpressions.Regex.Split(TitleIDHex, "(?<=\\G..)(?!$)").Select(x => (char)Convert.ToByte(x, 16)));
+                        TitleIDLabel.Text = (TitleIDText + " / " + TitleIDHex);
+                    }
+                    return;
                 }
             }
-            else
-            {
-                GameSourceDirectory.Text = "Game file has not been specified";
-                GameSourceDirectory.ForeColor = Color.Red;
-                FlagGameSpecified = false;
-                GameNameLabel.Text = "";
-                TitleIDLabel.Text = "";
-                TitleIDInt = 0;
-                TitleIDHex = "";
-                CucholixRepoID = "";
-                PackedTitleLine1.Text = "";
-                PackedTitleIDLine.Text = "";
-                goto EndOfGameSelection;
-            }
-            EndOfGameSelection:;
+
+            /* The success state returns on its own, but all others will reach here */
+            GameSourceDirectory.Text = "Game file has not been specified";
+            GameSourceDirectory.ForeColor = Color.Red;
+            FlagGameSpecified = false;
+            GameNameLabel.Text = "";
+            TitleIDLabel.Text = "";
+            TitleIDInt = 0;
+            TitleIDHex = "";
+            CucholixRepoID = "";
+            PackedTitleLine1.Text = "";
+            PackedTitleIDLine.Text = "";
+
+            return;
         }
 
         private Image ImageSourceLoad(string tmpPNG, string filename)
