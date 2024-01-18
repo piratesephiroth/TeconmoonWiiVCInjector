@@ -15,6 +15,7 @@ using System.Diagnostics;
 using Microsoft.VisualBasic.FileIO;
 using System.Runtime.InteropServices;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using TGASharpLib;
 
 namespace TeconMoon_s_WiiVC_Injector
 {
@@ -795,20 +796,13 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             if (File.Exists(tmpPNG)) { File.Delete(tmpPNG); }
 
+            Image tmpimage;
             if (Path.GetExtension(filename) == ".tga")
-            {
-                LauncherExeFile = TempToolsPath + "IMG\\tga2pngcmd.exe";
-                LauncherExeArgs = "-i \"" + filename + "\" -o \"" + Path.GetDirectoryName(tmpPNG) + "\"";
-                LaunchProgram();
-                File.Move(Path.GetDirectoryName(tmpPNG) + "\\" + Path.GetFileNameWithoutExtension(filename) + ".png", tmpPNG);
-            }
+                tmpimage = (new TGA(filename)).ToBitmap();
             else
-            {
-                Image.FromFile(filename).Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
-            }
-            FileStream tempstream = new FileStream(tmpPNG, FileMode.Open);
-            var tmpimage = Image.FromStream(tempstream);
-            tempstream.Close();
+                tmpimage = Image.FromFile(filename);
+
+            tmpimage.Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
             return tmpimage;
         }
 
