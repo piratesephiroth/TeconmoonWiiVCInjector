@@ -336,7 +336,6 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             if (WiiNAND.Checked)
             {
-                WiiNANDLoopback:
                 WiiVMC.Checked = false;
                 WiiVMC.Enabled = false;
                 Wiimmfi.Checked = false;
@@ -379,44 +378,52 @@ namespace TeconMoon_s_WiiVC_Injector
                     GamePadEmuLayout.Enabled = true;
                     DRCUSE = "1";
                 }
-                GameSourceDirectory.Text = Microsoft.VisualBasic.Interaction.InputBox("Enter your installed Wii Channel's 4-letter Title ID. If you don't know it, open a WAD for the channel in something like ShowMiiWads to view it.", "Enter your WAD's Title ID", "XXXX", 0, 0);
-                if (GameSourceDirectory.Text == "")
+
+                /* Loop until the loop is broken by entering a blank ID or 4 characters */
+                while (true)
                 {
-                    GameSourceDirectory.ForeColor = Color.Red;
-                    GameSourceDirectory.Text = "Title ID specification cancelled, reselect vWii NAND Title Launcher to specify";
-                    FlagGameSpecified = false;
-                    goto skipWiiNandLoopback;
-                }
-                if (GameSourceDirectory.Text.Length == 4)
-                {
-                    GameSourceDirectory.Text = GameSourceDirectory.Text.ToUpper();
-                    GameSourceDirectory.ForeColor = Color.Black;
-                    FlagGameSpecified = true;
-                    SystemType = "wiiware";
-                    GameNameLabel.Text = "N/A";
-                    TitleIDLabel.Text = "N/A";
-                    TitleIDText = GameSourceDirectory.Text;
-                    CucholixRepoID = GameSourceDirectory.Text;
-                    char[] HexIDBuild = GameSourceDirectory.Text.ToCharArray();
-                    StringBuilder stringBuilder = new StringBuilder();
-                    foreach (char c in HexIDBuild)
+                    GameSourceDirectory.Text = Microsoft.VisualBasic.Interaction.InputBox("Enter your installed Wii Channel's 4-letter Title ID. If you don't know it, open a WAD for the channel in something like ShowMiiWads to view it.", "Enter your WAD's Title ID", "XXXX", 0, 0);
+
+                    if (GameSourceDirectory.Text.Length == 0)
                     {
-                        stringBuilder.Append(((Int16)c).ToString("X"));
+                        GameSourceDirectory.ForeColor = Color.Red;
+                        GameSourceDirectory.Text = "Title ID specification cancelled, reselect vWii NAND Title Launcher to specify";
+                        FlagGameSpecified = false;
+                        return;
                     }
-                    PackedTitleIDLine.Text = "00050002" + stringBuilder.ToString();
+                    else if (GameSourceDirectory.Text.Length == 4)
+                    {
+                        GameSourceDirectory.ForeColor = Color.Black;
+                        GameSourceDirectory.Text = GameSourceDirectory.Text.ToUpper();
+                        FlagGameSpecified = true;
+
+                        SystemType = "wiiware";
+                        GameNameLabel.Text = "N/A";
+                        TitleIDLabel.Text = "N/A";
+                        TitleIDText = GameSourceDirectory.Text;
+                        CucholixRepoID = GameSourceDirectory.Text;
+                        char[] HexIDBuild = GameSourceDirectory.Text.ToCharArray();
+                        StringBuilder stringBuilder = new StringBuilder();
+                        foreach (char c in HexIDBuild)
+                        {
+                            stringBuilder.Append(((Int16)c).ToString("X"));
+                        }
+                        PackedTitleIDLine.Text = "00050002" + stringBuilder.ToString();
+
+                        return;
+                    }
+                    else
+                    {
+                        GameSourceDirectory.ForeColor = Color.Red;
+                        GameSourceDirectory.Text = "Invalid Title ID";
+
+                        MessageBox.Show("Only 4 characters can be used, try again. Example: The Star Fox 64 (USA) Channel's Title ID is NADE01, so you would specify NADE as the Title ID"
+                                        , "Invalid Title ID"
+                                        , MessageBoxButtons.OK
+                                        , MessageBoxIcon.Warning);
+                        /* Keep looping */
+                    }
                 }
-                else
-                {
-                    GameSourceDirectory.ForeColor = Color.Red;
-                    GameSourceDirectory.Text = "Invalid Title ID";
-                    FlagGameSpecified = false;
-                    MessageBox.Show("Only 4 characters can be used, try again. Example: The Star Fox 64 (USA) Channel's Title ID is NADE01, so you would specify NADE as the Title ID"
-                                    , "Invalid Title ID"
-                                    , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Warning);
-                    goto WiiNANDLoopback;
-                }
-                skipWiiNandLoopback:;
             }
         }
         private void GCRetail_CheckedChanged(object sender, EventArgs e)
