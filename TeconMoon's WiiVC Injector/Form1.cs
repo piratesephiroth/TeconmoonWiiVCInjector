@@ -962,7 +962,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 LogoPreviewBox.Image = ImageSourceLoad(TempLogoPath, OpenLogo.FileName);
                 LogoSourceDirectory.Text = OpenLogo.FileName;
                 LogoSourceDirectory.ForeColor = Color.Black;
-                FlagLogoSpecified = true;
             }
             else
             {
