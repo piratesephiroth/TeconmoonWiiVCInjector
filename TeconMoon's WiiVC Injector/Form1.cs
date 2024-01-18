@@ -642,9 +642,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 // delete any previous files
                 CleanUp();
 
-                GameSourceDirectory.Text = OpenGame.FileName;
-                GameSourceDirectory.ForeColor = Color.Black;
-                FlagGameSpecified = true;
                 byte[] idBytes = new byte[4];
                 //Get values from game file
                 using (var reader = new BinaryReader(File.OpenRead(OpenGame.FileName)))
@@ -764,6 +761,10 @@ namespace TeconMoon_s_WiiVC_Injector
                         TitleIDText = string.Join("", System.Text.RegularExpressions.Regex.Split(TitleIDHex, "(?<=\\G..)(?!$)").Select(x => (char)Convert.ToByte(x, 16)));
                         TitleIDLabel.Text = (TitleIDText + " / " + TitleIDHex);
                     }
+
+                    GameSourceDirectory.Text = OpenGame.FileName;
+                    GameSourceDirectory.ForeColor = Color.Black;
+                    FlagGameSpecified = true;
                     return;
                 }
             }
