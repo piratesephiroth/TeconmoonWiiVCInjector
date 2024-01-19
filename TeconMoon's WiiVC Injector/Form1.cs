@@ -539,6 +539,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 WiiNAND.Enabled = false;
                 GCRetail.Enabled = false;
             }
+
             //Check for building requirements when switching to the Build tab
             if (MainTabs.SelectedTab == BuildTab)
             {
@@ -571,75 +572,26 @@ namespace TeconMoon_s_WiiVC_Injector
                     SourceCheck.ForeColor = Color.Red;
                     BuildFlagSource = false;
                 }
-                if (PackedTitleLine1.Text != "" & PackedTitleIDLine.TextLength == 16)
-                {
-                    MetaCheck.ForeColor = Color.Green;
-                    BuildFlagMeta = true;
-                }
-                else
-                {
-                    MetaCheck.ForeColor = Color.Red;
-                    BuildFlagMeta = false;
-                }
+
+                BuildFlagMeta = (PackedTitleLine1.Text != "" & PackedTitleIDLine.TextLength == 16);
+                MetaCheck.ForeColor = BuildFlagMeta ? Color.Green : Color.Red;
 
                 if (CustomMainDol.Checked == false)
-                {
-                    AdvanceCheck.ForeColor = Color.Green;
                     BuildFlagAdvance = true;
-                }
                 else
-                {
-                    if (Path.GetExtension(OpenMainDol.FileName) == ".dol")
-                    {
-                        AdvanceCheck.ForeColor = Color.Green;
-                        BuildFlagAdvance = true;
-                    }
-                    else
-                    {
-                        AdvanceCheck.ForeColor = Color.Red;
-                        BuildFlagAdvance = false;
-                    }
-                }
+                    BuildFlagAdvance = (Path.GetExtension(OpenMainDol.FileName) == ".dol");
 
+                AdvanceCheck.ForeColor = BuildFlagAdvance ? Color.Green : Color.Red;
 
                 //Skip Ancast Key if box not checked in advanced
                 if (C2WPatchFlag.Checked == false)
-                {
-                    if (CommonKeyGood & TitleKeyGood)
-                    {
-                        KeysCheck.ForeColor = Color.Green;
-                        BuildFlagKeys = true;
-                    }
-                    else
-                    {
-                        KeysCheck.ForeColor = Color.Red;
-                        BuildFlagKeys = false;
-                    }
-                }
-                else
-                {
-                    if (CommonKeyGood & TitleKeyGood & AncastKeyGood)
-                    {
-                        KeysCheck.ForeColor = Color.Green;
-                        BuildFlagKeys = true;
-                    }
-                    else
-                    {
-                        KeysCheck.ForeColor = Color.Red;
-                        BuildFlagKeys = false;
-                    }
-                }
+                    AncastKeyGood = true;
+
+                BuildFlagKeys = (CommonKeyGood && TitleKeyGood && AncastKeyGood);
+                KeysCheck.ForeColor = BuildFlagKeys ? Color.Green : Color.Red;
+
                 //Enable Build Button
-                if (BuildFlagSource & BuildFlagMeta & BuildFlagAdvance & BuildFlagKeys)
-                {
-                    TheBigOneTM.Enabled = true;
-                }
-                else
-                {
-                    TheBigOneTM.Enabled = false;
-                }
-
-
+                TheBigOneTM.Enabled = (BuildFlagSource && BuildFlagMeta & BuildFlagAdvance && BuildFlagKeys);
             }
         }
 
