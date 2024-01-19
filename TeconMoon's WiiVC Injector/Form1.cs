@@ -16,6 +16,8 @@ using Microsoft.VisualBasic.FileIO;
 using System.Runtime.InteropServices;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using TGASharpLib;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace TeconMoon_s_WiiVC_Injector
 {
@@ -88,15 +90,15 @@ namespace TeconMoon_s_WiiVC_Injector
         string LauncherExeFile;
         string LauncherExeArgs;
         string JNUSToolDownloads = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\JNUSToolDownloads\\";
-        readonly string TempRootPath = Path.GetTempPath() + "WiiVCInjector\\";
-        readonly string TempSourcePath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\";
-        readonly string TempBuildPath = Path.GetTempPath() + "WiiVCInjector\\BUILDDIR\\";
-        readonly string TempToolsPath = Path.GetTempPath() + "WiiVCInjector\\TOOLDIR\\";
-        readonly string TempIconPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\iconTex.png";
-        readonly string TempBannerPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootTvTex.png";
-        readonly string TempDrcPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootDrcTex.png";
-        readonly string TempLogoPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootLogoTex.png";
-        readonly string TempSoundPath = Path.GetTempPath() + "WiiVCInjector\\SOURCETEMP\\bootSound.wav";
+        readonly static string TempRootPath = Path.GetTempPath() + "WiiVCInjector\\";
+        readonly static string TempSourcePath = TempRootPath + "SOURCETEMP\\";
+        readonly string TempBuildPath = TempRootPath + "BUILDDIR\\";
+        readonly string TempToolsPath = TempRootPath + "TOOLDIR\\";
+        readonly string TempIconPath = TempSourcePath + "iconTex.png";
+        readonly string TempBannerPath = TempSourcePath + "bootTvTex.png";
+        readonly string TempDrcPath = TempSourcePath + "bootDrcTex.png";
+        readonly string TempLogoPath = TempSourcePath + "bootLogoTex.png";
+        readonly string TempSoundPath = TempSourcePath + "bootSound.wav";
         string OGfilepath;
         string selectedOutputPath;
 
@@ -160,18 +162,29 @@ namespace TeconMoon_s_WiiVC_Injector
         public void DownloadFromRepo(string cucholixRepoID)
         {
             var client = new WebClient();
-            IconPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/iconTex.png");
-            if (File.Exists(TempIconPath)) { File.Delete(TempIconPath); }
-            client.DownloadFile(IconPreviewBox.ImageLocation, TempIconPath);
-            IconSourceDirectory.Text = "iconTex.png downloaded from Cucholix's Repo";
+            client.BaseAddress = Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/";
+
+            string filename = "iconTex.png";
+            string pathname = TempRootPath + filename;
+            if (File.Exists(pathname)) { File.Delete(pathname); }
+            client.DownloadFile(filename, pathname);
+
+            IconPreviewBox.Image = ImageSourceLoad(TempIconPath, pathname);
+            IconSourceDirectory.Text = filename + "downloaded from Cucholix's Repo";
             IconSourceDirectory.ForeColor = Color.Black;
 
-            BannerPreviewBox.Load(Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/bootTvTex.png");
-            if (File.Exists(TempBannerPath)) { File.Delete(TempBannerPath); }
-            client.DownloadFile(BannerPreviewBox.ImageLocation, TempBannerPath);
-            BannerSourceDirectory.Text = "bootTvTex.png downloaded from Cucholix's Repo";
+            filename = "bootTvTex.png";
+            pathname = TempRootPath + filename;
+            if (File.Exists(pathname)) { File.Delete(pathname); }
+            client.DownloadFile(filename, pathname);
+
+            BannerPreviewBox.Image = ImageSourceLoad(TempBannerPath, pathname);
+            BannerSourceDirectory.Text = filename + "downloaded from Cucholix's Repo";
             BannerSourceDirectory.ForeColor = Color.Black;
+
+            client.Dispose();
         }
+
         //Called from RepoDownload_Click to check if files exist before downloading
         private bool RemoteFileExists(string url)
         {
@@ -803,6 +816,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 tmpimage = Image.FromFile(filename);
 
             tmpimage.Save(tmpPNG, System.Drawing.Imaging.ImageFormat.Png);
+
             return tmpimage;
         }
 
@@ -825,6 +839,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 IconSourceDirectory.ForeColor = Color.Red;
             }
         }
+
         private void BannerSourceButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Make sure your Banner is 1280x720 (16:9) to prevent distortion"
@@ -881,7 +896,6 @@ namespace TeconMoon_s_WiiVC_Injector
             }
             return false;
         }
-
 
         //Events for the "Optional Source Files" Tab
         private void GC2SourceButton_Click(object sender, EventArgs e)
