@@ -77,9 +77,6 @@ namespace TeconMoon_s_WiiVC_Injector
         bool BuildFlagMeta;
         bool BuildFlagAdvance = true;
         bool BuildFlagKeys;
-        bool CommonKeyGood;
-        bool TitleKeyGood;
-        bool AncastKeyGood;
         bool HideProcess = true;
         int TitleIDInt;
         string CucholixRepoID = "";
@@ -540,59 +537,62 @@ namespace TeconMoon_s_WiiVC_Injector
                 GCRetail.Enabled = false;
             }
 
-            //Check for building requirements when switching to the Build tab
-            if (MainTabs.SelectedTab == BuildTab)
+            //If we're not on the build tab, there's nothing else to do here.
+            if (MainTabs.SelectedTab != BuildTab) return;
+
+            //Initialize Registry values if they don't exist and pull values from them if they do
+            /* Only check the registry and do the hash checks if we haven't set the keys to ReadOnly yet */
+            if (!WiiUCommonKey.ReadOnly)
             {
-                //Initialize Registry values if they don't exist and pull values from them if they do
                 if (Registry.CurrentUser.CreateSubKey("WiiVCInjector").GetValue("WiiUCommonKey") == null)
                 {
                     Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("WiiUCommonKey", "00000000000000000000000000000000");
                 }
+
                 WiiUCommonKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("WiiUCommonKey").ToString();
+                HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC");
+            }
+
+            if (!TitleKey.ReadOnly)
+            {
                 if (Registry.CurrentUser.CreateSubKey("WiiVCInjector").GetValue("TitleKey") == null)
                 {
                     Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("TitleKey", "00000000000000000000000000000000");
                 }
+
                 TitleKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("TitleKey").ToString();
-                Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
-
-                //Generate MD5 hashes for loaded keys and check them
-                CommonKeyGood = HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC");
-                TitleKeyGood = HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
-                AncastKeyGood = HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43");
-
-                //Final check for if all requirements are good
-                if (FlagGameSpecified && (IconPreviewBox.Image != null) && (BannerPreviewBox.Image != null))
-                {
-                    SourceCheck.ForeColor = Color.Green;
-                    BuildFlagSource = true;
-                }
-                else
-                {
-                    SourceCheck.ForeColor = Color.Red;
-                    BuildFlagSource = false;
-                }
-
-                BuildFlagMeta = (PackedTitleLine1.Text != "" & PackedTitleIDLine.TextLength == 16);
-                MetaCheck.ForeColor = BuildFlagMeta ? Color.Green : Color.Red;
-
-                if (CustomMainDol.Checked == false)
-                    BuildFlagAdvance = true;
-                else
-                    BuildFlagAdvance = (Path.GetExtension(OpenMainDol.FileName) == ".dol");
-
-                AdvanceCheck.ForeColor = BuildFlagAdvance ? Color.Green : Color.Red;
-
-                //Skip Ancast Key if box not checked in advanced
-                if (C2WPatchFlag.Checked == false)
-                    AncastKeyGood = true;
-
-                BuildFlagKeys = (CommonKeyGood && TitleKeyGood && AncastKeyGood);
-                KeysCheck.ForeColor = BuildFlagKeys ? Color.Green : Color.Red;
-
-                //Enable Build Button
-                TheBigOneTM.Enabled = (BuildFlagSource && BuildFlagMeta & BuildFlagAdvance && BuildFlagKeys);
+                HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
             }
+
+            Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
+
+            //Final check for if all requirements are good
+            if (FlagGameSpecified && (IconPreviewBox.Image != null) && (BannerPreviewBox.Image != null))
+            {
+                SourceCheck.ForeColor = Color.Green;
+                BuildFlagSource = true;
+            }
+            else
+            {
+                SourceCheck.ForeColor = Color.Red;
+                BuildFlagSource = false;
+            }
+
+            BuildFlagMeta = (PackedTitleLine1.Text != "" & PackedTitleIDLine.TextLength == 16);
+            MetaCheck.ForeColor = BuildFlagMeta ? Color.Green : Color.Red;
+
+            if (CustomMainDol.Checked == false)
+                BuildFlagAdvance = true;
+            else
+                BuildFlagAdvance = (Path.GetExtension(OpenMainDol.FileName) == ".dol");
+
+            AdvanceCheck.ForeColor = BuildFlagAdvance ? Color.Green : Color.Red;
+
+            BuildFlagKeys = (WiiUCommonKey.ReadOnly && TitleKey.ReadOnly && AncastKey.ReadOnly);
+            KeysCheck.ForeColor = BuildFlagKeys ? Color.Green : Color.Red;
+
+            //Enable Build Button
+            TheBigOneTM.Enabled = (BuildFlagSource && BuildFlagMeta & BuildFlagAdvance && BuildFlagKeys);
         }
 
         private string readerReadString(BinaryReader reader)
