@@ -285,17 +285,11 @@
   <metadata name="AdvancedTab.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="SaveAncastKeyButton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
-  <metadata name="sign_c2w_patcher_link.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="AdvancedLabel2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="AncastKey.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
+  <metadata name="toolTip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>150, 17</value>
   </metadata>
   <metadata name="BuildTab.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -355,40 +349,40 @@
     <value>True</value>
   </metadata>
   <metadata name="OpenIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>283, 17</value>
   </metadata>
   <data name="OpenIcon.Filter" xml:space="preserve">
     <value>Supported Image Files (*.png,*.tga,*.jpg,*.jpeg,*.bmp,*.gif)|*.png;*.tga;*.jpg;*.jpeg;*.bmp;*.gif|PNG Files (*.png)|*.png|TGA Files (*.tga)|*.tga|JPEG Files (*.jpg,*.jpeg)|*.jpg;*.jpeg|BMP Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif</value>
   </data>
   <metadata name="OpenBanner.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>158, 13</value>
+    <value>428, 17</value>
   </metadata>
   <data name="OpenBanner.Filter" xml:space="preserve">
     <value>Supported Image Files (*.png,*.tga,*.jpg,*.jpeg,*.bmp,*.gif)|*.png;*.tga;*.jpg;*.jpeg;*.bmp;*.gif|PNG Files (*.png)|*.png|TGA Files (*.tga)|*.tga|JPEG Files (*.jpg,*.jpeg)|*.jpg;*.jpeg|BMP Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif</value>
   </data>
   <metadata name="OpenGame.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>277, 17</value>
+    <value>593, 17</value>
   </metadata>
   <metadata name="OpenDrc.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>390, 17</value>
+    <value>750, 17</value>
   </metadata>
   <data name="OpenDrc.Filter" xml:space="preserve">
     <value>Supported Image Files (*.png,*.tga,*.jpg,*.jpeg,*.bmp,*.gif)|*.png;*.tga;*.jpg;*.jpeg;*.bmp;*.gif|PNG Files (*.png)|*.png|TGA Files (*.tga)|*.tga|JPEG Files (*.jpg,*.jpeg)|*.jpg;*.jpeg|BMP Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif</value>
   </data>
   <metadata name="OpenLogo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>530, 17</value>
+    <value>888, 17</value>
   </metadata>
   <data name="OpenLogo.Filter" xml:space="preserve">
     <value>Supported Image Files (*.png,*.tga,*.jpg,*.jpeg,*.bmp,*.gif)|*.png;*.tga;*.jpg;*.jpeg;*.bmp;*.gif|PNG Files (*.png)|*.png|TGA Files (*.tga)|*.tga|JPEG Files (*.jpg,*.jpeg)|*.jpg;*.jpeg|BMP Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif</value>
   </data>
   <metadata name="OpenBootSound.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>670, 17</value>
+    <value>1040, 17</value>
   </metadata>
   <metadata name="OpenMainDol.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>1241, 17</value>
   </metadata>
   <metadata name="OpenGC2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>302, 56</value>
+    <value>1419, 17</value>
   </metadata>
   <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
