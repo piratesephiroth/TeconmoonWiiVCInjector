@@ -91,7 +91,6 @@ namespace TeconMoon_s_WiiVC_Injector
         readonly string TempDrcPath = TempSourcePath + "bootDrcTex.png";
         readonly string TempLogoPath = TempSourcePath + "bootLogoTex.png";
         readonly string TempSoundPath = TempSourcePath + "bootSound.wav";
-        string OGfilepath;
         string selectedOutputPath;
 
         //call options
@@ -1591,16 +1590,17 @@ namespace TeconMoon_s_WiiVC_Injector
             //Build ISO based on type and user specification
             BuildStatus.Text = "Processing game for NFS Conversion...";
             BuildStatus.Refresh();
-            if (OpenGame.FileName != null) { OGfilepath = OpenGame.FileName; }
+
+            string OGfilepath = OpenGame.FileName;
 
             if (SystemType == "wii")
             {
                 if (FlagWBFS)
                 {
                     LauncherExeFile = TempToolsPath + "EXE\\wbfs_file.exe";
-                    LauncherExeArgs = "\"" + OpenGame.FileName + "\" convert \"" + TempSourcePath + "wbfsconvert.iso\"";
+                    LauncherExeArgs = "\"" + OGfilepath + "\" convert \"" + TempSourcePath + "wbfsconvert.iso\"";
                     LaunchProgram();
-                    OpenGame.FileName = TempSourcePath + "wbfsconvert.iso";
+                    OGfilepath = TempSourcePath + "wbfsconvert.iso";
                 }
                 if (FlagNKIT || FlagNASOS)
                 {
@@ -1611,13 +1611,13 @@ namespace TeconMoon_s_WiiVC_Injector
                     BuildStatus.Text = "Unscrubbing game for NFS Conversion...";
                     BuildStatus.Refresh();
                     LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                    LauncherExeArgs = "\"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "\"" + OGfilepath + "\"";
                     LaunchProgram();
-                    OpenGame.FileName = TempSourcePath + "game.iso";
+                    OGfilepath = TempSourcePath + "game.iso";
                     if(FlagNKIT)
-                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Temp", "*.tmp")[0], OpenGame.FileName);
+                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Temp", "*.tmp")[0], OGfilepath);
                     else
-                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Wii_MatchFail", "*.iso")[0], OpenGame.FileName);
+                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Wii_MatchFail", "*.iso")[0], OGfilepath);
 
 
                 }
@@ -1626,7 +1626,7 @@ namespace TeconMoon_s_WiiVC_Injector
                     BuildStatus.Text = "Extracting game for NFS Conversion...";
                     BuildStatus.Refresh();
                     LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
-                    LauncherExeArgs = "extract " + "\"" + OpenGame.FileName + "\"" + " --DEST " + TempSourcePath + "ISOEXTRACT" + " --psel data,-update -ovv";
+                    LauncherExeArgs = "extract " + "\"" + OGfilepath + "\"" + " --DEST " + TempSourcePath + "ISOEXTRACT" + " --psel data,-update -ovv";
                     LaunchProgram(); // EXTRACT WII ISO
                     if (ForceCC.Checked)
                     {
@@ -1662,19 +1662,19 @@ namespace TeconMoon_s_WiiVC_Injector
                     LauncherExeArgs = "copy " + TempSourcePath + "ISOEXTRACT" + " --DEST " + TempSourcePath + "game.iso" + " -ovv --links --iso" + wiimmfiOption;
                     LaunchProgram(); // REBUILD WII ISO
                     if (File.Exists(TempSourcePath + "wbfsconvert.iso")) { File.Delete(TempSourcePath + "wbfsconvert.iso"); }
-                    OpenGame.FileName = TempSourcePath + "game.iso";
+                    OGfilepath = TempSourcePath + "game.iso";
                 }
             }
             else if (SystemType == "dol")
             {
                 FileSystem.CreateDirectory(TempSourcePath + "TEMPISOBASE");
                 FileSystem.CopyDirectory(TempToolsPath + "BASE", TempSourcePath + "TEMPISOBASE");
-                File.Copy(OpenGame.FileName, TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
+                File.Copy(OGfilepath, TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                 LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
                 LauncherExeArgs = "copy " + TempSourcePath + "TEMPISOBASE" + " --DEST " + TempSourcePath + "game.iso" + " -ovv --links --iso";
                 LaunchProgram();
                 Directory.Delete(TempSourcePath + "TEMPISOBASE", true);
-                OpenGame.FileName = TempSourcePath + "game.iso";
+                OGfilepath = TempSourcePath + "game.iso";
             }
             else if (SystemType == "wiiware")
             {
@@ -1694,7 +1694,7 @@ namespace TeconMoon_s_WiiVC_Injector
                 LauncherExeArgs = "copy " + TempSourcePath + "TEMPISOBASE" + " --DEST " + TempSourcePath + "game.iso" + " -ovv --links --iso";
                 LaunchProgram();
                 Directory.Delete(TempSourcePath + "TEMPISOBASE", true);
-                OpenGame.FileName = TempSourcePath + "game.iso";
+                OGfilepath = TempSourcePath + "game.iso";
             }
             else if (SystemType == "gcn")
             {
@@ -1738,13 +1738,13 @@ namespace TeconMoon_s_WiiVC_Injector
                     BuildStatus.Text = "Unscrubbing game for NFS Conversion...";
                     BuildStatus.Refresh();
                     LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                    LauncherExeArgs = "\"" + OpenGame.FileName;
+                    LauncherExeArgs = "\"" + OGfilepath;
                     LaunchProgram(); // CONVERT TO ISO
                     File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\game.iso");
                 }
                 else
                 {
-                    File.Copy(OpenGame.FileName, TempSourcePath + "TEMPISOBASE\\files\\game.iso");
+                    File.Copy(OGfilepath, TempSourcePath + "TEMPISOBASE\\files\\game.iso");
                 }
 
                 if (FlagGC2Specified)
@@ -1771,11 +1771,11 @@ namespace TeconMoon_s_WiiVC_Injector
                 LauncherExeArgs = "copy " + TempSourcePath + "TEMPISOBASE" + " --DEST " + TempSourcePath + "game.iso" + " -ovv --links --iso";
                 LaunchProgram(); // BUILD FINAL GAMECUBE ISO
                 Directory.Delete(TempSourcePath + "TEMPISOBASE", true);
-                OpenGame.FileName = TempSourcePath + "game.iso";
+                OGfilepath = TempSourcePath + "game.iso";
             }
         
             LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
-            LauncherExeArgs = "extract " + OpenGame.FileName + " --psel data --psel -update --files +tmd.bin --files +ticket.bin --dest " + TempSourcePath + "TIKTEMP" + " -vv1";
+            LauncherExeArgs = "extract " + OGfilepath + " --psel data --psel -update --files +tmd.bin --files +ticket.bin --dest " + TempSourcePath + "TIKTEMP" + " -vv1";
             LaunchProgram();
             File.Copy(TempSourcePath + "TIKTEMP\\tmd.bin", TempBuildPath + "code\\rvlt.tmd");
             File.Copy(TempSourcePath + "TIKTEMP\\ticket.bin", TempBuildPath + "code\\rvlt.tik");
@@ -1794,26 +1794,26 @@ namespace TeconMoon_s_WiiVC_Injector
             switch (SystemType)
             {
                 case "wii":
-                    LauncherExeArgs = "-enc" + nfspatchflag + lrpatchflag + " -iso \"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "-enc" + nfspatchflag + lrpatchflag + " -iso \"" + OGfilepath + "\"";
                     break;
 
                 case "dol":
-                    LauncherExeArgs = "-enc -homebrew" + (DisablePassthrough.Checked ? "" : "-passthrough") + " -iso \"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "-enc -homebrew" + (DisablePassthrough.Checked ? "" : "-passthrough") + " -iso \"" + OGfilepath + "\"";
                     break;
 
                 case "wiiware":
-                    LauncherExeArgs = "-enc -homebrew" + nfspatchflag + lrpatchflag + " -iso \"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "-enc -homebrew" + nfspatchflag + lrpatchflag + " -iso \"" + OGfilepath + "\"";
                     break;
 
                 case "gcn":
-                    LauncherExeArgs = "-enc -homebrew -passthrough -iso \"" + OpenGame.FileName + "\"";
+                    LauncherExeArgs = "-enc -homebrew -passthrough -iso \"" + OGfilepath + "\"";
                     break;
             }
             LaunchProgram();
 
             if ((DisableTrimming.Checked == false) || (FlagWBFS))
             {
-                File.Delete(OpenGame.FileName);
+                File.Delete(OGfilepath);
             }
             BuildProgress.Value = 85;
             ///////////////////////////
@@ -1855,7 +1855,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 Process.Start(outputPath);
             }
 
-            if (OGfilepath != null) { OpenGame.FileName = OGfilepath; }
             BuildStatus.Text = "";
             BuildStatus.Refresh();
             MainTabs.Enabled = true;
