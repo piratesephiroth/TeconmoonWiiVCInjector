@@ -73,12 +73,7 @@ namespace TeconMoon_s_WiiVC_Injector
         bool FlagGameSpecified;
         bool FlagGC2Specified;
         bool FlagBootSoundSpecified;
-        bool BuildFlagSource;
-        bool BuildFlagMeta;
-        bool BuildFlagAdvance = true;
-        bool BuildFlagKeys;
         bool HideProcess = true;
-        int TitleIDInt;
         string CucholixRepoID = "";
         string DRCUSE = "1";
         string nfspatchflag = "";
@@ -254,7 +249,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 SystemType = "wii";
                 GameNameLabel.Text = "";
                 TitleIDLabel.Text = "";
-                TitleIDInt = 0;
                 TitleIDHex = "";
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
@@ -307,7 +301,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 SystemType = "dol";
                 GameNameLabel.Text = "";
                 TitleIDLabel.Text = "";
-                TitleIDInt = 0;
                 TitleIDHex = "";
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
@@ -357,7 +350,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 OpenGame.FileName = "NULL";
                 GameNameLabel.Text = "";
                 TitleIDLabel.Text = "";
-                TitleIDInt = 0;
                 TitleIDHex = "";
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
@@ -456,7 +448,6 @@ namespace TeconMoon_s_WiiVC_Injector
                 SystemType = "gcn";
                 GameNameLabel.Text = "";
                 TitleIDLabel.Text = "";
-                TitleIDInt = 0;
                 TitleIDHex = "";
                 CucholixRepoID = "";
                 PackedTitleLine1.Text = "";
@@ -567,20 +558,14 @@ namespace TeconMoon_s_WiiVC_Injector
             Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
 
             //Final check for if all requirements are good
-            if (FlagGameSpecified && (IconPreviewBox.Image != null) && (BannerPreviewBox.Image != null))
-            {
-                SourceCheck.ForeColor = Color.Green;
-                BuildFlagSource = true;
-            }
-            else
-            {
-                SourceCheck.ForeColor = Color.Red;
-                BuildFlagSource = false;
-            }
 
-            BuildFlagMeta = (PackedTitleLine1.Text != "" & PackedTitleIDLine.TextLength == 16);
+            bool BuildFlagSource = (FlagGameSpecified && (IconPreviewBox.Image != null) && (BannerPreviewBox.Image != null));
+            SourceCheck.ForeColor = BuildFlagSource ? Color.Green : Color.Red;
+
+            bool BuildFlagMeta = (PackedTitleLine1.Text != "" & PackedTitleIDLine.TextLength == 16);
             MetaCheck.ForeColor = BuildFlagMeta ? Color.Green : Color.Red;
 
+            bool BuildFlagAdvance;
             if (CustomMainDol.Checked == false)
                 BuildFlagAdvance = true;
             else
@@ -588,7 +573,7 @@ namespace TeconMoon_s_WiiVC_Injector
 
             AdvanceCheck.ForeColor = BuildFlagAdvance ? Color.Green : Color.Red;
 
-            BuildFlagKeys = (WiiUCommonKey.ReadOnly && TitleKey.ReadOnly && AncastKey.ReadOnly);
+            bool BuildFlagKeys = (WiiUCommonKey.ReadOnly && TitleKey.ReadOnly && AncastKey.ReadOnly);
             KeysCheck.ForeColor = BuildFlagKeys ? Color.Green : Color.Red;
 
             //Enable Build Button
@@ -609,6 +594,7 @@ namespace TeconMoon_s_WiiVC_Injector
         //Events for the "Required Source Files" Tab
         private void GameSourceButton_Click(object sender, EventArgs e)
         {
+            int TitleIDInt = 0;
             long GameType = 0;
             if (OpenGame.ShowDialog() == DialogResult.OK)
             {
@@ -748,7 +734,6 @@ namespace TeconMoon_s_WiiVC_Injector
             FlagGameSpecified = false;
             GameNameLabel.Text = "";
             TitleIDLabel.Text = "";
-            TitleIDInt = 0;
             TitleIDHex = "";
             CucholixRepoID = "";
             PackedTitleLine1.Text = "";
