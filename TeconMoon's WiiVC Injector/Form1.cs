@@ -150,10 +150,10 @@ namespace TeconMoon_s_WiiVC_Injector
             BannerSourceDirectory.ForeColor = Color.Red;
         }
 
-        public void DownloadFromRepo(string cucholixRepoID)
+        public void DownloadFromRepo(string RepoID)
         {
             var client = new WebClient();
-            client.BaseAddress = Properties.Settings.Default.BannersRepository + SystemType + "/" + cucholixRepoID + "/";
+            client.BaseAddress = Properties.Settings.Default.BannersRepository + SystemType + "/" + RepoID + "/";
 
             string filename = "iconTex.png";
             string pathname = TempRootPath + filename;
@@ -230,253 +230,225 @@ namespace TeconMoon_s_WiiVC_Injector
                 Directory.Delete(TempRootPath, true);
         }
 
+        private void SystemType_Common_Checked()
+        {
+            GameSourceDirectory.Text = "Game file has not been specified";
+            GameSourceDirectory.ForeColor = Color.Red;
+            FlagGameSpecified = false;
+
+            GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
+            GC2SourceDirectory.ForeColor = Color.Red;
+            FlagGC2Specified = false;
+
+            GameNameLabel.Text = "";
+            TitleIDLabel.Text = "";
+            TitleIDHex = "";
+            PackedTitleLine1.Text = "";
+            PackedTitleIDLine.Text = "";
+            CucholixRepoID = "";
+            RepoDownload.Enabled = false;
+        }
+
         //Radio Buttons for desired injection type (Check with Alan on having one command to clear variables instead of specifying them all 4 times)
         private void WiiRetail_CheckedChanged(object sender, EventArgs e)
         {
-            if (WiiRetail.Checked)
+            if (WiiRetail.Checked == false) return;
+
+            SystemType_Common_Checked();
+
+            WiiVMC.Enabled = true;
+            Wiimmfi.Enabled = true;
+            GameSourceButton.Enabled = true;
+            GameSourceButton.Text = "Game...";
+            OpenGame.Filter = "Wii Dumps (*.iso,*.wbfs,*.iso.dec)|*.iso;*.wbfs;*.iso.dec";
+            SystemType = "wii";
+            GC2SourceButton.Enabled = false;
+            if (NoGamePadEmu.Checked == false & CCEmu.Checked == false & HorWiiMote.Checked == false & VerWiiMote.Checked == false & ForceCC.Checked == false & ForceNoCC.Checked == false)
             {
-                WiiVMC.Enabled = true;
-                Wiimmfi.Enabled = true;
-                RepoDownload.Enabled = true;
-                GameSourceButton.Enabled = true;
-                GameSourceButton.Text = "Game...";
-                OpenGame.FileName = "game";
-                OpenGame.Filter = "Wii Dumps (*.iso,*.wbfs,*.iso.dec)|*.iso;*.wbfs;*.iso.dec";
-                GameSourceDirectory.Text = "Game file has not been specified";
-                GameSourceDirectory.ForeColor = Color.Red;
-                FlagGameSpecified = false;
-                SystemType = "wii";
-                GameNameLabel.Text = "";
-                TitleIDLabel.Text = "";
-                TitleIDHex = "";
-                CucholixRepoID = "";
-                PackedTitleLine1.Text = "";
-                PackedTitleIDLine.Text = "";
-                GC2SourceButton.Enabled = false;
-                GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
-                GC2SourceDirectory.ForeColor = Color.Red;
-                FlagGC2Specified = false;
-                if (NoGamePadEmu.Checked == false & CCEmu.Checked == false & HorWiiMote.Checked == false & VerWiiMote.Checked == false & ForceCC.Checked == false & ForceNoCC.Checked == false)
-                {
-                    NoGamePadEmu.Checked = true;
-                    GamePadEmuLayout.Enabled = true;
-                    DRCUSE = "1";
-                }
-                Force43NINTENDONT.Checked = false;
-                Force43NINTENDONT.Enabled = false;
-                ForceInterlacedNINTENDONT.Checked = false;
-                ForceInterlacedNINTENDONT.Enabled = false;
-                CustomMainDol.Checked = false;
-                CustomMainDol.Enabled = false;
-                DisableNintendontAutoboot.Checked = false;
-                DisableNintendontAutoboot.Enabled = false;
-                DisablePassthrough.Checked = false;
-                DisablePassthrough.Enabled = false;
-                DisableGamePad.Checked = false;
-                DisableGamePad.Enabled = false;
-                C2WPatchFlag.Checked = false;
-                C2WPatchFlag.Enabled = false;
-                if (ForceCC.Checked) { DisableTrimming.Checked = false; DisableTrimming.Enabled = false; } else { DisableTrimming.Enabled = true; }
-                Force43NAND.Checked = false;
-                Force43NAND.Enabled = false;
+                NoGamePadEmu.Checked = true;
+                GamePadEmuLayout.Enabled = true;
+                DRCUSE = "1";
             }
+            Force43NINTENDONT.Checked = false;
+            Force43NINTENDONT.Enabled = false;
+            ForceInterlacedNINTENDONT.Checked = false;
+            ForceInterlacedNINTENDONT.Enabled = false;
+            CustomMainDol.Checked = false;
+            CustomMainDol.Enabled = false;
+            DisableNintendontAutoboot.Checked = false;
+            DisableNintendontAutoboot.Enabled = false;
+            DisablePassthrough.Checked = false;
+            DisablePassthrough.Enabled = false;
+            DisableGamePad.Checked = false;
+            DisableGamePad.Enabled = false;
+            C2WPatchFlag.Checked = false;
+            C2WPatchFlag.Enabled = false;
+            if (ForceCC.Checked) { DisableTrimming.Checked = false; DisableTrimming.Enabled = false; } else { DisableTrimming.Enabled = true; }
+            Force43NAND.Checked = false;
+            Force43NAND.Enabled = false;
         }
+
         private void WiiHomebrew_CheckedChanged(object sender, EventArgs e)
         {
-            if (WiiHomebrew.Checked)
-            {
-                WiiVMC.Checked = false;
-                WiiVMC.Enabled = false;
-                Wiimmfi.Checked = false;
-                Wiimmfi.Enabled = false;
-                RepoDownload.Enabled = false;
-                GameSourceButton.Enabled = true;
-                GameSourceButton.Text = "Game...";
-                OpenGame.FileName = "boot.dol";
-                OpenGame.Filter = "DOL Files (*.dol)|*.dol";
-                GameSourceDirectory.Text = "Game file has not been specified";
-                GameSourceDirectory.ForeColor = Color.Red;
-                FlagGameSpecified = false;
-                SystemType = "dol";
-                GameNameLabel.Text = "";
-                TitleIDLabel.Text = "";
-                TitleIDHex = "";
-                CucholixRepoID = "";
-                PackedTitleLine1.Text = "";
-                PackedTitleIDLine.Text = "";
-                DRCUSE = "65537";
-                GC2SourceButton.Enabled = false;
-                GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
-                GC2SourceDirectory.ForeColor = Color.Red;
-                FlagGC2Specified = false;
-                NoGamePadEmu.Checked = false;
-                CCEmu.Checked = false;
-                HorWiiMote.Checked = false;
-                VerWiiMote.Checked = false;
-                ForceCC.Checked = false;
-                ForceNoCC.Checked = false;
-                GamePadEmuLayout.Enabled = false;
-                LRPatch.Checked = false;
-                LRPatch.Enabled = false;
-                Force43NINTENDONT.Checked = false;
-                Force43NINTENDONT.Enabled = false;
-                ForceInterlacedNINTENDONT.Checked = false;
-                ForceInterlacedNINTENDONT.Enabled = false;
-                CustomMainDol.Checked = false;
-                CustomMainDol.Enabled = false;
-                DisableNintendontAutoboot.Checked = false;
-                DisableNintendontAutoboot.Enabled = false;
-                DisablePassthrough.Enabled = true;
-                DisableGamePad.Enabled = true;
-                C2WPatchFlag.Enabled = true;
-                DisableTrimming.Checked = false;
-                DisableTrimming.Enabled = false;
-                Force43NAND.Checked = false;
-                Force43NAND.Enabled = false;
-            }
+            if (WiiHomebrew.Checked == false) return;
+            SystemType_Common_Checked();
+
+            WiiVMC.Checked = false;
+            WiiVMC.Enabled = false;
+            Wiimmfi.Checked = false;
+            Wiimmfi.Enabled = false;
+            GameSourceButton.Enabled = true;
+            GameSourceButton.Text = "Game...";
+            OpenGame.FileName = "boot.dol";
+            OpenGame.Filter = "DOL Files (*.dol)|*.dol";
+            SystemType = "dol";
+            DRCUSE = "65537";
+            GC2SourceButton.Enabled = false;
+            NoGamePadEmu.Checked = false;
+            CCEmu.Checked = false;
+            HorWiiMote.Checked = false;
+            VerWiiMote.Checked = false;
+            ForceCC.Checked = false;
+            ForceNoCC.Checked = false;
+            GamePadEmuLayout.Enabled = false;
+            LRPatch.Checked = false;
+            LRPatch.Enabled = false;
+            Force43NINTENDONT.Checked = false;
+            Force43NINTENDONT.Enabled = false;
+            ForceInterlacedNINTENDONT.Checked = false;
+            ForceInterlacedNINTENDONT.Enabled = false;
+            CustomMainDol.Checked = false;
+            CustomMainDol.Enabled = false;
+            DisableNintendontAutoboot.Checked = false;
+            DisableNintendontAutoboot.Enabled = false;
+            DisablePassthrough.Enabled = true;
+            DisableGamePad.Enabled = true;
+            C2WPatchFlag.Enabled = true;
+            DisableTrimming.Checked = false;
+            DisableTrimming.Enabled = false;
+            Force43NAND.Checked = false;
+            Force43NAND.Enabled = false;
         }
+
         private void WiiNAND_CheckedChanged(object sender, EventArgs e)
         {
-            if (WiiNAND.Checked)
+            if (WiiNAND.Checked == false) return;
+            SystemType_Common_Checked();
+
+            WiiVMC.Checked = false;
+            WiiVMC.Enabled = false;
+            Wiimmfi.Checked = false;
+            Wiimmfi.Enabled = false;
+            GameSourceButton.Enabled = false;
+            GameSourceButton.Text = "TitleID...";
+            GC2SourceButton.Enabled = false;
+            Force43NINTENDONT.Checked = false;
+            Force43NINTENDONT.Enabled = false;
+            ForceInterlacedNINTENDONT.Checked = false;
+            ForceInterlacedNINTENDONT.Enabled = false;
+            CustomMainDol.Checked = false;
+            CustomMainDol.Enabled = false;
+            DisableNintendontAutoboot.Checked = false;
+            DisableNintendontAutoboot.Enabled = false;
+            DisablePassthrough.Checked = false;
+            DisablePassthrough.Enabled = false;
+            DisableGamePad.Checked = false;
+            DisableGamePad.Enabled = false;
+            C2WPatchFlag.Checked = false;
+            C2WPatchFlag.Enabled = false;
+            DisableTrimming.Checked = false;
+            DisableTrimming.Enabled = false;
+            Force43NAND.Enabled = true;
+            if (NoGamePadEmu.Checked == false & CCEmu.Checked == false & HorWiiMote.Checked == false & VerWiiMote.Checked == false & ForceCC.Checked == false & ForceNoCC.Checked == false)
             {
-                WiiVMC.Checked = false;
-                WiiVMC.Enabled = false;
-                Wiimmfi.Checked = false;
-                Wiimmfi.Enabled = false;
-                RepoDownload.Enabled = true;
-                GameSourceButton.Enabled = false;
-                GameSourceButton.Text = "TitleID...";
-                OpenGame.FileName = "NULL";
-                GameNameLabel.Text = "";
-                TitleIDLabel.Text = "";
-                TitleIDHex = "";
-                CucholixRepoID = "";
-                PackedTitleLine1.Text = "";
-                PackedTitleIDLine.Text = "";
-                GC2SourceButton.Enabled = false;
-                GC2SourceDirectory.Text = "2nd GameCube Disc Image has not been specified";
-                GC2SourceDirectory.ForeColor = Color.Red;
-                FlagGC2Specified = false;
-                Force43NINTENDONT.Checked = false;
-                Force43NINTENDONT.Enabled = false;
-                ForceInterlacedNINTENDONT.Checked = false;
-                ForceInterlacedNINTENDONT.Enabled = false;
-                CustomMainDol.Checked = false;
-                CustomMainDol.Enabled = false;
-                DisableNintendontAutoboot.Checked = false;
-                DisableNintendontAutoboot.Enabled = false;
-                DisablePassthrough.Checked = false;
-                DisablePassthrough.Enabled = false;
-                DisableGamePad.Checked = false;
-                DisableGamePad.Enabled = false;
-                C2WPatchFlag.Checked = false;
-                C2WPatchFlag.Enabled = false;
-                DisableTrimming.Checked = false;
-                DisableTrimming.Enabled = false;
-                Force43NAND.Enabled = true;
-                if (NoGamePadEmu.Checked == false & CCEmu.Checked == false & HorWiiMote.Checked == false & VerWiiMote.Checked == false & ForceCC.Checked == false & ForceNoCC.Checked == false)
+                NoGamePadEmu.Checked = true;
+                GamePadEmuLayout.Enabled = true;
+                DRCUSE = "1";
+            }
+
+            /* Loop until the loop is broken by entering a blank ID or 4 characters */
+            while (true)
+            {
+                GameSourceDirectory.Text = Microsoft.VisualBasic.Interaction.InputBox("Enter your installed Wii Channel's 4-letter Title ID. If you don't know it, open a WAD for the channel in something like ShowMiiWads to view it.", "Enter your WAD's Title ID", "XXXX", 0, 0);
+
+                if (GameSourceDirectory.Text.Length == 0)
                 {
-                    NoGamePadEmu.Checked = true;
-                    GamePadEmuLayout.Enabled = true;
-                    DRCUSE = "1";
+                    GameSourceDirectory.Text = "Title ID specification cancelled, reselect vWii NAND Title Launcher to specify";
+                    return;
                 }
-
-                /* Loop until the loop is broken by entering a blank ID or 4 characters */
-                while (true)
+                else if (GameSourceDirectory.Text.Length == 4)
                 {
-                    GameSourceDirectory.Text = Microsoft.VisualBasic.Interaction.InputBox("Enter your installed Wii Channel's 4-letter Title ID. If you don't know it, open a WAD for the channel in something like ShowMiiWads to view it.", "Enter your WAD's Title ID", "XXXX", 0, 0);
+                    GameSourceDirectory.ForeColor = Color.Black;
+                    GameSourceDirectory.Text = GameSourceDirectory.Text.ToUpper();
+                    FlagGameSpecified = true;
 
-                    if (GameSourceDirectory.Text.Length == 0)
+                    SystemType = "wiiware";
+                    GameNameLabel.Text = "N/A";
+                    TitleIDLabel.Text = "N/A";
+                    TitleIDText = GameSourceDirectory.Text;
+                    CucholixRepoID = GameSourceDirectory.Text;
+                    RepoDownload.Enabled = true;
+
+                    char[] HexIDBuild = GameSourceDirectory.Text.ToCharArray();
+                    StringBuilder stringBuilder = new StringBuilder();
+                    foreach (char c in HexIDBuild)
                     {
-                        GameSourceDirectory.ForeColor = Color.Red;
-                        GameSourceDirectory.Text = "Title ID specification cancelled, reselect vWii NAND Title Launcher to specify";
-                        FlagGameSpecified = false;
-                        return;
+                        stringBuilder.Append(((Int16)c).ToString("X"));
                     }
-                    else if (GameSourceDirectory.Text.Length == 4)
-                    {
-                        GameSourceDirectory.ForeColor = Color.Black;
-                        GameSourceDirectory.Text = GameSourceDirectory.Text.ToUpper();
-                        FlagGameSpecified = true;
+                    PackedTitleIDLine.Text = "00050002" + stringBuilder.ToString();
 
-                        SystemType = "wiiware";
-                        GameNameLabel.Text = "N/A";
-                        TitleIDLabel.Text = "N/A";
-                        TitleIDText = GameSourceDirectory.Text;
-                        CucholixRepoID = GameSourceDirectory.Text;
-                        char[] HexIDBuild = GameSourceDirectory.Text.ToCharArray();
-                        StringBuilder stringBuilder = new StringBuilder();
-                        foreach (char c in HexIDBuild)
-                        {
-                            stringBuilder.Append(((Int16)c).ToString("X"));
-                        }
-                        PackedTitleIDLine.Text = "00050002" + stringBuilder.ToString();
-
-                        return;
-                    }
-                    else
-                    {
-                        GameSourceDirectory.ForeColor = Color.Red;
-                        GameSourceDirectory.Text = "Invalid Title ID";
-
-                        MessageBox.Show("Only 4 characters can be used, try again. Example: The Star Fox 64 (USA) Channel's Title ID is NADE01, so you would specify NADE as the Title ID"
-                                        , "Invalid Title ID"
-                                        , MessageBoxButtons.OK
-                                        , MessageBoxIcon.Warning);
-                        /* Keep looping */
-                    }
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Only 4 characters can be used, try again. Example: The Star Fox 64 (USA) Channel's Title ID is NADE01, so you would specify NADE as the Title ID"
+                                    , "Invalid Title ID"
+                                    , MessageBoxButtons.OK
+                                    , MessageBoxIcon.Warning);
+                    /* Keep looping */
                 }
             }
         }
+
         private void GCRetail_CheckedChanged(object sender, EventArgs e)
         {
-            if (GCRetail.Checked)
-            {
-                WiiVMC.Checked = false;
-                WiiVMC.Enabled = false;
-                Wiimmfi.Checked = false;
-                Wiimmfi.Enabled = false;
-                RepoDownload.Enabled = true;
-                GameSourceButton.Enabled = true;
-                GameSourceButton.Text = "Game...";
-                OpenGame.FileName = "game";
-                OpenGame.Filter = "GameCube Dumps (*.gcm,*.iso)|*.gcm;*.iso";
-                GameSourceDirectory.Text = "Game file has not been specified";
-                GameSourceDirectory.ForeColor = Color.Red;
-                FlagGameSpecified = false;
-                SystemType = "gcn";
-                GameNameLabel.Text = "";
-                TitleIDLabel.Text = "";
-                TitleIDHex = "";
-                CucholixRepoID = "";
-                PackedTitleLine1.Text = "";
-                PackedTitleIDLine.Text = "";
-                DRCUSE = "65537";
-                GC2SourceButton.Enabled = true;
-                NoGamePadEmu.Checked = false;
-                CCEmu.Checked = false;
-                HorWiiMote.Checked = false;
-                VerWiiMote.Checked = false;
-                ForceCC.Checked = false;
-                ForceNoCC.Checked = false;
-                GamePadEmuLayout.Enabled = false;
-                LRPatch.Checked = false;
-                LRPatch.Enabled = false;
-                Force43NINTENDONT.Enabled = true;
-                ForceInterlacedNINTENDONT.Enabled = true;
-                CustomMainDol.Enabled = true;
-                DisableNintendontAutoboot.Enabled = true;
-                DisablePassthrough.Checked = false;
-                DisablePassthrough.Enabled = false;
-                DisableGamePad.Enabled = true;
-                C2WPatchFlag.Checked = false;
-                C2WPatchFlag.Enabled = false;
-                DisableTrimming.Checked = false;
-                DisableTrimming.Enabled = false;
-                Force43NAND.Checked = false;
-                Force43NAND.Enabled = false;
-            }
+            if (GCRetail.Checked == false) return;
+
+            SystemType_Common_Checked();
+            WiiVMC.Checked = false;
+            WiiVMC.Enabled = false;
+            Wiimmfi.Checked = false;
+            Wiimmfi.Enabled = false;
+            GameSourceButton.Enabled = true;
+            GameSourceButton.Text = "Game...";
+            OpenGame.Filter = "GameCube Dumps (*.gcm,*.iso)|*.gcm;*.iso";
+            SystemType = "gcn";
+            DRCUSE = "65537";
+            GC2SourceButton.Enabled = true;
+            NoGamePadEmu.Checked = false;
+            CCEmu.Checked = false;
+            HorWiiMote.Checked = false;
+            VerWiiMote.Checked = false;
+            ForceCC.Checked = false;
+            ForceNoCC.Checked = false;
+            GamePadEmuLayout.Enabled = false;
+            LRPatch.Checked = false;
+            LRPatch.Enabled = false;
+            Force43NINTENDONT.Enabled = true;
+            ForceInterlacedNINTENDONT.Enabled = true;
+            CustomMainDol.Enabled = true;
+            DisableNintendontAutoboot.Enabled = true;
+            DisablePassthrough.Checked = false;
+            DisablePassthrough.Enabled = false;
+            DisableGamePad.Enabled = true;
+            C2WPatchFlag.Checked = false;
+            C2WPatchFlag.Enabled = false;
+            DisableTrimming.Checked = false;
+            DisableTrimming.Enabled = false;
+            Force43NAND.Checked = false;
+            Force43NAND.Enabled = false;
         }
+
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             using (var settingsForm = new SettingsForm())
@@ -629,6 +601,8 @@ namespace TeconMoon_s_WiiVC_Injector
 
                         reader.BaseStream.Position = 0x200;
                         CucholixRepoID = readerReadString(reader);
+
+                        RepoDownload.Enabled = true;
                     }
                     else
                     {
@@ -668,8 +642,10 @@ namespace TeconMoon_s_WiiVC_Injector
                             reader.BaseStream.Position = startOffset + 0x00;
                             CucholixRepoID = readerReadString(reader);
 
+                            RepoDownload.Enabled = true;
+
                             // NKIT check
-                            if(!FlagNASOS)
+                            if (!FlagNASOS)
                             {
                                 reader.BaseStream.Position = 0x200;
                                 /* TODO: It should be possible to replace this with ReadChars(4), 
@@ -685,17 +661,9 @@ namespace TeconMoon_s_WiiVC_Injector
                     }
                 }
 
-                //Flag if GameType Int doesn't match current SystemType
-                if ((SystemType == "wii" && GameType != 2745048157) ||
-                    (SystemType == "gcn" && GameType != 4440324665927270400))
-                {
-                    MessageBox.Show("This is not a valid " + SystemType +" image. It will not be loaded."
-                                    , "Error"
-                                    , MessageBoxButtons.OK
-                                    , MessageBoxIcon.Error);
-                    /* Fall through to the fail state on the outside of all the if blocks */
-                }
-                else
+                //Ensure GameType matches SystemType
+                if ((SystemType == "wii" && GameType == 2745048157) ||
+                    (SystemType == "gcn" && GameType == 4440324665927270400))
                 {
                     GameNameLabel.Text = InternalGameName;
                     var GameTitle = StringUtil.RemoveSpecialChars(GameTdb.GetName(CucholixRepoID));
@@ -725,6 +693,14 @@ namespace TeconMoon_s_WiiVC_Injector
                     FlagGameSpecified = true;
                     return;
                 }
+                else
+                {
+                    MessageBox.Show("This is not a valid " + SystemType + " image. It will not be loaded."
+                                    , "Error"
+                                    , MessageBoxButtons.OK
+                                    , MessageBoxIcon.Error);
+                    /* Fall through to the fail state on the outside of all the if blocks */
+                }
             }
 
             /* The success state returns on its own, but all others will reach here */
@@ -735,6 +711,7 @@ namespace TeconMoon_s_WiiVC_Injector
             TitleIDLabel.Text = "";
             TitleIDHex = "";
             CucholixRepoID = "";
+            RepoDownload.Enabled = false;
             PackedTitleLine1.Text = "";
             PackedTitleIDLine.Text = "";
 
@@ -797,40 +774,23 @@ namespace TeconMoon_s_WiiVC_Injector
         }
         private void RepoDownload_Click(object sender, EventArgs e)
         {
-            if (CucholixRepoID == "")
-            {
-                MessageBox.Show("Please select your game before using this option"
-                                , "No game specified"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information);
-            }
-            else
-            {
-                if (!TryDownloadImages(CucholixRepoID))
-                {
-                    if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
-                                        , "Game not found on Repo"
-                                        , MessageBoxButtons.YesNo
-                                        , MessageBoxIcon.Asterisk) == DialogResult.Yes)
-                    {
-                        Process.Start("https://gbatemp.net/threads/483080/");
-                    }
-                }
-            }
-        }
-
-        private bool TryDownloadImages(string cucholixRepoID)
-        {
-            IEnumerable<string> ids = GameTdb.GetAlternativeIds(cucholixRepoID);
+            IEnumerable<string> ids = GameTdb.GetAlternativeIds(CucholixRepoID);
             foreach (var id in ids)
             {
                 if (RemoteFileExists(Properties.Settings.Default.BannersRepository + SystemType + "/" + id + "/iconTex.png"))
                 {
                     DownloadFromRepo(id);
-                    return true;
+                    return;
                 }
             }
-            return false;
+
+            if (MessageBox.Show("Cucholix's Repo does not have assets for your game. You will need to provide your own. Would you like to visit the GBAtemp request thread?"
+                    , "Game not found on Repo"
+                    , MessageBoxButtons.YesNo
+                    , MessageBoxIcon.Asterisk) == DialogResult.Yes)
+            {
+                Process.Start("https://gbatemp.net/threads/483080/");
+            }
         }
 
         //Events for the "Optional Source Files" Tab

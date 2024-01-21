@@ -84,21 +84,29 @@
             this.PackedTitleLine1 = new System.Windows.Forms.TextBox();
             this.PackedTitleText = new System.Windows.Forms.Label();
             this.AdvancedTab = new System.Windows.Forms.TabPage();
-            this.DisableGamePad = new System.Windows.Forms.CheckBox();
-            this.SaveAncastKeyButton = new System.Windows.Forms.Button();
-            this.DisableNintendontAutoboot = new System.Windows.Forms.CheckBox();
+            this.wii_panel = new System.Windows.Forms.Panel();
+            this.Wiimmfi = new System.Windows.Forms.CheckBox();
+            this.WiiVMC = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.DisableTrimming = new System.Windows.Forms.CheckBox();
+            this.Force43NAND = new System.Windows.Forms.CheckBox();
+            this.dol_panel = new System.Windows.Forms.Panel();
+            this.AdvancedLabel1 = new System.Windows.Forms.Label();
             this.DisablePassthrough = new System.Windows.Forms.CheckBox();
-            this.MainDolLabel = new System.Windows.Forms.Label();
-            this.CustomMainDol = new System.Windows.Forms.CheckBox();
-            this.MainDolSourceButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Force43NINTENDONT = new System.Windows.Forms.CheckBox();
-            this.ForceInterlacedNINTENDONT = new System.Windows.Forms.CheckBox();
-            this.sign_c2w_patcher_link = new System.Windows.Forms.LinkLabel();
-            this.AdvancedLabel2 = new System.Windows.Forms.Label();
+            this.DisableGamePad = new System.Windows.Forms.CheckBox();
             this.C2WPatchFlag = new System.Windows.Forms.CheckBox();
             this.AncastKey = new System.Windows.Forms.TextBox();
-            this.AdvancedLabel1 = new System.Windows.Forms.Label();
+            this.SaveAncastKeyButton = new System.Windows.Forms.Button();
+            this.AdvancedLabel2 = new System.Windows.Forms.Label();
+            this.sign_c2w_patcher_link = new System.Windows.Forms.LinkLabel();
+            this.gcn_panel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Force43NINTENDONT = new System.Windows.Forms.CheckBox();
+            this.CustomMainDol = new System.Windows.Forms.CheckBox();
+            this.DisableNintendontAutoboot = new System.Windows.Forms.CheckBox();
+            this.ForceInterlacedNINTENDONT = new System.Windows.Forms.CheckBox();
+            this.MainDolLabel = new System.Windows.Forms.Label();
+            this.MainDolSourceButton = new System.Windows.Forms.Button();
             this.BuildTab = new System.Windows.Forms.TabPage();
             this.AdvanceCheck = new System.Windows.Forms.Label();
             this.BuildStatus = new System.Windows.Forms.Label();
@@ -129,14 +137,6 @@
             this.OpenGC2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
-            this.gcn_panel = new System.Windows.Forms.Panel();
-            this.dol_panel = new System.Windows.Forms.Panel();
-            this.wii_panel = new System.Windows.Forms.Panel();
-            this.Wiimmfi = new System.Windows.Forms.CheckBox();
-            this.WiiVMC = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.DisableTrimming = new System.Windows.Forms.CheckBox();
-            this.Force43NAND = new System.Windows.Forms.CheckBox();
             this.MainTableLayout.SuspendLayout();
             this.MainTabs.SuspendLayout();
             this.SourceFilesTab.SuspendLayout();
@@ -148,10 +148,10 @@
             this.MetaTab.SuspendLayout();
             this.GamePadEmuLayout.SuspendLayout();
             this.AdvancedTab.SuspendLayout();
-            this.BuildTab.SuspendLayout();
-            this.gcn_panel.SuspendLayout();
-            this.dol_panel.SuspendLayout();
             this.wii_panel.SuspendLayout();
+            this.dol_panel.SuspendLayout();
+            this.gcn_panel.SuspendLayout();
+            this.BuildTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTableLayout
@@ -238,6 +238,7 @@
             // RepoDownload
             // 
             this.RepoDownload.BackColor = System.Drawing.Color.Silver;
+            this.RepoDownload.Enabled = false;
             this.RepoDownload.Location = new System.Drawing.Point(12, 215);
             this.RepoDownload.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RepoDownload.Name = "RepoDownload";
@@ -430,10 +431,10 @@
             this.SourceFilesTab2.Controls.Add(this.DrcSourceButton);
             this.SourceFilesTab2.Controls.Add(this.BootSoundPreviewButton);
             this.SourceFilesTab2.Location = new System.Drawing.Point(4, 29);
-            this.SourceFilesTab2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.SourceFilesTab2.Margin = new System.Windows.Forms.Padding(6);
             this.SourceFilesTab2.Name = "SourceFilesTab2";
-            this.SourceFilesTab2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.SourceFilesTab2.Size = new System.Drawing.Size(710, 538);
+            this.SourceFilesTab2.Padding = new System.Windows.Forms.Padding(6);
+            this.SourceFilesTab2.Size = new System.Drawing.Size(712, 538);
             this.SourceFilesTab2.TabIndex = 5;
             this.SourceFilesTab2.Text = "Optional Source Files";
             // 
@@ -634,10 +635,10 @@
             this.MetaTab.Controls.Add(this.PackedTitleLine1);
             this.MetaTab.Controls.Add(this.PackedTitleText);
             this.MetaTab.Location = new System.Drawing.Point(4, 29);
-            this.MetaTab.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.MetaTab.Margin = new System.Windows.Forms.Padding(6);
             this.MetaTab.Name = "MetaTab";
-            this.MetaTab.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.MetaTab.Size = new System.Drawing.Size(710, 538);
+            this.MetaTab.Padding = new System.Windows.Forms.Padding(6);
+            this.MetaTab.Size = new System.Drawing.Size(712, 538);
             this.MetaTab.TabIndex = 2;
             this.MetaTab.Text = "GamePad/Meta Options";
             // 
@@ -853,49 +854,106 @@
             this.AdvancedTab.Controls.Add(this.dol_panel);
             this.AdvancedTab.Controls.Add(this.gcn_panel);
             this.AdvancedTab.Location = new System.Drawing.Point(4, 29);
-            this.AdvancedTab.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.AdvancedTab.Margin = new System.Windows.Forms.Padding(6);
             this.AdvancedTab.Name = "AdvancedTab";
-            this.AdvancedTab.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.AdvancedTab.Padding = new System.Windows.Forms.Padding(6);
             this.AdvancedTab.Size = new System.Drawing.Size(712, 538);
             this.AdvancedTab.TabIndex = 3;
             this.AdvancedTab.Text = "Advanced";
             // 
-            // DisableGamePad
+            // wii_panel
             // 
-            this.DisableGamePad.AutoSize = true;
-            this.DisableGamePad.Location = new System.Drawing.Point(4, 62);
-            this.DisableGamePad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.DisableGamePad.Name = "DisableGamePad";
-            this.DisableGamePad.Size = new System.Drawing.Size(449, 24);
-            this.DisableGamePad.TabIndex = 25;
-            this.DisableGamePad.Text = "Don\'t use GamePad as controller (Won\'t prompt for usage)";
-            this.DisableGamePad.UseVisualStyleBackColor = true;
-            this.DisableGamePad.CheckedChanged += new System.EventHandler(this.DisableGamePad_CheckedChanged);
+            this.wii_panel.Controls.Add(this.Wiimmfi);
+            this.wii_panel.Controls.Add(this.WiiVMC);
+            this.wii_panel.Controls.Add(this.label2);
+            this.wii_panel.Controls.Add(this.DisableTrimming);
+            this.wii_panel.Controls.Add(this.Force43NAND);
+            this.wii_panel.Location = new System.Drawing.Point(15, 367);
+            this.wii_panel.Name = "wii_panel";
+            this.wii_panel.Size = new System.Drawing.Size(683, 135);
+            this.wii_panel.TabIndex = 30;
             // 
-            // SaveAncastKeyButton
+            // Wiimmfi
             // 
-            this.SaveAncastKeyButton.BackColor = System.Drawing.Color.Silver;
-            this.SaveAncastKeyButton.Enabled = false;
-            this.SaveAncastKeyButton.Location = new System.Drawing.Point(413, 124);
-            this.SaveAncastKeyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.SaveAncastKeyButton.Name = "SaveAncastKeyButton";
-            this.SaveAncastKeyButton.Size = new System.Drawing.Size(94, 35);
-            this.SaveAncastKeyButton.TabIndex = 23;
-            this.SaveAncastKeyButton.Text = "Save Key";
-            this.SaveAncastKeyButton.UseVisualStyleBackColor = false;
-            this.SaveAncastKeyButton.Click += new System.EventHandler(this.SaveAncastKeyButton_Click);
+            this.Wiimmfi.AutoSize = true;
+            this.Wiimmfi.Location = new System.Drawing.Point(4, 104);
+            this.Wiimmfi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Wiimmfi.Name = "Wiimmfi";
+            this.Wiimmfi.Size = new System.Drawing.Size(514, 24);
+            this.Wiimmfi.TabIndex = 32;
+            this.Wiimmfi.Text = "Patch game to use the Wiimmfi server for online play (Wii Retail only)";
+            this.Wiimmfi.UseVisualStyleBackColor = true;
             // 
-            // DisableNintendontAutoboot
+            // WiiVMC
             // 
-            this.DisableNintendontAutoboot.AutoSize = true;
-            this.DisableNintendontAutoboot.Location = new System.Drawing.Point(4, 90);
-            this.DisableNintendontAutoboot.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.DisableNintendontAutoboot.Name = "DisableNintendontAutoboot";
-            this.DisableNintendontAutoboot.Size = new System.Drawing.Size(158, 24);
-            this.DisableNintendontAutoboot.TabIndex = 22;
-            this.DisableNintendontAutoboot.Text = "Disable Autoboot";
-            this.DisableNintendontAutoboot.UseVisualStyleBackColor = true;
-            this.DisableNintendontAutoboot.CheckedChanged += new System.EventHandler(this.NintendontAutoboot_CheckedChanged);
+            this.WiiVMC.AutoSize = true;
+            this.WiiVMC.Location = new System.Drawing.Point(4, 69);
+            this.WiiVMC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.WiiVMC.Name = "WiiVMC";
+            this.WiiVMC.Size = new System.Drawing.Size(652, 24);
+            this.WiiVMC.TabIndex = 31;
+            this.WiiVMC.Text = "Patch video mode with Wii-VMC (Wii Retail only, opens a new window during convers" +
+    "ion)";
+            this.WiiVMC.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(0, 9);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(481, 20);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "Wii Retail Injection / vWii NAND Title Launcher Patches";
+            // 
+            // DisableTrimming
+            // 
+            this.DisableTrimming.AutoSize = true;
+            this.DisableTrimming.Location = new System.Drawing.Point(4, 34);
+            this.DisableTrimming.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DisableTrimming.Name = "DisableTrimming";
+            this.DisableTrimming.Size = new System.Drawing.Size(309, 24);
+            this.DisableTrimming.TabIndex = 29;
+            this.DisableTrimming.Text = "Don\'t trim game output (Wii Retail only)";
+            this.DisableTrimming.UseVisualStyleBackColor = true;
+            // 
+            // Force43NAND
+            // 
+            this.Force43NAND.AutoSize = true;
+            this.Force43NAND.Location = new System.Drawing.Point(325, 34);
+            this.Force43NAND.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Force43NAND.Name = "Force43NAND";
+            this.Force43NAND.Size = new System.Drawing.Size(266, 24);
+            this.Force43NAND.TabIndex = 28;
+            this.Force43NAND.Text = "Force 4:3 (vWii NAND Titles only)";
+            this.Force43NAND.UseVisualStyleBackColor = true;
+            // 
+            // dol_panel
+            // 
+            this.dol_panel.Controls.Add(this.AdvancedLabel1);
+            this.dol_panel.Controls.Add(this.DisablePassthrough);
+            this.dol_panel.Controls.Add(this.DisableGamePad);
+            this.dol_panel.Controls.Add(this.C2WPatchFlag);
+            this.dol_panel.Controls.Add(this.AncastKey);
+            this.dol_panel.Controls.Add(this.SaveAncastKeyButton);
+            this.dol_panel.Controls.Add(this.AdvancedLabel2);
+            this.dol_panel.Controls.Add(this.sign_c2w_patcher_link);
+            this.dol_panel.Location = new System.Drawing.Point(15, 143);
+            this.dol_panel.Name = "dol_panel";
+            this.dol_panel.Size = new System.Drawing.Size(683, 217);
+            this.dol_panel.TabIndex = 29;
+            // 
+            // AdvancedLabel1
+            // 
+            this.AdvancedLabel1.AutoSize = true;
+            this.AdvancedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AdvancedLabel1.Location = new System.Drawing.Point(0, 8);
+            this.AdvancedLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.AdvancedLabel1.Name = "AdvancedLabel1";
+            this.AdvancedLabel1.Size = new System.Drawing.Size(205, 20);
+            this.AdvancedLabel1.TabIndex = 0;
+            this.AdvancedLabel1.Text = "Wii Homebrew Patches";
             // 
             // DisablePassthrough
             // 
@@ -908,105 +966,17 @@
             this.DisablePassthrough.Text = "Disable Wii Remote passthrough in GamePad mode";
             this.DisablePassthrough.UseVisualStyleBackColor = true;
             // 
-            // MainDolLabel
+            // DisableGamePad
             // 
-            this.MainDolLabel.AutoEllipsis = true;
-            this.MainDolLabel.BackColor = System.Drawing.Color.LightGray;
-            this.MainDolLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.MainDolLabel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MainDolLabel.Location = new System.Drawing.Point(363, 53);
-            this.MainDolLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.MainDolLabel.Name = "MainDolLabel";
-            this.MainDolLabel.Size = new System.Drawing.Size(316, 31);
-            this.MainDolLabel.TabIndex = 18;
-            this.MainDolLabel.Text = "<- Specify custom main.dol file";
-            this.MainDolLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // CustomMainDol
-            // 
-            this.CustomMainDol.AutoSize = true;
-            this.CustomMainDol.Location = new System.Drawing.Point(4, 61);
-            this.CustomMainDol.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.CustomMainDol.Name = "CustomMainDol";
-            this.CustomMainDol.Size = new System.Drawing.Size(301, 24);
-            this.CustomMainDol.TabIndex = 17;
-            this.CustomMainDol.Text = "Specify custom Nintendont Forwarder";
-            this.CustomMainDol.UseVisualStyleBackColor = true;
-            this.CustomMainDol.CheckedChanged += new System.EventHandler(this.CustomMainDol_CheckedChanged);
-            // 
-            // MainDolSourceButton
-            // 
-            this.MainDolSourceButton.AutoSize = true;
-            this.MainDolSourceButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.MainDolSourceButton.BackColor = System.Drawing.Color.LightGray;
-            this.MainDolSourceButton.Enabled = false;
-            this.MainDolSourceButton.Location = new System.Drawing.Point(303, 53);
-            this.MainDolSourceButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MainDolSourceButton.Name = "MainDolSourceButton";
-            this.MainDolSourceButton.Size = new System.Drawing.Size(31, 30);
-            this.MainDolSourceButton.TabIndex = 16;
-            this.MainDolSourceButton.Text = "...";
-            this.MainDolSourceButton.UseVisualStyleBackColor = false;
-            this.MainDolSourceButton.Click += new System.EventHandler(this.MainDolSourceButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 10);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(170, 20);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Nintendont Options";
-            // 
-            // Force43NINTENDONT
-            // 
-            this.Force43NINTENDONT.AutoSize = true;
-            this.Force43NINTENDONT.Location = new System.Drawing.Point(4, 35);
-            this.Force43NINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Force43NINTENDONT.Name = "Force43NINTENDONT";
-            this.Force43NINTENDONT.Size = new System.Drawing.Size(207, 24);
-            this.Force43NINTENDONT.TabIndex = 14;
-            this.Force43NINTENDONT.Text = "Force 4:3 for Nintendont";
-            this.toolTip1.SetToolTip(this.Force43NINTENDONT, "Disables \"Force Widescreen\" and \"WiiU Widescreen\" Flags");
-            this.Force43NINTENDONT.UseVisualStyleBackColor = true;
-            this.Force43NINTENDONT.CheckedChanged += new System.EventHandler(this.Force43NINTENDONT_CheckedChanged);
-            // 
-            // ForceInterlacedNINTENDONT
-            // 
-            this.ForceInterlacedNINTENDONT.AutoSize = true;
-            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(303, 27);
-            this.ForceInterlacedNINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ForceInterlacedNINTENDONT.Name = "ForceInterlacedNINTENDONT";
-            this.ForceInterlacedNINTENDONT.Size = new System.Drawing.Size(254, 24);
-            this.ForceInterlacedNINTENDONT.TabIndex = 14;
-            this.ForceInterlacedNINTENDONT.Text = "Force interlaced for Nintendont";
-            this.toolTip2.SetToolTip(this.ForceInterlacedNINTENDONT, "Disables \"Force Progressive\" Flag");
-            this.ForceInterlacedNINTENDONT.UseVisualStyleBackColor = true;
-            this.ForceInterlacedNINTENDONT.CheckedChanged += new System.EventHandler(this.ForceInterlacedNINTENDONT_CheckedChanged);
-            // 
-            // sign_c2w_patcher_link
-            // 
-            this.sign_c2w_patcher_link.AutoSize = true;
-            this.sign_c2w_patcher_link.Location = new System.Drawing.Point(445, 183);
-            this.sign_c2w_patcher_link.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.sign_c2w_patcher_link.Name = "sign_c2w_patcher_link";
-            this.sign_c2w_patcher_link.Size = new System.Drawing.Size(138, 20);
-            this.sign_c2w_patcher_link.TabIndex = 10;
-            this.sign_c2w_patcher_link.TabStop = true;
-            this.sign_c2w_patcher_link.Text = "sign_c2w_patcher";
-            this.sign_c2w_patcher_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.sign_c2w_patcher_link_LinkClicked);
-            // 
-            // AdvancedLabel2
-            // 
-            this.AdvancedLabel2.Location = new System.Drawing.Point(4, 163);
-            this.AdvancedLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.AdvancedLabel2.Name = "AdvancedLabel2";
-            this.AdvancedLabel2.Size = new System.Drawing.Size(637, 49);
-            this.AdvancedLabel2.TabIndex = 4;
-            this.AdvancedLabel2.Text = "cafe2wii patching unlocks the vWii clock speed for supported homebrew like WiiSXR" +
-    " or Nintendont. cafe2wii patched titles MUST be launched using:";
+            this.DisableGamePad.AutoSize = true;
+            this.DisableGamePad.Location = new System.Drawing.Point(4, 62);
+            this.DisableGamePad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DisableGamePad.Name = "DisableGamePad";
+            this.DisableGamePad.Size = new System.Drawing.Size(449, 24);
+            this.DisableGamePad.TabIndex = 25;
+            this.DisableGamePad.Text = "Don\'t use GamePad as controller (Won\'t prompt for usage)";
+            this.DisableGamePad.UseVisualStyleBackColor = true;
+            this.DisableGamePad.CheckedChanged += new System.EventHandler(this.DisableGamePad_CheckedChanged);
             // 
             // C2WPatchFlag
             // 
@@ -1032,16 +1002,144 @@
             this.AncastKey.TabIndex = 2;
             this.AncastKey.Text = "Wii U Starbuck Ancast Key Required";
             // 
-            // AdvancedLabel1
+            // SaveAncastKeyButton
             // 
-            this.AdvancedLabel1.AutoSize = true;
-            this.AdvancedLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AdvancedLabel1.Location = new System.Drawing.Point(0, 8);
-            this.AdvancedLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.AdvancedLabel1.Name = "AdvancedLabel1";
-            this.AdvancedLabel1.Size = new System.Drawing.Size(205, 20);
-            this.AdvancedLabel1.TabIndex = 0;
-            this.AdvancedLabel1.Text = "Wii Homebrew Patches";
+            this.SaveAncastKeyButton.BackColor = System.Drawing.Color.Silver;
+            this.SaveAncastKeyButton.Enabled = false;
+            this.SaveAncastKeyButton.Location = new System.Drawing.Point(413, 124);
+            this.SaveAncastKeyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.SaveAncastKeyButton.Name = "SaveAncastKeyButton";
+            this.SaveAncastKeyButton.Size = new System.Drawing.Size(94, 35);
+            this.SaveAncastKeyButton.TabIndex = 23;
+            this.SaveAncastKeyButton.Text = "Save Key";
+            this.SaveAncastKeyButton.UseVisualStyleBackColor = false;
+            this.SaveAncastKeyButton.Click += new System.EventHandler(this.SaveAncastKeyButton_Click);
+            // 
+            // AdvancedLabel2
+            // 
+            this.AdvancedLabel2.Location = new System.Drawing.Point(4, 163);
+            this.AdvancedLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.AdvancedLabel2.Name = "AdvancedLabel2";
+            this.AdvancedLabel2.Size = new System.Drawing.Size(637, 49);
+            this.AdvancedLabel2.TabIndex = 4;
+            this.AdvancedLabel2.Text = "cafe2wii patching unlocks the vWii clock speed for supported homebrew like WiiSXR" +
+    " or Nintendont. cafe2wii patched titles MUST be launched using:";
+            // 
+            // sign_c2w_patcher_link
+            // 
+            this.sign_c2w_patcher_link.AutoSize = true;
+            this.sign_c2w_patcher_link.Location = new System.Drawing.Point(445, 183);
+            this.sign_c2w_patcher_link.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.sign_c2w_patcher_link.Name = "sign_c2w_patcher_link";
+            this.sign_c2w_patcher_link.Size = new System.Drawing.Size(138, 20);
+            this.sign_c2w_patcher_link.TabIndex = 10;
+            this.sign_c2w_patcher_link.TabStop = true;
+            this.sign_c2w_patcher_link.Text = "sign_c2w_patcher";
+            this.sign_c2w_patcher_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.sign_c2w_patcher_link_LinkClicked);
+            // 
+            // gcn_panel
+            // 
+            this.gcn_panel.Controls.Add(this.label1);
+            this.gcn_panel.Controls.Add(this.Force43NINTENDONT);
+            this.gcn_panel.Controls.Add(this.CustomMainDol);
+            this.gcn_panel.Controls.Add(this.DisableNintendontAutoboot);
+            this.gcn_panel.Controls.Add(this.ForceInterlacedNINTENDONT);
+            this.gcn_panel.Controls.Add(this.MainDolLabel);
+            this.gcn_panel.Controls.Add(this.MainDolSourceButton);
+            this.gcn_panel.Location = new System.Drawing.Point(15, 18);
+            this.gcn_panel.Name = "gcn_panel";
+            this.gcn_panel.Size = new System.Drawing.Size(683, 119);
+            this.gcn_panel.TabIndex = 28;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(0, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(170, 20);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Nintendont Options";
+            // 
+            // Force43NINTENDONT
+            // 
+            this.Force43NINTENDONT.AutoSize = true;
+            this.Force43NINTENDONT.Location = new System.Drawing.Point(4, 35);
+            this.Force43NINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Force43NINTENDONT.Name = "Force43NINTENDONT";
+            this.Force43NINTENDONT.Size = new System.Drawing.Size(207, 24);
+            this.Force43NINTENDONT.TabIndex = 14;
+            this.Force43NINTENDONT.Text = "Force 4:3 for Nintendont";
+            this.toolTip1.SetToolTip(this.Force43NINTENDONT, "Disables \"Force Widescreen\" and \"WiiU Widescreen\" Flags");
+            this.Force43NINTENDONT.UseVisualStyleBackColor = true;
+            this.Force43NINTENDONT.CheckedChanged += new System.EventHandler(this.Force43NINTENDONT_CheckedChanged);
+            // 
+            // CustomMainDol
+            // 
+            this.CustomMainDol.AutoSize = true;
+            this.CustomMainDol.Location = new System.Drawing.Point(4, 61);
+            this.CustomMainDol.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.CustomMainDol.Name = "CustomMainDol";
+            this.CustomMainDol.Size = new System.Drawing.Size(301, 24);
+            this.CustomMainDol.TabIndex = 17;
+            this.CustomMainDol.Text = "Specify custom Nintendont Forwarder";
+            this.CustomMainDol.UseVisualStyleBackColor = true;
+            this.CustomMainDol.CheckedChanged += new System.EventHandler(this.CustomMainDol_CheckedChanged);
+            // 
+            // DisableNintendontAutoboot
+            // 
+            this.DisableNintendontAutoboot.AutoSize = true;
+            this.DisableNintendontAutoboot.Location = new System.Drawing.Point(4, 90);
+            this.DisableNintendontAutoboot.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DisableNintendontAutoboot.Name = "DisableNintendontAutoboot";
+            this.DisableNintendontAutoboot.Size = new System.Drawing.Size(158, 24);
+            this.DisableNintendontAutoboot.TabIndex = 22;
+            this.DisableNintendontAutoboot.Text = "Disable Autoboot";
+            this.DisableNintendontAutoboot.UseVisualStyleBackColor = true;
+            this.DisableNintendontAutoboot.CheckedChanged += new System.EventHandler(this.NintendontAutoboot_CheckedChanged);
+            // 
+            // ForceInterlacedNINTENDONT
+            // 
+            this.ForceInterlacedNINTENDONT.AutoSize = true;
+            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(303, 27);
+            this.ForceInterlacedNINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.ForceInterlacedNINTENDONT.Name = "ForceInterlacedNINTENDONT";
+            this.ForceInterlacedNINTENDONT.Size = new System.Drawing.Size(254, 24);
+            this.ForceInterlacedNINTENDONT.TabIndex = 14;
+            this.ForceInterlacedNINTENDONT.Text = "Force interlaced for Nintendont";
+            this.toolTip2.SetToolTip(this.ForceInterlacedNINTENDONT, "Disables \"Force Progressive\" Flag");
+            this.ForceInterlacedNINTENDONT.UseVisualStyleBackColor = true;
+            this.ForceInterlacedNINTENDONT.CheckedChanged += new System.EventHandler(this.ForceInterlacedNINTENDONT_CheckedChanged);
+            // 
+            // MainDolLabel
+            // 
+            this.MainDolLabel.AutoEllipsis = true;
+            this.MainDolLabel.BackColor = System.Drawing.Color.LightGray;
+            this.MainDolLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.MainDolLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.MainDolLabel.Location = new System.Drawing.Point(363, 53);
+            this.MainDolLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.MainDolLabel.Name = "MainDolLabel";
+            this.MainDolLabel.Size = new System.Drawing.Size(316, 31);
+            this.MainDolLabel.TabIndex = 18;
+            this.MainDolLabel.Text = "<- Specify custom main.dol file";
+            this.MainDolLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // MainDolSourceButton
+            // 
+            this.MainDolSourceButton.AutoSize = true;
+            this.MainDolSourceButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MainDolSourceButton.BackColor = System.Drawing.Color.LightGray;
+            this.MainDolSourceButton.Enabled = false;
+            this.MainDolSourceButton.Location = new System.Drawing.Point(303, 53);
+            this.MainDolSourceButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MainDolSourceButton.Name = "MainDolSourceButton";
+            this.MainDolSourceButton.Size = new System.Drawing.Size(31, 30);
+            this.MainDolSourceButton.TabIndex = 16;
+            this.MainDolSourceButton.Text = "...";
+            this.MainDolSourceButton.UseVisualStyleBackColor = false;
+            this.MainDolSourceButton.Click += new System.EventHandler(this.MainDolSourceButton_Click);
             // 
             // BuildTab
             // 
@@ -1061,9 +1159,9 @@
             this.BuildTab.Controls.Add(this.CommonLabel);
             this.BuildTab.Controls.Add(this.WiiUCommonKey);
             this.BuildTab.Location = new System.Drawing.Point(4, 29);
-            this.BuildTab.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.BuildTab.Margin = new System.Windows.Forms.Padding(6);
             this.BuildTab.Name = "BuildTab";
-            this.BuildTab.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.BuildTab.Padding = new System.Windows.Forms.Padding(6);
             this.BuildTab.Size = new System.Drawing.Size(712, 538);
             this.BuildTab.TabIndex = 4;
             this.BuildTab.Text = "Build Title";
@@ -1093,7 +1191,7 @@
             // 
             this.BuildProgress.BackColor = System.Drawing.Color.Gainsboro;
             this.BuildProgress.Location = new System.Drawing.Point(10, 328);
-            this.BuildProgress.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.BuildProgress.Margin = new System.Windows.Forms.Padding(6);
             this.BuildProgress.Name = "BuildProgress";
             this.BuildProgress.Size = new System.Drawing.Size(684, 43);
             this.BuildProgress.TabIndex = 14;
@@ -1333,103 +1431,6 @@
             this.OpenGC2.Filter = "GameCube Disk 2 (*.gcm,*.iso)|*.gcm;*.iso";
             this.OpenGC2.Title = "Specify your GameCube game\'s 2nd disc";
             // 
-            // gcn_panel
-            // 
-            this.gcn_panel.Controls.Add(this.label1);
-            this.gcn_panel.Controls.Add(this.Force43NINTENDONT);
-            this.gcn_panel.Controls.Add(this.CustomMainDol);
-            this.gcn_panel.Controls.Add(this.DisableNintendontAutoboot);
-            this.gcn_panel.Controls.Add(this.ForceInterlacedNINTENDONT);
-            this.gcn_panel.Controls.Add(this.MainDolLabel);
-            this.gcn_panel.Controls.Add(this.MainDolSourceButton);
-            this.gcn_panel.Location = new System.Drawing.Point(15, 18);
-            this.gcn_panel.Name = "gcn_panel";
-            this.gcn_panel.Size = new System.Drawing.Size(683, 119);
-            this.gcn_panel.TabIndex = 28;
-            // 
-            // dol_panel
-            // 
-            this.dol_panel.Controls.Add(this.AdvancedLabel1);
-            this.dol_panel.Controls.Add(this.DisablePassthrough);
-            this.dol_panel.Controls.Add(this.DisableGamePad);
-            this.dol_panel.Controls.Add(this.C2WPatchFlag);
-            this.dol_panel.Controls.Add(this.AncastKey);
-            this.dol_panel.Controls.Add(this.SaveAncastKeyButton);
-            this.dol_panel.Controls.Add(this.AdvancedLabel2);
-            this.dol_panel.Controls.Add(this.sign_c2w_patcher_link);
-            this.dol_panel.Location = new System.Drawing.Point(15, 143);
-            this.dol_panel.Name = "dol_panel";
-            this.dol_panel.Size = new System.Drawing.Size(683, 217);
-            this.dol_panel.TabIndex = 29;
-            // 
-            // wii_panel
-            // 
-            this.wii_panel.Controls.Add(this.Wiimmfi);
-            this.wii_panel.Controls.Add(this.WiiVMC);
-            this.wii_panel.Controls.Add(this.label2);
-            this.wii_panel.Controls.Add(this.DisableTrimming);
-            this.wii_panel.Controls.Add(this.Force43NAND);
-            this.wii_panel.Location = new System.Drawing.Point(15, 367);
-            this.wii_panel.Name = "wii_panel";
-            this.wii_panel.Size = new System.Drawing.Size(683, 135);
-            this.wii_panel.TabIndex = 30;
-            // 
-            // Wiimmfi
-            // 
-            this.Wiimmfi.AutoSize = true;
-            this.Wiimmfi.Location = new System.Drawing.Point(4, 104);
-            this.Wiimmfi.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Wiimmfi.Name = "Wiimmfi";
-            this.Wiimmfi.Size = new System.Drawing.Size(514, 24);
-            this.Wiimmfi.TabIndex = 32;
-            this.Wiimmfi.Text = "Patch game to use the Wiimmfi server for online play (Wii Retail only)";
-            this.Wiimmfi.UseVisualStyleBackColor = true;
-            // 
-            // WiiVMC
-            // 
-            this.WiiVMC.AutoSize = true;
-            this.WiiVMC.Location = new System.Drawing.Point(4, 69);
-            this.WiiVMC.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.WiiVMC.Name = "WiiVMC";
-            this.WiiVMC.Size = new System.Drawing.Size(652, 24);
-            this.WiiVMC.TabIndex = 31;
-            this.WiiVMC.Text = "Patch video mode with Wii-VMC (Wii Retail only, opens a new window during convers" +
-    "ion)";
-            this.WiiVMC.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(0, 9);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(481, 20);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "Wii Retail Injection / vWii NAND Title Launcher Patches";
-            // 
-            // DisableTrimming
-            // 
-            this.DisableTrimming.AutoSize = true;
-            this.DisableTrimming.Location = new System.Drawing.Point(4, 34);
-            this.DisableTrimming.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.DisableTrimming.Name = "DisableTrimming";
-            this.DisableTrimming.Size = new System.Drawing.Size(309, 24);
-            this.DisableTrimming.TabIndex = 29;
-            this.DisableTrimming.Text = "Don\'t trim game output (Wii Retail only)";
-            this.DisableTrimming.UseVisualStyleBackColor = true;
-            // 
-            // Force43NAND
-            // 
-            this.Force43NAND.AutoSize = true;
-            this.Force43NAND.Location = new System.Drawing.Point(325, 34);
-            this.Force43NAND.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Force43NAND.Name = "Force43NAND";
-            this.Force43NAND.Size = new System.Drawing.Size(266, 24);
-            this.Force43NAND.TabIndex = 28;
-            this.Force43NAND.Text = "Force 4:3 (vWii NAND Titles only)";
-            this.Force43NAND.UseVisualStyleBackColor = true;
-            // 
             // WiiVC_Injector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -1438,7 +1439,7 @@
             this.Controls.Add(this.MainTableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "WiiVC_Injector";
             this.Text = "TeconMoon\'s WiiVC Injector - [{0}]";
@@ -1457,14 +1458,14 @@
             this.GamePadEmuLayout.ResumeLayout(false);
             this.GamePadEmuLayout.PerformLayout();
             this.AdvancedTab.ResumeLayout(false);
-            this.BuildTab.ResumeLayout(false);
-            this.BuildTab.PerformLayout();
-            this.gcn_panel.ResumeLayout(false);
-            this.gcn_panel.PerformLayout();
-            this.dol_panel.ResumeLayout(false);
-            this.dol_panel.PerformLayout();
             this.wii_panel.ResumeLayout(false);
             this.wii_panel.PerformLayout();
+            this.dol_panel.ResumeLayout(false);
+            this.dol_panel.PerformLayout();
+            this.gcn_panel.ResumeLayout(false);
+            this.gcn_panel.PerformLayout();
+            this.BuildTab.ResumeLayout(false);
+            this.BuildTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
