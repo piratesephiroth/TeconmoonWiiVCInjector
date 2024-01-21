@@ -467,6 +467,11 @@ namespace TeconMoon_s_WiiVC_Injector
          */
         private bool HashTest(TextBox box, string goodHash)
         {
+            bool savedHash = (Registry.CurrentUser.CreateSubKey("WiiVCInjector").GetValue(box.Name) != null);
+
+            if (savedHash)
+                box.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue(box.Name).ToString();
+
             box.Text = box.Text.ToUpper();
             byte[] tmpSource = Encoding.ASCII.GetBytes(box.Text);
             byte[] tmpHash = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
@@ -476,6 +481,28 @@ namespace TeconMoon_s_WiiVC_Injector
             /* Clean up the text box */
             box.ReadOnly = rv;
             box.BackColor = rv ? Color.Lime : Color.White;
+
+            /* If we're good then save it */
+            if(!savedHash)
+            {
+                if (rv)
+                {
+                    Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue(box.Name, box.Text);
+                    Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
+
+                    MessageBox.Show("The " + box.Name + " has been verified."
+                    , "Success"
+                    , MessageBoxButtons.OK
+                    , MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("The " + box.Name + " you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
+                                    , "Invalid " + box.Name
+                                    , MessageBoxButtons.OK
+                                    , MessageBoxIcon.Error);
+                }
+            }
 
             return rv;
         }
@@ -502,31 +529,8 @@ namespace TeconMoon_s_WiiVC_Injector
             //If we're not on the build tab, there's nothing else to do here.
             if (MainTabs.SelectedTab != BuildTab) return;
 
-            //Initialize Registry values if they don't exist and pull values from them if they do
-            /* Only check the registry and do the hash checks if we haven't set the keys to ReadOnly yet */
-            if (!WiiUCommonKey.ReadOnly)
-            {
-                if (Registry.CurrentUser.CreateSubKey("WiiVCInjector").GetValue("WiiUCommonKey") == null)
-                {
-                    Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("WiiUCommonKey", "00000000000000000000000000000000");
-                }
-
-                WiiUCommonKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("WiiUCommonKey").ToString();
-                HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC");
-            }
-
-            if (!TitleKey.ReadOnly)
-            {
-                if (Registry.CurrentUser.CreateSubKey("WiiVCInjector").GetValue("TitleKey") == null)
-                {
-                    Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("TitleKey", "00000000000000000000000000000000");
-                }
-
-                TitleKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("TitleKey").ToString();
-                HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
-            }
-
-            Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
+            HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC");
+            HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
 
             //Final check for if all requirements are good
 
@@ -544,7 +548,7 @@ namespace TeconMoon_s_WiiVC_Injector
 
             AdvanceCheck.ForeColor = BuildFlagAdvance ? Color.Green : Color.Red;
 
-            bool BuildFlagKeys = (WiiUCommonKey.ReadOnly && TitleKey.ReadOnly && AncastKey.ReadOnly);
+            bool BuildFlagKeys = (WiiUCommonKey.ReadOnly && TitleKey.ReadOnly && (!C2WPatchFlag.Checked || AncastKey.ReadOnly));
             KeysCheck.ForeColor = BuildFlagKeys ? Color.Green : Color.Red;
 
             //Enable Build Button
@@ -1126,45 +1130,21 @@ namespace TeconMoon_s_WiiVC_Injector
         {
             if (C2WPatchFlag.Checked)
             {
-                AncastKey.ReadOnly = false;
-                AncastKey.BackColor = Color.White;
                 SaveAncastKeyButton.Enabled = true;
-                if (Registry.CurrentUser.CreateSubKey("WiiVCInjector").GetValue("AncastKey") == null)
-                {
-                    Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("AncastKey", "00000000000000000000000000000000");
-                }
-                AncastKey.Text = Registry.CurrentUser.OpenSubKey("WiiVCInjector").GetValue("AncastKey").ToString();
-                Registry.CurrentUser.OpenSubKey("WiiVCInjector").Close();
+
                 //If key is correct, lock text box for edits
                 HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43");
             }
             else
             {
-                AncastKey.BackColor = Color.Silver;
-                AncastKey.ReadOnly = true;
                 SaveAncastKeyButton.Enabled = false;
             }
         }
         private void SaveAncastKeyButton_Click(object sender, EventArgs e)
         {
-            //Verify Title Key MD5 Hash
-            if (HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43"))
-            {
-                Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("AncastKey", AncastKey.Text);
-                Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
-                MessageBox.Show("The Wii U Starbuck Ancast Key has been verified."
-                                , "Success"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("The Wii U Starbuck Ancast Key you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
-                                , "Invalid Starbuck Ancast Keyn"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error);
-            }
+            HashTest(AncastKey, "31-8D-1F-9D-98-FB-08-E7-7C-7F-E1-77-AA-49-05-43");
         }
+
         private void sign_c2w_patcher_link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/FIX94/sign_c2w_patcher");
@@ -1198,48 +1178,12 @@ namespace TeconMoon_s_WiiVC_Injector
         //Events for the "Build Title" Tab
         private void SaveCommonKeyButton_Click(object sender, EventArgs e)
         {
-            //Verify Wii U Common Key MD5 Hash
-
-            if (HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC"))
-            {
-                Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("WiiUCommonKey", WiiUCommonKey.Text);
-                Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
-                MessageBox.Show("The Wii U Common Key has been verified."
-                                , "Success"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information);
-                MainTabs.SelectedTab = AdvancedTab;
-                MainTabs.SelectedTab = BuildTab;
-            }
-            else
-            {
-                MessageBox.Show("The Wii U Common Key you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
-                                , "Invalid Wii U Common Key"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error);
-            }
+            HashTest(WiiUCommonKey, "35-AC-59-94-97-22-79-33-1D-97-09-4F-A2-FB-97-FC");
         }
+
         private void SaveTitleKeyButton_Click(object sender, EventArgs e)
         {
-            //Verify Title Key MD5 Hash
-            if (HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F"))
-            {
-                Registry.CurrentUser.CreateSubKey("WiiVCInjector").SetValue("TitleKey", TitleKey.Text);
-                Registry.CurrentUser.CreateSubKey("WiiVCInjector").Close();
-                MessageBox.Show("The Title Key has been verified."
-                                , "Success"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Information);
-                MainTabs.SelectedTab = AdvancedTab;
-                MainTabs.SelectedTab = BuildTab;
-            }
-            else
-            {
-                MessageBox.Show("The Title Key you have provided is incorrect" + "\n" + "(MD5 Hash verification failed)"
-                                , "Invalid Title Key"
-                                , MessageBoxButtons.OK
-                                , MessageBoxIcon.Error);
-            }
+            HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
         }
 
         //Events for the actual "Build" Button
