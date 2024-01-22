@@ -93,11 +93,9 @@
             this.dol_panel = new System.Windows.Forms.Panel();
             this.AdvancedLabel1 = new System.Windows.Forms.Label();
             this.DisablePassthrough = new System.Windows.Forms.CheckBox();
-            this.DisableGamePad = new System.Windows.Forms.CheckBox();
             this.C2WPatchFlag = new System.Windows.Forms.CheckBox();
             this.AncastKey = new System.Windows.Forms.TextBox();
             this.SaveAncastKeyButton = new System.Windows.Forms.Button();
-            this.AdvancedLabel2 = new System.Windows.Forms.Label();
             this.sign_c2w_patcher_link = new System.Windows.Forms.LinkLabel();
             this.gcn_panel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -137,6 +135,7 @@
             this.OpenGC2 = new System.Windows.Forms.OpenFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
+            this.DisableGamePad = new System.Windows.Forms.CheckBox();
             this.MainTableLayout.SuspendLayout();
             this.MainTabs.SuspendLayout();
             this.SourceFilesTab.SuspendLayout();
@@ -850,6 +849,7 @@
             // AdvancedTab
             // 
             this.AdvancedTab.BackColor = System.Drawing.Color.Gainsboro;
+            this.AdvancedTab.Controls.Add(this.DisableGamePad);
             this.AdvancedTab.Controls.Add(this.wii_panel);
             this.AdvancedTab.Controls.Add(this.dol_panel);
             this.AdvancedTab.Controls.Add(this.gcn_panel);
@@ -933,15 +933,13 @@
             // 
             this.dol_panel.Controls.Add(this.AdvancedLabel1);
             this.dol_panel.Controls.Add(this.DisablePassthrough);
-            this.dol_panel.Controls.Add(this.DisableGamePad);
             this.dol_panel.Controls.Add(this.C2WPatchFlag);
             this.dol_panel.Controls.Add(this.AncastKey);
             this.dol_panel.Controls.Add(this.SaveAncastKeyButton);
-            this.dol_panel.Controls.Add(this.AdvancedLabel2);
             this.dol_panel.Controls.Add(this.sign_c2w_patcher_link);
-            this.dol_panel.Location = new System.Drawing.Point(15, 143);
+            this.dol_panel.Location = new System.Drawing.Point(15, 184);
             this.dol_panel.Name = "dol_panel";
-            this.dol_panel.Size = new System.Drawing.Size(683, 217);
+            this.dol_panel.Size = new System.Drawing.Size(683, 176);
             this.dol_panel.TabIndex = 29;
             // 
             // AdvancedLabel1
@@ -966,22 +964,10 @@
             this.DisablePassthrough.Text = "Disable Wii Remote passthrough in GamePad mode";
             this.DisablePassthrough.UseVisualStyleBackColor = true;
             // 
-            // DisableGamePad
-            // 
-            this.DisableGamePad.AutoSize = true;
-            this.DisableGamePad.Location = new System.Drawing.Point(4, 62);
-            this.DisableGamePad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.DisableGamePad.Name = "DisableGamePad";
-            this.DisableGamePad.Size = new System.Drawing.Size(449, 24);
-            this.DisableGamePad.TabIndex = 25;
-            this.DisableGamePad.Text = "Don\'t use GamePad as controller (Won\'t prompt for usage)";
-            this.DisableGamePad.UseVisualStyleBackColor = true;
-            this.DisableGamePad.CheckedChanged += new System.EventHandler(this.DisableGamePad_CheckedChanged);
-            // 
             // C2WPatchFlag
             // 
             this.C2WPatchFlag.AutoSize = true;
-            this.C2WPatchFlag.Location = new System.Drawing.Point(4, 94);
+            this.C2WPatchFlag.Location = new System.Drawing.Point(4, 58);
             this.C2WPatchFlag.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.C2WPatchFlag.Name = "C2WPatchFlag";
             this.C2WPatchFlag.Size = new System.Drawing.Size(390, 24);
@@ -993,7 +979,7 @@
             // AncastKey
             // 
             this.AncastKey.BackColor = System.Drawing.Color.Silver;
-            this.AncastKey.Location = new System.Drawing.Point(4, 128);
+            this.AncastKey.Location = new System.Drawing.Point(4, 89);
             this.AncastKey.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AncastKey.MaxLength = 32;
             this.AncastKey.Name = "AncastKey";
@@ -1006,7 +992,7 @@
             // 
             this.SaveAncastKeyButton.BackColor = System.Drawing.Color.Silver;
             this.SaveAncastKeyButton.Enabled = false;
-            this.SaveAncastKeyButton.Location = new System.Drawing.Point(413, 124);
+            this.SaveAncastKeyButton.Location = new System.Drawing.Point(413, 85);
             this.SaveAncastKeyButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SaveAncastKeyButton.Name = "SaveAncastKeyButton";
             this.SaveAncastKeyButton.Size = new System.Drawing.Size(94, 35);
@@ -1015,26 +1001,20 @@
             this.SaveAncastKeyButton.UseVisualStyleBackColor = false;
             this.SaveAncastKeyButton.Click += new System.EventHandler(this.SaveAncastKeyButton_Click);
             // 
-            // AdvancedLabel2
-            // 
-            this.AdvancedLabel2.Location = new System.Drawing.Point(4, 163);
-            this.AdvancedLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.AdvancedLabel2.Name = "AdvancedLabel2";
-            this.AdvancedLabel2.Size = new System.Drawing.Size(637, 49);
-            this.AdvancedLabel2.TabIndex = 4;
-            this.AdvancedLabel2.Text = "cafe2wii patching unlocks the vWii clock speed for supported homebrew like WiiSXR" +
-    " or Nintendont. cafe2wii patched titles MUST be launched using:";
-            // 
             // sign_c2w_patcher_link
             // 
-            this.sign_c2w_patcher_link.AutoSize = true;
-            this.sign_c2w_patcher_link.Location = new System.Drawing.Point(445, 183);
+            this.sign_c2w_patcher_link.LinkArea = new System.Windows.Forms.LinkArea(145, 16);
+            this.sign_c2w_patcher_link.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
+            this.sign_c2w_patcher_link.Location = new System.Drawing.Point(4, 125);
             this.sign_c2w_patcher_link.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.sign_c2w_patcher_link.Name = "sign_c2w_patcher_link";
-            this.sign_c2w_patcher_link.Size = new System.Drawing.Size(138, 20);
+            this.sign_c2w_patcher_link.Size = new System.Drawing.Size(652, 48);
             this.sign_c2w_patcher_link.TabIndex = 10;
             this.sign_c2w_patcher_link.TabStop = true;
-            this.sign_c2w_patcher_link.Text = "sign_c2w_patcher";
+            this.sign_c2w_patcher_link.Text = "cafe2wii patching unlocks the vWii clock speed for supported homebrew like WiiSXR" +
+    " or Nintendont. cafe2wii patched titles MUST be launched using: sign_c2w_patcher" +
+    "";
+            this.sign_c2w_patcher_link.UseCompatibleTextRendering = true;
             this.sign_c2w_patcher_link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.sign_c2w_patcher_link_LinkClicked);
             // 
             // gcn_panel
@@ -1102,7 +1082,7 @@
             // ForceInterlacedNINTENDONT
             // 
             this.ForceInterlacedNINTENDONT.AutoSize = true;
-            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(303, 27);
+            this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(313, 35);
             this.ForceInterlacedNINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ForceInterlacedNINTENDONT.Name = "ForceInterlacedNINTENDONT";
             this.ForceInterlacedNINTENDONT.Size = new System.Drawing.Size(254, 24);
@@ -1118,7 +1098,7 @@
             this.MainDolLabel.BackColor = System.Drawing.Color.LightGray;
             this.MainDolLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.MainDolLabel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MainDolLabel.Location = new System.Drawing.Point(363, 53);
+            this.MainDolLabel.Location = new System.Drawing.Point(363, 83);
             this.MainDolLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.MainDolLabel.Name = "MainDolLabel";
             this.MainDolLabel.Size = new System.Drawing.Size(316, 31);
@@ -1132,7 +1112,7 @@
             this.MainDolSourceButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MainDolSourceButton.BackColor = System.Drawing.Color.LightGray;
             this.MainDolSourceButton.Enabled = false;
-            this.MainDolSourceButton.Location = new System.Drawing.Point(303, 53);
+            this.MainDolSourceButton.Location = new System.Drawing.Point(324, 83);
             this.MainDolSourceButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainDolSourceButton.Name = "MainDolSourceButton";
             this.MainDolSourceButton.Size = new System.Drawing.Size(31, 30);
@@ -1431,6 +1411,17 @@
             this.OpenGC2.Filter = "GameCube Disk 2 (*.gcm,*.iso)|*.gcm;*.iso";
             this.OpenGC2.Title = "Specify your GameCube game\'s 2nd disc";
             // 
+            // DisableGamePad
+            // 
+            this.DisableGamePad.AutoSize = true;
+            this.DisableGamePad.Location = new System.Drawing.Point(19, 145);
+            this.DisableGamePad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.DisableGamePad.Name = "DisableGamePad";
+            this.DisableGamePad.Size = new System.Drawing.Size(449, 24);
+            this.DisableGamePad.TabIndex = 31;
+            this.DisableGamePad.Text = "Don\'t use GamePad as controller (Won\'t prompt for usage)";
+            this.DisableGamePad.UseVisualStyleBackColor = true;
+            // 
             // WiiVC_Injector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -1458,6 +1449,7 @@
             this.GamePadEmuLayout.ResumeLayout(false);
             this.GamePadEmuLayout.PerformLayout();
             this.AdvancedTab.ResumeLayout(false);
+            this.AdvancedTab.PerformLayout();
             this.wii_panel.ResumeLayout(false);
             this.wii_panel.PerformLayout();
             this.dol_panel.ResumeLayout(false);
@@ -1503,7 +1495,6 @@
         private System.Windows.Forms.Label GamePadModeText;
         private System.Windows.Forms.TextBox PackedTitleIDLine;
         private System.Windows.Forms.Label PackedTitleIDText;
-        private System.Windows.Forms.Label AdvancedLabel2;
         private System.Windows.Forms.CheckBox C2WPatchFlag;
         private System.Windows.Forms.TextBox AncastKey;
         private System.Windows.Forms.Label AdvancedLabel1;
@@ -1567,7 +1558,6 @@
         private System.Windows.Forms.Label GC2SourceDirectory;
         private System.Windows.Forms.Button GC2SourceButton;
         private System.Windows.Forms.OpenFileDialog OpenGC2;
-        private System.Windows.Forms.CheckBox DisableGamePad;
         private System.Windows.Forms.CheckBox LRPatch;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolTip toolTip2;
@@ -1579,6 +1569,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox DisableTrimming;
         private System.Windows.Forms.CheckBox Force43NAND;
+        private System.Windows.Forms.CheckBox DisableGamePad;
     }
 }
 
