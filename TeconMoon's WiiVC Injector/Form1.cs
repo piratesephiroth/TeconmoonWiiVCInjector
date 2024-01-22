@@ -1186,6 +1186,27 @@ namespace TeconMoon_s_WiiVC_Injector
             HashTest(TitleKey, "F9-4B-D8-8E-BB-7A-A9-38-67-E6-30-61-5F-27-1C-9F");
         }
 
+        private void processGCNdisc(string inFile, string outFile)
+        {
+            if (FlagNKIT)
+            {
+                if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
+                {
+                    Directory.Delete(TempToolsPath + "NKIT\\Processed\\Temp", true);
+                }
+                BuildStatus.Text = "Unscrubbing disc for NFS Conversion...";
+                BuildStatus.Refresh();
+                LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
+                LauncherExeArgs = "\"" + inFile + "\"";
+                LaunchProgram(); // CONVERT DISC TO ISO
+                File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\" + outFile);
+            }
+            else
+            {
+                File.Copy(inFile, TempSourcePath + "TEMPISOBASE\\files\\" + outFile);
+            }
+        }
+
         //Events for the actual "Build" Button
         private void TheBigOneTM_Click(object sender, EventArgs e)
         {
@@ -1210,11 +1231,7 @@ namespace TeconMoon_s_WiiVC_Injector
                                                             , MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.No)
                 {
-                    MainTabs.Enabled = true;
-                    BuildStatus.Text = "";
-                    BuildStatus.Refresh();
-                    BuildProgress.Value = 0;
-                    return;
+                    goto BuildProcessFin;
                 }
             }
 
@@ -1238,7 +1255,6 @@ namespace TeconMoon_s_WiiVC_Injector
                                     , "Cancelled"
                                     , MessageBoxButtons.OK
                                     , MessageBoxIcon.Warning);
-                    MainTabs.Enabled = true;
                     goto BuildProcessFin;
                 }
                 selectedOutputPath = outputFolderSelect.FileName;
@@ -1339,10 +1355,6 @@ namespace TeconMoon_s_WiiVC_Injector
                                                                 , MessageBoxIcon.Warning);
                     if (dialogResult == DialogResult.No)
                     {
-                        MainTabs.Enabled = true;
-                        BuildStatus.Text = "";
-                        BuildStatus.Refresh();
-                        BuildProgress.Value = 0;
                         goto BuildProcessFin;
                     }
                 }
@@ -1396,9 +1408,6 @@ namespace TeconMoon_s_WiiVC_Injector
                                     , "Error"
                                     , MessageBoxButtons.OK
                                     , MessageBoxIcon.Error);
-                    MainTabs.Enabled = true;
-                    BuildStatus.Text = "";
-                    BuildProgress.Value = 0;
                     goto BuildProcessFin;
                 }
             }
@@ -1499,6 +1508,7 @@ namespace TeconMoon_s_WiiVC_Injector
 
             if (SystemType == "wii")
             {
+                /* Convert the wbfs file to iso. This is not named game.iso in to allow the nkit/nasos/trimming to work */
                 if (FlagWBFS)
                 {
                     LauncherExeFile = TempToolsPath + "EXE\\wbfs_file.exe";
@@ -1519,9 +1529,9 @@ namespace TeconMoon_s_WiiVC_Injector
                     LaunchProgram();
                     OGfilepath = TempSourcePath + "game.iso";
                     if(FlagNKIT)
-                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Temp", "*.tmp")[0], OGfilepath);
+                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Temp", "*.tmp")[0], TempSourcePath + "game.iso");
                     else
-                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Wii_MatchFail", "*.iso")[0], OGfilepath);
+                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\Wii_MatchFail", "*.iso")[0], TempSourcePath + "game.iso");
 
 
                 }
@@ -1633,44 +1643,11 @@ namespace TeconMoon_s_WiiVC_Injector
                     File.Copy(TempToolsPath + "DOL\\nintendont_default_autobooter.dol", TempSourcePath + "TEMPISOBASE\\sys\\main.dol");
                 }
 
-                if (FlagNKIT)
-                {
-                    if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
-                    {
-                        Directory.Delete(TempToolsPath + "NKIT\\Processed\\Temp", true);
-                    }
-                    BuildStatus.Text = "Unscrubbing game for NFS Conversion...";
-                    BuildStatus.Refresh();
-                    LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                    LauncherExeArgs = "\"" + OGfilepath;
-                    LaunchProgram(); // CONVERT TO ISO
-                    File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\game.iso");
-                }
-                else
-                {
-                    File.Copy(OGfilepath, TempSourcePath + "TEMPISOBASE\\files\\game.iso");
-                }
+                processGCNdisc(OGfilepath, "game.iso");
 
                 if (FlagGC2Specified)
-                {
-                    if (FlagNKIT)
-                    {
-                        if (Directory.Exists(TempToolsPath + "NKIT\\Processed\\Temp"))
-                        {
-                            Directory.Delete(TempToolsPath + "NKIT\\Processed\\Temp", true);
-                        }
-                        BuildStatus.Text = "Unscrubbing second disc for NFS Conversion...";
-                        BuildStatus.Refresh();
-                        LauncherExeFile = TempToolsPath + "NKIT\\ConvertToISO.exe";
-                        LauncherExeArgs = "\"" + OpenGC2.FileName + "\"";
-                        LaunchProgram(); // CONVERT DISC 2 TO ISO
-                        File.Move(Directory.GetFiles(TempToolsPath + "NKIT\\Processed\\GameCube_MatchFail", "*.iso")[0], TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
-                    }
-                    else
-                    {
-                        File.Copy(OpenGC2.FileName, TempSourcePath + "TEMPISOBASE\\files\\disc2.iso");
-                    }
-                }
+                    processGCNdisc(OpenGC2.FileName, "disc2.iso");
+
                 LauncherExeFile = TempToolsPath + "WIT\\wit.exe";
                 LauncherExeArgs = "copy " + TempSourcePath + "TEMPISOBASE" + " --DEST " + TempSourcePath + "game.iso" + " -ovv --links --iso";
                 LaunchProgram(); // BUILD FINAL GAMECUBE ISO
@@ -1759,11 +1736,13 @@ namespace TeconMoon_s_WiiVC_Injector
                 Process.Start(outputPath);
             }
 
+            MainTabs.SelectedTab = SourceFilesTab;
+
+        BuildProcessFin:
+            BuildProgress.Value = 0;
             BuildStatus.Text = "";
             BuildStatus.Refresh();
             MainTabs.Enabled = true;
-            MainTabs.SelectedTab = SourceFilesTab;
-            BuildProcessFin:;
             /////
         }
 
