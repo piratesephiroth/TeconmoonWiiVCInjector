@@ -313,6 +313,7 @@ namespace TeconMoon_s_WiiVC_Injector
             GamePadEmuLayout.Enabled = false;
             LRPatch.Checked = false;
             LRPatch.Enabled = false;
+
             Force43NINTENDONT.Checked = false;
             Force43NINTENDONT.Enabled = false;
             ForceInterlacedNINTENDONT.Checked = false;
@@ -321,6 +322,7 @@ namespace TeconMoon_s_WiiVC_Injector
             CustomMainDol.Enabled = false;
             DisableNintendontAutoboot.Checked = false;
             DisableNintendontAutoboot.Enabled = false;
+
             DisablePassthrough.Enabled = true;
             DisableGamePad.Enabled = true;
             C2WPatchFlag.Enabled = true;
@@ -1054,6 +1056,10 @@ namespace TeconMoon_s_WiiVC_Injector
             if (CustomMainDol.Checked)
             {
                 MainDolSourceButton.Enabled = true;
+                MainDolSourceButton.Visible = true;
+                MainDolLabel.Text = "<- Specify custom main.dol file";
+                MainDolLabel.Visible = true;
+
                 Force43NINTENDONT.Checked = false;
                 Force43NINTENDONT.Enabled = false;
                 ForceInterlacedNINTENDONT.Checked = false;
@@ -1065,7 +1071,10 @@ namespace TeconMoon_s_WiiVC_Injector
             else
             {
                 MainDolSourceButton.Enabled = false;
-                MainDolLabel.Text = "<- Specify custom main.dol file";
+                MainDolSourceButton.Visible = false;
+                MainDolLabel.ResetText();
+                MainDolLabel.Visible = false;
+
                 Force43NINTENDONT.Enabled = true;
                 ForceInterlacedNINTENDONT.Enabled = true;
                 DisableNintendontAutoboot.Enabled = true;

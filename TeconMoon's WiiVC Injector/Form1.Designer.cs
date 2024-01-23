@@ -863,6 +863,7 @@
             // 
             // wii_panel
             // 
+            this.wii_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.wii_panel.Controls.Add(this.Wiimmfi);
             this.wii_panel.Controls.Add(this.WiiVMC);
             this.wii_panel.Controls.Add(this.label2);
@@ -921,6 +922,7 @@
             // Force43NAND
             // 
             this.Force43NAND.AutoSize = true;
+            this.Force43NAND.Enabled = false;
             this.Force43NAND.Location = new System.Drawing.Point(325, 34);
             this.Force43NAND.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Force43NAND.Name = "Force43NAND";
@@ -931,6 +933,7 @@
             // 
             // dol_panel
             // 
+            this.dol_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dol_panel.Controls.Add(this.AdvancedLabel1);
             this.dol_panel.Controls.Add(this.DisablePassthrough);
             this.dol_panel.Controls.Add(this.C2WPatchFlag);
@@ -956,6 +959,7 @@
             // DisablePassthrough
             // 
             this.DisablePassthrough.AutoSize = true;
+            this.DisablePassthrough.Enabled = false;
             this.DisablePassthrough.Location = new System.Drawing.Point(4, 33);
             this.DisablePassthrough.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DisablePassthrough.Name = "DisablePassthrough";
@@ -967,6 +971,7 @@
             // C2WPatchFlag
             // 
             this.C2WPatchFlag.AutoSize = true;
+            this.C2WPatchFlag.Enabled = false;
             this.C2WPatchFlag.Location = new System.Drawing.Point(4, 58);
             this.C2WPatchFlag.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.C2WPatchFlag.Name = "C2WPatchFlag";
@@ -979,6 +984,7 @@
             // AncastKey
             // 
             this.AncastKey.BackColor = System.Drawing.Color.Silver;
+            this.AncastKey.Enabled = false;
             this.AncastKey.Location = new System.Drawing.Point(4, 89);
             this.AncastKey.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AncastKey.MaxLength = 32;
@@ -1019,6 +1025,7 @@
             // 
             // gcn_panel
             // 
+            this.gcn_panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.gcn_panel.Controls.Add(this.label1);
             this.gcn_panel.Controls.Add(this.Force43NINTENDONT);
             this.gcn_panel.Controls.Add(this.CustomMainDol);
@@ -1028,7 +1035,7 @@
             this.gcn_panel.Controls.Add(this.MainDolSourceButton);
             this.gcn_panel.Location = new System.Drawing.Point(15, 18);
             this.gcn_panel.Name = "gcn_panel";
-            this.gcn_panel.Size = new System.Drawing.Size(683, 119);
+            this.gcn_panel.Size = new System.Drawing.Size(683, 126);
             this.gcn_panel.TabIndex = 28;
             // 
             // label1
@@ -1045,6 +1052,7 @@
             // Force43NINTENDONT
             // 
             this.Force43NINTENDONT.AutoSize = true;
+            this.Force43NINTENDONT.Enabled = false;
             this.Force43NINTENDONT.Location = new System.Drawing.Point(4, 35);
             this.Force43NINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Force43NINTENDONT.Name = "Force43NINTENDONT";
@@ -1058,7 +1066,8 @@
             // CustomMainDol
             // 
             this.CustomMainDol.AutoSize = true;
-            this.CustomMainDol.Location = new System.Drawing.Point(4, 61);
+            this.CustomMainDol.Enabled = false;
+            this.CustomMainDol.Location = new System.Drawing.Point(4, 95);
             this.CustomMainDol.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CustomMainDol.Name = "CustomMainDol";
             this.CustomMainDol.Size = new System.Drawing.Size(301, 24);
@@ -1070,7 +1079,8 @@
             // DisableNintendontAutoboot
             // 
             this.DisableNintendontAutoboot.AutoSize = true;
-            this.DisableNintendontAutoboot.Location = new System.Drawing.Point(4, 90);
+            this.DisableNintendontAutoboot.Enabled = false;
+            this.DisableNintendontAutoboot.Location = new System.Drawing.Point(4, 65);
             this.DisableNintendontAutoboot.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DisableNintendontAutoboot.Name = "DisableNintendontAutoboot";
             this.DisableNintendontAutoboot.Size = new System.Drawing.Size(158, 24);
@@ -1082,6 +1092,7 @@
             // ForceInterlacedNINTENDONT
             // 
             this.ForceInterlacedNINTENDONT.AutoSize = true;
+            this.ForceInterlacedNINTENDONT.Enabled = false;
             this.ForceInterlacedNINTENDONT.Location = new System.Drawing.Point(313, 35);
             this.ForceInterlacedNINTENDONT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ForceInterlacedNINTENDONT.Name = "ForceInterlacedNINTENDONT";
@@ -1098,13 +1109,15 @@
             this.MainDolLabel.BackColor = System.Drawing.Color.LightGray;
             this.MainDolLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.MainDolLabel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MainDolLabel.Location = new System.Drawing.Point(363, 83);
+            this.MainDolLabel.Enabled = false;
+            this.MainDolLabel.Location = new System.Drawing.Point(352, 88);
             this.MainDolLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.MainDolLabel.Name = "MainDolLabel";
             this.MainDolLabel.Size = new System.Drawing.Size(316, 31);
             this.MainDolLabel.TabIndex = 18;
             this.MainDolLabel.Text = "<- Specify custom main.dol file";
             this.MainDolLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MainDolLabel.Visible = false;
             // 
             // MainDolSourceButton
             // 
@@ -1112,13 +1125,14 @@
             this.MainDolSourceButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.MainDolSourceButton.BackColor = System.Drawing.Color.LightGray;
             this.MainDolSourceButton.Enabled = false;
-            this.MainDolSourceButton.Location = new System.Drawing.Point(324, 83);
+            this.MainDolSourceButton.Location = new System.Drawing.Point(313, 89);
             this.MainDolSourceButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainDolSourceButton.Name = "MainDolSourceButton";
             this.MainDolSourceButton.Size = new System.Drawing.Size(31, 30);
             this.MainDolSourceButton.TabIndex = 16;
             this.MainDolSourceButton.Text = "...";
             this.MainDolSourceButton.UseVisualStyleBackColor = false;
+            this.MainDolSourceButton.Visible = false;
             this.MainDolSourceButton.Click += new System.EventHandler(this.MainDolSourceButton_Click);
             // 
             // BuildTab
@@ -1414,7 +1428,7 @@
             // DisableGamePad
             // 
             this.DisableGamePad.AutoSize = true;
-            this.DisableGamePad.Location = new System.Drawing.Point(19, 145);
+            this.DisableGamePad.Location = new System.Drawing.Point(19, 152);
             this.DisableGamePad.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DisableGamePad.Name = "DisableGamePad";
             this.DisableGamePad.Size = new System.Drawing.Size(449, 24);
